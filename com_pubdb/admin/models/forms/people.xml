@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset>
+        <field name="pubdb_people_id"
+               type="text"
+               default="0"
+               label="JGLOBAL_FIELD_ID_LABEL"
+               readonly="true"
+               class="readonly"
+               description="JGLOBAL_FIELD_ID_DESC" />
+        <field name="abbreviation"
+               type="text"
+               default="0"
+               label="JGLOBAL_FIELD_ABBREVATION_LABEL"
+               readonly="true"
+               class="readonly"
+               description="JGLOBAL_FIELD_ABBREVATION_DESC" />
+        <field name="firstname"
+               type="text"
+               default="0"
+               label="JGLOBAL_FIELD_FIRSTNAME_LABEL"
+               readonly="true"
+               class="readonly"
+               description="JGLOBAL_FIELD_FIRSTNAME_DESC" />
+        <field name="lastname"
+               type="text"
+               default="0"
+               label="JGLOBAL_FIELD_LASTNAME_LABEL"
+               readonly="true"
+               class="readonly"
+               description="JGLOBAL_FIELD_LASTNAME_DESC" />
+        <field name="lastnameforsorting"
+               type="text"
+               default="0"
+               label="JGLOBAL_FIELD_LASTNAMEFORSORTING_LABEL"
+               readonly="true"
+               class="readonly"
+               description="JGLOBAL_FIELD_LASTNAMEFORSORTING_DESC" />
+        <field name="middlename"
+               type="text"
+               default="0"
+               label="JGLOBAL_FIELD_MIDDLENAME_LABEL"
+               readonly="true"
+               class="readonly"
+               description="JGLOBAL_FIELD_MIDDLENAME_DESC" />
+        <field name="notes"
+               type="textarea"
+               default="0"
+               label="JGLOBAL_FIELD_NOTES_LABEL"
+               readonly="true"
+               class="readonly"
+               description="JGLOBAL_FIELD_NOTES_DESC" />
+        <field name="prefix"
+               type="text"
+               default="0"
+               label="JGLOBAL_FIELD_PREFIX_LABEL"
+               readonly="true"
+               class="readonly"
+               description="JGLOBAL_FIELD_PREFIX_DESC" />
+        <field name="sex"
+               type="number"
+               default="0"
+               label="JGLOBAL_FIELD_SEX_LABEL"
+               readonly="true"
+               class="readonly"
+               description="JGLOBAL_FIELD_SEX_DESC" />
+        <field name="suffix"
+               type="text"
+               default="0"
+               label="JGLOBAL_FIELD_SUFFIX_LABEL"
+               readonly="true"
+               class="readonly"
+               description="JGLOBAL_FIELD_SUFFIX_DESC" />
+        <field name="title"
+               type="text"
+               default="0"
+               label="JGLOBAL_FIELD_TITLE_LABEL"
+               readonly="true"
+               class="readonly"
+               description="JGLOBAL_FIELD_TITLE_DESC" />
+        
+        
+    </fieldset>
+</form>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="filter" addfieldpath="administrator/components/com_pubdb/models/fields">
+		<field
+			name="title"
+			type="text"
+			label="COM_CONTENT_FILTER_TITLE_DESC"
+			hint="JSEARCH_FILTER"
+		/>
+	</fields>
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="list"
+			label="COM_CONTENT_LIST_FULL_ORDERING"
+			description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
+			onchange="this.form.submit();"
+			default="l.Title ASC"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="l.Title ASC">JGLOBAL_TITLE_ASC</option>
+			<option value="l.Title DESC">JGLOBAL_TITLE_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			class="inputbox input-mini"
+			default="25"
+			label="COM_CONTENT_LIST_LIMIT"
+			description="COM_CONTENT_LIST_LIMIT_DESC"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>

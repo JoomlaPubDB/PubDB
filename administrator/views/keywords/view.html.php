@@ -19,7 +19,7 @@ use \Joomla\CMS\Language\Text;
  *
  * @since  1.6
  */
-class PubdbViewLiteratures extends \Joomla\CMS\MVC\View\HtmlView
+class PubdbViewKeywords extends \Joomla\CMS\MVC\View\HtmlView
 {
 	protected $items;
 
@@ -50,7 +50,7 @@ class PubdbViewLiteratures extends \Joomla\CMS\MVC\View\HtmlView
 			throw new Exception(implode("\n", $errors));
 		}
 
-		PubdbHelper::addSubmenu('literatures');
+		PubdbHelper::addSubmenu('keywords');
 
 		$this->addToolbar();
 
@@ -70,26 +70,26 @@ class PubdbViewLiteratures extends \Joomla\CMS\MVC\View\HtmlView
 		$state = $this->get('State');
 		$canDo = PubdbHelper::getActions();
 
-		JToolBarHelper::title(Text::_('COM_PUBDB_TITLE_LITERATURES'), 'literatures.png');
+		JToolBarHelper::title(Text::_('COM_PUBDB_TITLE_KEYWORDS'), 'keywords.png');
 
 		// Check if the form exists before showing the add/edit buttons
-		$formPath = JPATH_COMPONENT_ADMINISTRATOR . '/views/literature';
+		$formPath = JPATH_COMPONENT_ADMINISTRATOR . '/views/keyword';
 
 		if (file_exists($formPath))
 		{
 			if ($canDo->get('core.create'))
 			{
-				JToolBarHelper::addNew('literature.add', 'JTOOLBAR_NEW');
+				JToolBarHelper::addNew('keyword.add', 'JTOOLBAR_NEW');
 
 				if (isset($this->items[0]))
 				{
-					JToolbarHelper::custom('literatures.duplicate', 'copy.png', 'copy_f2.png', 'JTOOLBAR_DUPLICATE', true);
+					JToolbarHelper::custom('keywords.duplicate', 'copy.png', 'copy_f2.png', 'JTOOLBAR_DUPLICATE', true);
 				}
 			}
 
 			if ($canDo->get('core.edit') && isset($this->items[0]))
 			{
-				JToolBarHelper::editList('literature.edit', 'JTOOLBAR_EDIT');
+				JToolBarHelper::editList('keyword.edit', 'JTOOLBAR_EDIT');
 			}
 		}
 
@@ -98,24 +98,24 @@ class PubdbViewLiteratures extends \Joomla\CMS\MVC\View\HtmlView
 			if (isset($this->items[0]->state))
 			{
 				JToolBarHelper::divider();
-				JToolBarHelper::custom('literatures.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
-				JToolBarHelper::custom('literatures.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+				JToolBarHelper::custom('keywords.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
+				JToolBarHelper::custom('keywords.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
 			}
 			elseif (isset($this->items[0]))
 			{
 				// If this component does not use state then show a direct delete button as we can not trash
-				JToolBarHelper::deleteList('', 'literatures.delete', 'JTOOLBAR_DELETE');
+				JToolBarHelper::deleteList('', 'keywords.delete', 'JTOOLBAR_DELETE');
 			}
 
 			if (isset($this->items[0]->state))
 			{
 				JToolBarHelper::divider();
-				JToolBarHelper::archiveList('literatures.archive', 'JTOOLBAR_ARCHIVE');
+				JToolBarHelper::archiveList('keywords.archive', 'JTOOLBAR_ARCHIVE');
 			}
 
 			if (isset($this->items[0]->checked_out))
 			{
-				JToolBarHelper::custom('literatures.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
+				JToolBarHelper::custom('keywords.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
 			}
 		}
 
@@ -124,12 +124,12 @@ class PubdbViewLiteratures extends \Joomla\CMS\MVC\View\HtmlView
 		{
 			if ($state->get('filter.state') == -2 && $canDo->get('core.delete'))
 			{
-				JToolBarHelper::deleteList('', 'literatures.delete', 'JTOOLBAR_EMPTY_TRASH');
+				JToolBarHelper::deleteList('', 'keywords.delete', 'JTOOLBAR_EMPTY_TRASH');
 				JToolBarHelper::divider();
 			}
 			elseif ($canDo->get('core.edit.state'))
 			{
-				JToolBarHelper::trash('literatures.trash', 'JTOOLBAR_TRASH');
+				JToolBarHelper::trash('keywords.trash', 'JTOOLBAR_TRASH');
 				JToolBarHelper::divider();
 			}
 		}
@@ -140,7 +140,7 @@ class PubdbViewLiteratures extends \Joomla\CMS\MVC\View\HtmlView
 		}
 
 		// Set sidebar action - New in 3.0
-		JHtmlSidebar::setAction('index.php?option=com_pubdb&view=literatures');
+		JHtmlSidebar::setAction('index.php?option=com_pubdb&view=keywords');
 	}
 
 	/**
@@ -154,15 +154,7 @@ class PubdbViewLiteratures extends \Joomla\CMS\MVC\View\HtmlView
 			'a.`id`' => JText::_('JGRID_HEADING_ID'),
 			'a.`ordering`' => JText::_('JGRID_HEADING_ORDERING'),
 			'a.`state`' => JText::_('JSTATUS'),
-			'a.`title`' => JText::_('COM_PUBDB_LITERATURES_TITLE'),
-			'a.`subtitle`' => JText::_('COM_PUBDB_LITERATURES_SUBTITLE'),
-			'a.`reference_type`' => JText::_('COM_PUBDB_LITERATURES_REFERENCE_TYPE'),
-			'a.`access_date`' => JText::_('COM_PUBDB_LITERATURES_ACCESS_DATE'),
-			'a.`language`' => JText::_('JGRID_HEADING_LANGUAGE'),
-			'a.`doi`' => JText::_('COM_PUBDB_LITERATURES_DOI'),
-			'a.`isbn`' => JText::_('COM_PUBDB_LITERATURES_ISBN'),
-			'a.`authors`' => JText::_('COM_PUBDB_LITERATURES_AUTHORS'),
-			'a.`keywords`' => JText::_('COM_PUBDB_LITERATURES_KEYWORDS'),
+			'a.`name`' => JText::_('COM_PUBDB_KEYWORDS_NAME'),
 		);
 	}
 

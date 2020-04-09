@@ -17,13 +17,36 @@ use \Joomla\CMS\Language\Text;
 use \Joomla\CMS\Table\Table;
 
 /**
- * literature Table class
+ * keyword Table class
  *
  * @since  1.6
  */
-class PubdbTableliterature extends \Joomla\CMS\Table\Table
+class PubdbTablekeyword extends \Joomla\CMS\Table\Table
 {
-	
+	/**
+	 * Check if a field is unique
+	 *
+	 * @param   string  $field  Name of the field
+	 *
+	 * @return bool True if unique
+	 */
+	private function isUnique ($field)
+	{
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query
+			->select($db->quoteName($field))
+			->from($db->quoteName($this->_tbl))
+			->where($db->quoteName($field) . ' = ' . $db->quote($this->$field))
+			->where($db->quoteName('id') . ' <> ' . (int) $this->{$this->_tbl_key});
+
+		$db->setQuery($query);
+		$db->execute();
+
+		return ($db->getNumRows() == 0) ? true : false;
+	}
+
 	/**
 	 * Constructor
 	 *
@@ -31,8 +54,8 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 	 */
 	public function __construct(&$db)
 	{
-		JObserverMapper::addObserverClassToClass('JTableObserverContenthistory', 'PubdbTableliterature', array('typeAlias' => 'com_pubdb.literature'));
-		parent::__construct('#__pubdb_literature', 'id', $db);
+		JObserverMapper::addObserverClassToClass('JTableObserverContenthistory', 'PubdbTablekeyword', array('typeAlias' => 'com_pubdb.keyword'));
+		parent::__construct('#__pubdb_keywords', 'id', $db);
         $this->setColumnAlias('published', 'state');
     }
 
@@ -71,116 +94,6 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 			$array['modified_by'] = JFactory::getUser()->id;
 		}
 
-		// Support for empty date field: published_on
-		if($array['published_on'] == '0000-00-00' )
-		{
-			$array['published_on'] = '';
-		}
-
-		// Support for empty date field: access_date
-		if($array['access_date'] == '0000-00-00' )
-		{
-			$array['access_date'] = '';
-		}
-
-		// Support for multiple or not foreign key field: periodical_id
-			if(!empty($array['periodical_id']))
-			{
-				if(is_array($array['periodical_id'])){
-					$array['periodical_id'] = implode(',',$array['periodical_id']);
-				}
-				else if(strrpos($array['periodical_id'], ',') != false){
-					$array['periodical_id'] = explode(',',$array['periodical_id']);
-				}
-			}
-			else {
-				$array['periodical_id'] = '';
-			}
-
-		// Support for multiple or not foreign key field: series_title_id
-			if(!empty($array['series_title_id']))
-			{
-				if(is_array($array['series_title_id'])){
-					$array['series_title_id'] = implode(',',$array['series_title_id']);
-				}
-				else if(strrpos($array['series_title_id'], ',') != false){
-					$array['series_title_id'] = explode(',',$array['series_title_id']);
-				}
-			}
-			else {
-				$array['series_title_id'] = '';
-			}
-
-		// Support for multiple or not foreign key field: authors
-			if(!empty($array['authors']))
-			{
-				if(is_array($array['authors'])){
-					$array['authors'] = implode(',',$array['authors']);
-				}
-				else if(strrpos($array['authors'], ',') != false){
-					$array['authors'] = explode(',',$array['authors']);
-				}
-			}
-			else {
-				$array['authors'] = '';
-			}
-
-		// Support for multiple or not foreign key field: translators
-			if(!empty($array['translators']))
-			{
-				if(is_array($array['translators'])){
-					$array['translators'] = implode(',',$array['translators']);
-				}
-				else if(strrpos($array['translators'], ',') != false){
-					$array['translators'] = explode(',',$array['translators']);
-				}
-			}
-			else {
-				$array['translators'] = '';
-			}
-
-		// Support for multiple or not foreign key field: others_involved
-			if(!empty($array['others_involved']))
-			{
-				if(is_array($array['others_involved'])){
-					$array['others_involved'] = implode(',',$array['others_involved']);
-				}
-				else if(strrpos($array['others_involved'], ',') != false){
-					$array['others_involved'] = explode(',',$array['others_involved']);
-				}
-			}
-			else {
-				$array['others_involved'] = '';
-			}
-
-		// Support for multiple or not foreign key field: publishers
-			if(!empty($array['publishers']))
-			{
-				if(is_array($array['publishers'])){
-					$array['publishers'] = implode(',',$array['publishers']);
-				}
-				else if(strrpos($array['publishers'], ',') != false){
-					$array['publishers'] = explode(',',$array['publishers']);
-				}
-			}
-			else {
-				$array['publishers'] = '';
-			}
-
-		// Support for multiple or not foreign key field: keywords
-			if(!empty($array['keywords']))
-			{
-				if(is_array($array['keywords'])){
-					$array['keywords'] = implode(',',$array['keywords']);
-				}
-				else if(strrpos($array['keywords'], ',') != false){
-					$array['keywords'] = explode(',',$array['keywords']);
-				}
-			}
-			else {
-				$array['keywords'] = '';
-			}
-
 		if (isset($array['params']) && is_array($array['params']))
 		{
 			$registry = new JRegistry;
@@ -195,13 +108,13 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 			$array['metadata'] = (string) $registry;
 		}
 
-		if (!Factory::getUser()->authorise('core.admin', 'com_pubdb.literature.' . $array['id']))
+		if (!Factory::getUser()->authorise('core.admin', 'com_pubdb.keyword.' . $array['id']))
 		{
 			$actions         = Access::getActionsFromFile(
 				JPATH_ADMINISTRATOR . '/components/com_pubdb/access.xml',
-				"/access/section[@name='literature']/"
+				"/access/section[@name='keyword']/"
 			);
-			$default_actions = Access::getAssetRules('com_pubdb.literature.' . $array['id'])->getData();
+			$default_actions = Access::getAssetRules('com_pubdb.keyword.' . $array['id'])->getData();
 			$array_jaccess   = array();
 
 			foreach ($actions as $action)
@@ -266,6 +179,11 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 			$this->ordering = self::getNextOrder();
 		}
 		
+		// Check if name is unique
+		if (!$this->isUnique('name'))
+		{
+			throw new Exception('Your <b>name</b> item "<b>' . $this->name . '</b>" already exists');
+		}
 		
 
 		return parent::check();
@@ -363,7 +281,7 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 	{
 		$k = $this->_tbl_key;
 
-		return 'com_pubdb.literature.' . (int) $this->$k;
+		return 'com_pubdb.keyword.' . (int) $this->$k;
 	}
 
 	/**

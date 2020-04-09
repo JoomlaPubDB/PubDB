@@ -37,14 +37,14 @@ $saveOrder = $listOrder == 'a.`ordering`';
 
 if ($saveOrder)
 {
-	$saveOrderingUrl = 'index.php?option=com_pubdb&task=literatures.saveOrderAjax&tmpl=component';
-    HTMLHelper::_('sortablelist.sortable', 'literatureList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
+	$saveOrderingUrl = 'index.php?option=com_pubdb&task=keywords.saveOrderAjax&tmpl=component';
+    HTMLHelper::_('sortablelist.sortable', 'keywordList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 
 $sortFields = $this->getSortFields();
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_pubdb&view=literatures'); ?>" method="post"
+<form action="<?php echo Route::_('index.php?option=com_pubdb&view=keywords'); ?>" method="post"
 	  name="adminForm" id="adminForm">
 	<?php if (!empty($this->sidebar)): ?>
 	<div id="j-sidebar-container" class="span2">
@@ -58,7 +58,7 @@ $sortFields = $this->getSortFields();
             <?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
 
 			<div class="clearfix"></div>
-			<table class="table table-striped" id="literatureList">
+			<table class="table table-striped" id="keywordList">
 				<thead>
 				<tr>
 					<?php if (isset($this->items[0]->ordering)): ?>
@@ -77,34 +77,10 @@ $sortFields = $this->getSortFields();
 					<?php endif; ?>
 
 									<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_ID', 'a.`id`', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_KEYWORDS_ID', 'a.`id`', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_TITLE', 'a.`title`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_SUBTITLE', 'a.`subtitle`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_REFERENCE_TYPE', 'a.`reference_type`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_ACCESS_DATE', 'a.`access_date`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_LANGUAGE', 'a.`language`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_DOI', 'a.`doi`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_ISBN', 'a.`isbn`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_AUTHORS', 'a.`authors`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_KEYWORDS', 'a.`keywords`', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_KEYWORDS_NAME', 'a.`name`', $listDirn, $listOrder); ?>
 				</th>
 
 					
@@ -155,7 +131,7 @@ $sortFields = $this->getSortFields();
 						</td>
 						<?php if (isset($this->items[0]->state)): ?>
 							<td class="center">
-								<?php echo JHtml::_('jgrid.published', $item->state, $i, 'literatures.', $canChange, 'cb'); ?>
+								<?php echo JHtml::_('jgrid.published', $item->state, $i, 'keywords.', $canChange, 'cb'); ?>
 </td>
 						<?php endif; ?>
 
@@ -164,39 +140,15 @@ $sortFields = $this->getSortFields();
 					<?php echo $item->id; ?>
 				</td>				<td>
 				<?php if (isset($item->checked_out) && $item->checked_out && ($canEdit || $canChange)) : ?>
-					<?php echo JHtml::_('jgrid.checkedout', $i, $item->uEditor, $item->checked_out_time, 'literatures.', $canCheckin); ?>
+					<?php echo JHtml::_('jgrid.checkedout', $i, $item->uEditor, $item->checked_out_time, 'keywords.', $canCheckin); ?>
 				<?php endif; ?>
 				<?php if ($canEdit) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_pubdb&task=literature.edit&id='.(int) $item->id); ?>">
-					<?php echo $this->escape($item->title); ?></a>
+					<a href="<?php echo JRoute::_('index.php?option=com_pubdb&task=keyword.edit&id='.(int) $item->id); ?>">
+					<?php echo $this->escape($item->name); ?></a>
 				<?php else : ?>
-					<?php echo $this->escape($item->title); ?>
+					<?php echo $this->escape($item->name); ?>
 				<?php endif; ?>
 
-				</td>				<td>
-
-					<?php echo $item->subtitle; ?>
-				</td>				<td>
-
-					<?php echo $item->reference_type; ?>
-				</td>				<td>
-
-					<?php echo $item->access_date; ?>
-				</td>				<td>
-
-					<?php echo $item->language; ?>
-				</td>				<td>
-
-					<?php echo $item->doi; ?>
-				</td>				<td>
-
-					<?php echo $item->isbn; ?>
-				</td>				<td>
-
-					<?php echo $item->authors; ?>
-				</td>				<td>
-
-					<?php echo $item->keywords; ?>
 				</td>
 
 					</tr>

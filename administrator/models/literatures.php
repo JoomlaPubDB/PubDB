@@ -60,6 +60,7 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 				'translators', 'a.`translators`',
 				'others_involved', 'a.`others_involved`',
 				'publishers', 'a.`publishers`',
+				'keywords', 'a.`keywords`',
 			);
 		}
 
@@ -174,6 +175,9 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 		// Join over the foreign key 'publishers'
 		$query->select('`#__pubdb_publisher_3418659`.`name` AS publishers_fk_value_3418659');
 		$query->join('LEFT', '#__pubdb_publisher AS #__pubdb_publisher_3418659 ON #__pubdb_publisher_3418659.`id` = a.`publishers`');
+		// Join over the foreign key 'keywords'
+		$query->select('`#__pubdb_keywords_3418670`.`name` AS keywords_fk_value_3418670');
+		$query->join('LEFT', '#__pubdb_keywords AS #__pubdb_keywords_3418670 ON #__pubdb_keywords_3418670.`id` = a.`keywords`');
                 
 
 		// Filter by published state
@@ -200,7 +204,7 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 			else
 			{
 				$search = $db->Quote('%' . $db->escape($search, true) . '%');
-				$query->where('( a.title LIKE ' . $search . '  OR  a.subtitle LIKE ' . $search . '  OR  a.doi LIKE ' . $search . '  OR  a.isbn LIKE ' . $search . '  OR  a.eisbn LIKE ' . $search . '  OR CONCAT(`#__pubdb_person_3418647`.`first_name`, \' \', `#__pubdb_person_3418647`.`last_name`, \' \', `#__pubdb_person_3418647`.`middle_name`) LIKE ' . $search . '  OR CONCAT(`#__pubdb_person_3418648`.`first_name`, \' \', `#__pubdb_person_3418648`.`last_name`, \' \', `#__pubdb_person_3418648`.`middle_name`) LIKE ' . $search . '  OR CONCAT(`#__pubdb_person_3418649`.`first_name`, \' \', `#__pubdb_person_3418649`.`last_name`, \' \', `#__pubdb_person_3418649`.`middle_name`) LIKE ' . $search . ' )');
+				$query->where('( a.title LIKE ' . $search . '  OR  a.subtitle LIKE ' . $search . '  OR  a.doi LIKE ' . $search . '  OR  a.isbn LIKE ' . $search . '  OR  a.eisbn LIKE ' . $search . '  OR CONCAT(`#__pubdb_person_3418647`.`first_name`, \' \', `#__pubdb_person_3418647`.`last_name`, \' \', `#__pubdb_person_3418647`.`middle_name`) LIKE ' . $search . '  OR CONCAT(`#__pubdb_person_3418648`.`first_name`, \' \', `#__pubdb_person_3418648`.`last_name`, \' \', `#__pubdb_person_3418648`.`middle_name`) LIKE ' . $search . '  OR CONCAT(`#__pubdb_person_3418649`.`first_name`, \' \', `#__pubdb_person_3418649`.`last_name`, \' \', `#__pubdb_person_3418649`.`middle_name`) LIKE ' . $search . '  OR #__pubdb_keywords_3418670.name LIKE ' . $search . ' )');
 			}
 		}
                 
@@ -217,6 +221,14 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 		if ($filter_access_date_to !== null  && !empty($filter_access_date_to))
 		{
 			$query->where("a.`access_date` <= '".$db->escape($filter_access_date_to)."'");
+		}
+
+		// Filtering keywords
+		$filter_keywords = $this->state->get("filter.keywords");
+
+		if ($filter_keywords !== null && !empty($filter_keywords))
+		{
+			$query->where("FIND_IN_SET('" . $db->escape($filter_keywords) . "',a.keywords)");
 		}
 		// Add the list ordering clause.
 		$orderCol  = $this->state->get('list.ordering', "a.id");
@@ -267,6 +279,32 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 				}
 
 				$oneItem->authors = !empty($textValue) ? implode(', ', $textValue) : $oneItem->authors;
+			}
+
+			if (isset($oneItem->keywords))
+			{
+				$values    = explode(',', $oneItem->keywords);
+				$textValue = array();
+
+				foreach ($values as $value)
+				{
+					$db    = JFactory::getDbo();
+					$query = $db->getQuery(true);
+					$query
+						->select('`#__pubdb_keywords_3418670`.`name`')
+						->from($db->quoteName('#__pubdb_keywords', '#__pubdb_keywords_3418670'))
+						->where($db->quoteName('#__pubdb_keywords_3418670.id') . ' = '. $db->quote($db->escape($value)));
+
+					$db->setQuery($query);
+					$results = $db->loadObject();
+
+					if ($results)
+					{
+						$textValue[] = $results->name;
+					}
+				}
+
+				$oneItem->keywords = !empty($textValue) ? implode(', ', $textValue) : $oneItem->keywords;
 			}
 		}
 

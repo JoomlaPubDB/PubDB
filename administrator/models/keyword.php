@@ -22,7 +22,7 @@ use \Joomla\CMS\Plugin\PluginHelper;
  *
  * @since  1.6
  */
-class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
+class PubdbModelKeyword extends \Joomla\CMS\MVC\Model\AdminModel
 {
 	/**
 	 * @var      string    The prefix to use with controller messages.
@@ -34,7 +34,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @var   	string  	Alias to manage history control
 	 * @since   3.2
 	 */
-	public $typeAlias = 'com_pubdb.literature';
+	public $typeAlias = 'com_pubdb.keyword';
 
 	/**
 	 * @var null  Item data
@@ -58,7 +58,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @since    1.6
 	 */
-	public function getTable($type = 'Literature', $prefix = 'PubdbTable', $config = array())
+	public function getTable($type = 'Keyword', $prefix = 'PubdbTable', $config = array())
 	{
 		return Table::getInstance($type, $prefix, $config);
 	}
@@ -82,7 +82,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 
             // Get the form.
             $form = $this->loadForm(
-                    'com_pubdb.literature', 'literature',
+                    'com_pubdb.keyword', 'keyword',
                     array('control' => 'jform',
                             'load_data' => $loadData
                     )
@@ -110,7 +110,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('com_pubdb.edit.literature.data', array());
+		$data = Factory::getApplication()->getUserState('com_pubdb.edit.keyword.data', array());
 
 		if (empty($data))
 		{
@@ -148,7 +148,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * Method to duplicate an Literature
+	 * Method to duplicate an Keyword
 	 *
 	 * @param   array  &$pks  An array of primary key IDs.
 	 *
@@ -187,90 +187,6 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 					throw new Exception($table->getError());
 				}
 				
-				if (!empty($table->periodical_id))
-				{
-					if (is_array($table->periodical_id))
-					{
-						$table->periodical_id = implode(',', $table->periodical_id);
-					}
-				}
-				else
-				{
-					$table->periodical_id = '';
-				}
-
-				if (!empty($table->series_title_id))
-				{
-					if (is_array($table->series_title_id))
-					{
-						$table->series_title_id = implode(',', $table->series_title_id);
-					}
-				}
-				else
-				{
-					$table->series_title_id = '';
-				}
-
-				if (!empty($table->authors))
-				{
-					if (is_array($table->authors))
-					{
-						$table->authors = implode(',', $table->authors);
-					}
-				}
-				else
-				{
-					$table->authors = '';
-				}
-
-				if (!empty($table->translators))
-				{
-					if (is_array($table->translators))
-					{
-						$table->translators = implode(',', $table->translators);
-					}
-				}
-				else
-				{
-					$table->translators = '';
-				}
-
-				if (!empty($table->others_involved))
-				{
-					if (is_array($table->others_involved))
-					{
-						$table->others_involved = implode(',', $table->others_involved);
-					}
-				}
-				else
-				{
-					$table->others_involved = '';
-				}
-
-				if (!empty($table->publishers))
-				{
-					if (is_array($table->publishers))
-					{
-						$table->publishers = implode(',', $table->publishers);
-					}
-				}
-				else
-				{
-					$table->publishers = '';
-				}
-
-				if (!empty($table->keywords))
-				{
-					if (is_array($table->keywords))
-					{
-						$table->keywords = implode(',', $table->keywords);
-					}
-				}
-				else
-				{
-					$table->keywords = '';
-				}
-
 
 				// Trigger the before save event.
 				$result = $dispatcher->trigger($this->event_before_save, array($context, &$table, true));
@@ -315,7 +231,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 			if (@$table->ordering === '')
 			{
 				$db = Factory::getDbo();
-				$db->setQuery('SELECT MAX(ordering) FROM #__pubdb_literature');
+				$db->setQuery('SELECT MAX(ordering) FROM #__pubdb_keywords');
 				$max             = $db->loadResult();
 				$table->ordering = $max + 1;
 			}

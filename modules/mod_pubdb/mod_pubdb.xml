@@ -59,6 +59,7 @@
 	<option value="#__pubdb_series_title">#__pubdb_series_title</option>
 	<option value="#__pubdb_person">#__pubdb_person</option>
 	<option value="#__pubdb_publisher">#__pubdb_publisher</option>
+	<option value="#__pubdb_keywords">#__pubdb_keywords</option>
                 </field>
                 <field 
                     name="field" type="groupedlist" default=""
@@ -90,6 +91,7 @@
 		<option value="#__pubdb_literature:translators">translators</option>
 		<option value="#__pubdb_literature:others_involved">others_involved</option>
 		<option value="#__pubdb_literature:publishers">publishers</option>
+		<option value="#__pubdb_literature:keywords">keywords</option>
 	</group>
 	<group label="#__pubdb_periodical">
 		<option value="#__pubdb_periodical:id">id</option>
@@ -122,6 +124,12 @@
 		<option value="#__pubdb_publisher:modified_by">modified_by</option>
 		<option value="#__pubdb_publisher:name">name</option>
 	</group>
+	<group label="#__pubdb_keywords">
+		<option value="#__pubdb_keywords:id">id</option>
+		<option value="#__pubdb_keywords:created_by">created_by</option>
+		<option value="#__pubdb_keywords:modified_by">modified_by</option>
+		<option value="#__pubdb_keywords:name">name</option>
+	</group>
                 </field>
                 <field 
                     name="offset" type="text" default="0" filter="uint" class="input-small"
@@ -146,6 +154,7 @@
 	<option value="#__pubdb_series_title">#__pubdb_series_title</option>
 	<option value="#__pubdb_person">#__pubdb_person</option>
 	<option value="#__pubdb_publisher">#__pubdb_publisher</option>
+	<option value="#__pubdb_keywords">#__pubdb_keywords</option>
                 </field>
                 <field 
                     name="item_id" type="text" filter="uint" class="input-small"

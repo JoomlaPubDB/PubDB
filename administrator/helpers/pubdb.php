@@ -58,6 +58,12 @@ JHtmlSidebar::addEntry(
 			$vName == 'publishers'
 		);
 
+JHtmlSidebar::addEntry(
+			JText::_('COM_PUBDB_TITLE_KEYWORDS'),
+			'index.php?option=com_pubdb&view=keywords',
+			$vName == 'keywords'
+		);
+
 	}
 
 	/**

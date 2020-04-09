@@ -18,9 +18,9 @@ use \Joomla\CMS\Language\Text;
 /**
  * Updates the database structure of the component
  *
- * ***REMOVED***
- * ***REMOVED***
- * ***REMOVED***
+ * @version  0.0.1
+ * @author   Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @since    0.0.1
  */
 class com_pubdbInstallerScript
 {

@@ -214,6 +214,74 @@ $wheres2[] = 'a.middle_name LIKE ' . $word;
     $rows = array_merge($list, $rows);
 }
 
+
+
+//Search Verlage.
+if ($limit > 0) {
+    switch ($phrase) {
+        case 'exact':
+            $text = $db->quote('%' . $db->escape($text, true) . '%', false);
+            $wheres2 = array();
+            $wheres2[] = 'a.name LIKE ' . $text;
+            $where = '(' . implode(') OR (', $wheres2) . ')';
+            break;
+
+        case 'all':
+        case 'any':
+        default:
+            $words = explode(' ', $text);
+            $wheres = array();
+
+            foreach ($words as $word) {
+                $word = $db->quote('%' . $db->escape($word, true) . '%', false);
+                $wheres2 = array();
+                $wheres2[] = 'a.name LIKE ' . $word;
+                $wheres[] = implode(' OR ', $wheres2);
+            }
+
+            $where = '(' . implode(($phrase == 'all' ? ') AND (' : ') OR ('), $wheres) . ')';
+            break;
+    }
+
+    switch ($ordering) {
+        default:
+            $order = 'a.id DESC';
+            break;
+    }
+
+    $query = $db->getQuery(true);
+
+    $query
+            ->clear()
+            ->select(
+                    array(
+                        'a.id',
+                        'a.name AS title',
+                        '"" AS created',
+                        'a.name AS text',
+                        '"Verlag" AS section',
+                        '1 AS browsernav'
+                    )
+            )
+            ->from('#__pubdb_publisher AS a')
+            
+            ->where('(' . $where . ')')
+            ->group('a.id')
+            ->order($order);
+
+    $db->setQuery($query, 0, $limit);
+    $list = $db->loadObjectList();
+    $limit -= count($list);
+
+    if (isset($list)) {
+        foreach ($list as $key => $item) {
+            $list[$key]->href = JRoute::_('index.php?option=com_pubdb&view=publisher&id=' . $item->id, false, 2);
+        }
+    }
+
+    $rows = array_merge($list, $rows);
+}
+
 		return $rows;
 	}
 }

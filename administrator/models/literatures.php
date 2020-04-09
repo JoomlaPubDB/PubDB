@@ -59,6 +59,7 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 				'authors', 'a.`authors`',
 				'translators', 'a.`translators`',
 				'others_involved', 'a.`others_involved`',
+				'publishers', 'a.`publishers`',
 			);
 		}
 
@@ -170,6 +171,9 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 		// Join over the foreign key 'others_involved'
 		$query->select('CONCAT(`#__pubdb_person_3418649`.`first_name`, \' \', `#__pubdb_person_3418649`.`last_name`, \' \', `#__pubdb_person_3418649`.`middle_name`) AS people_fk_value_3418649');
 		$query->join('LEFT', '#__pubdb_person AS #__pubdb_person_3418649 ON #__pubdb_person_3418649.`id` = a.`others_involved`');
+		// Join over the foreign key 'publishers'
+		$query->select('`#__pubdb_publisher_3418659`.`name` AS publishers_fk_value_3418659');
+		$query->join('LEFT', '#__pubdb_publisher AS #__pubdb_publisher_3418659 ON #__pubdb_publisher_3418659.`id` = a.`publishers`');
                 
 
 		// Filter by published state

@@ -172,6 +172,9 @@ class ModPubdbHelper
 		case 'others_involved':
 		$result = self::loadValueFromExternalTable('#__pubdb_person', 'id', '', $field_value);
 		break;
+		case 'publishers':
+		$result = self::loadValueFromExternalTable('#__pubdb_publisher', 'id', 'name', $field_value);
+		break;
 		}
 		break;
 		case '#__pubdb_periodical':
@@ -245,6 +248,24 @@ class ModPubdbHelper
 		$result = $field_value;
 		break;
 		case 'title':
+		$result = $field_value;
+		break;
+		}
+		break;
+		case '#__pubdb_publisher':
+		switch($field_name){
+		case 'id':
+		$result = $field_value;
+		break;
+		case 'created_by':
+		$user = JFactory::getUser($field_value);
+		$result = $user->name;
+		break;
+		case 'modified_by':
+		$user = JFactory::getUser($field_value);
+		$result = $user->name;
+		break;
+		case 'name':
 		$result = $field_value;
 		break;
 		}

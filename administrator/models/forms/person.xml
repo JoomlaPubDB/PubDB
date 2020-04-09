@@ -15,7 +15,7 @@
     <field name="modified_by" type="modifiedby" default="0" label="COM_PUBDB_FORM_LBL_PERSON_MODIFIED_BY" description="COM_PUBDB_FORM_DESC_PERSON_MODIFIED_BY" hidden="true" hint="COM_PUBDB_FORM_LBL_PERSON_MODIFIED_BY"/>
     <field name="first_name" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_PERSON_FIRST_NAME" description="COM_PUBDB_FORM_DESC_PERSON_FIRST_NAME" hint="COM_PUBDB_FORM_LBL_PERSON_FIRST_NAME"/>
     <field name="last_name" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_PERSON_LAST_NAME" description="COM_PUBDB_FORM_DESC_PERSON_LAST_NAME" hint="COM_PUBDB_FORM_LBL_PERSON_LAST_NAME"/>
-    <field name="middle_name" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_PERSON_MIDDLE_NAME" description="COM_PUBDB_FORM_DESC_PERSON_MIDDLE_NAME" hint="COM_PUBDB_FORM_LBL_PERSON_MIDDLE_NAME"/>
+    <field name="middle_name" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_PERSON_MIDDLE_NAME" description="COM_PUBDB_FORM_DESC_PERSON_MIDDLE_NAME" hint="COM_PUBDB_FORM_LBL_PERSON_MIDDLE_NAME"/>
     <field name="sex" type="radio" label="COM_PUBDB_FORM_LBL_PERSON_SEX" description="COM_PUBDB_FORM_DESC_PERSON_SEX" hint="COM_PUBDB_FORM_LBL_PERSON_SEX">
       <option value="1">COM_PUBDB_PEOPLE_SEX_OPTION_1</option>
       <option value="2">COM_PUBDB_PEOPLE_SEX_OPTION_2</option>

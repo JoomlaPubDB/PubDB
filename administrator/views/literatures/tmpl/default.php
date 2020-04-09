@@ -2,7 +2,7 @@
 /**
  * @version    CVS: 0.0.1
  * @package    Com_Pubdb
- * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
@@ -100,6 +100,9 @@ $sortFields = $this->getSortFields();
 				<th class='left'>
 				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_ISBN', 'a.`isbn`', $listDirn, $listOrder); ?>
 				</th>
+				<th class='left'>
+				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_AUTHORS', 'a.`authors`', $listDirn, $listOrder); ?>
+				</th>
 
 					
 				</tr>
@@ -185,6 +188,9 @@ $sortFields = $this->getSortFields();
 				</td>				<td>
 
 					<?php echo $item->isbn; ?>
+				</td>				<td>
+
+					<?php echo $item->authors; ?>
 				</td>
 
 					</tr>

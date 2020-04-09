@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="filter">
+        <field name="search" type="text" hint="COM_PUBDB_SEARCH_FILTER_SUBMIT"
+               label="COM_USERS_FILTER_SEARCH_DESC"
+               class="js-stools-search-string" />
+
+        <field name="series_title_editor" type="sql" label="COM_PUBDB_FORM_LBL_SERIES_TITLE_SERIES_TITLE_EDITOR" query="SELECT '' AS `id`, 'COM_PUBDB_SERIES_TITLES_SERIES_TITLE_EDITOR_FILTER' AS `val` UNION SELECT `id` AS `id`,  CONCAT(`first_name`, ' ', `last_name`, ' ', `middle_name`) AS val FROM `#__pubdb_person`" key_field="id" value_field="val" class="inputbox" onchange="this.form.submit()" translate="true"/>
+
+
+    </fields>
+</form>

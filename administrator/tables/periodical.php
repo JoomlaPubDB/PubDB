@@ -3,7 +3,7 @@
 /**
  * @version    CVS: 0.0.1
  * @package    Com_Pubdb
- * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
@@ -55,7 +55,7 @@ class PubdbTableperiodical extends \Joomla\CMS\Table\Table
 	public function __construct(&$db)
 	{
 		JObserverMapper::addObserverClassToClass('JTableObserverContenthistory', 'PubdbTableperiodical', array('typeAlias' => 'com_pubdb.periodical'));
-		parent::__construct('#__pubdb_series_title', 'id', $db);
+		parent::__construct('#__pubdb_periodical', 'id', $db);
         $this->setColumnAlias('published', 'state');
     }
 

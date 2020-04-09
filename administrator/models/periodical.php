@@ -2,7 +2,7 @@
 /**
  * @version    CVS: 0.0.1
  * @package    Com_Pubdb
- * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
@@ -231,7 +231,7 @@ class PubdbModelPeriodical extends \Joomla\CMS\MVC\Model\AdminModel
 			if (@$table->ordering === '')
 			{
 				$db = Factory::getDbo();
-				$db->setQuery('SELECT MAX(ordering) FROM #__pubdb_series_title');
+				$db->setQuery('SELECT MAX(ordering) FROM #__pubdb_periodical');
 				$max             = $db->loadResult();
 				$table->ordering = $max + 1;
 			}

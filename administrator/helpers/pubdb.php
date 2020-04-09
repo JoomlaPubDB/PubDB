@@ -52,6 +52,12 @@ JHtmlSidebar::addEntry(
 			$vName == 'people'
 		);
 
+JHtmlSidebar::addEntry(
+			JText::_('COM_PUBDB_TITLE_PUBLISHERS'),
+			'index.php?option=com_pubdb&view=publishers',
+			$vName == 'publishers'
+		);
+
 	}
 
 	/**

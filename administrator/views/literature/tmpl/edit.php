@@ -65,6 +65,13 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 		}
 	});
 	js("#jform_others_involved").trigger("liszt:updated");
+	js('input:hidden.publishers').each(function(){
+		var name = js(this).attr('name');
+		if(name.indexOf('publishershidden')){
+			js('#jform_publishers option[value="'+js(this).val()+'"]').attr('selected',true);
+		}
+	});
+	js("#jform_publishers").trigger("liszt:updated");
 	});
 
 	Joomla.submitbutton = function (task) {
@@ -164,6 +171,16 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 					if(!is_array($value))
 					{
 						echo '<input type="hidden" class="others_involved" name="jform[others_involvedhidden]['.$value.']" value="'.$value.'" />';
+					}
+				}
+				?>
+				<?php echo $this->form->renderField('publishers'); ?>
+				<?php
+				foreach((array)$this->item->publishers as $value)
+				{
+					if(!is_array($value))
+					{
+						echo '<input type="hidden" class="publishers" name="jform[publishershidden]['.$value.']" value="'.$value.'" />';
 					}
 				}
 				?>

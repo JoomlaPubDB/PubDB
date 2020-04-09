@@ -58,6 +58,8 @@
 
 			<menu link="option=com_pubdb&amp;view=people" view="people" alt="Pubdb/People">COM_PUBDB_TITLE_PEOPLE</menu>
 
+			<menu link="option=com_pubdb&amp;view=publishers" view="publishers" alt="Pubdb/Publishers">COM_PUBDB_TITLE_PUBLISHERS</menu>
+
         </submenu>
         <files folder="administrator">
             <filename>access.xml</filename>

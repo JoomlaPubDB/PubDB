@@ -30,13 +30,19 @@ class PubdbHelper
 	{
 		JHtmlSidebar::addEntry(
 			JText::_('COM_PUBDB_TITLE_LITERATURES'),
-			'index.php?option=PubDB&view=literatures',
+			'index.php?option=com_pubdb&view=literatures',
 			$vName == 'literatures'
 		);
 
 JHtmlSidebar::addEntry(
 			JText::_('COM_PUBDB_TITLE_PERIODICALS'),
-			'index.php?option=PubDB&view=periodicals',
+			'index.php?option=com_pubdb&view=periodicals',
+			$vName == 'periodicals'
+		);
+
+JHtmlSidebar::addEntry(
+			JText::_('COM_PUBDB_TITLE_PERIODICALS'),
+			'index.php?option=com_pubdb&view=periodicals',
 			$vName == 'periodicals'
 		);
 
@@ -80,7 +86,7 @@ JHtmlSidebar::addEntry(
 		$user   = Factory::getUser();
 		$result = new JObject;
 
-		$assetName = 'PubDB';
+		$assetName = 'com_pubdb';
 
 		$actions = array(
 			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.delete'

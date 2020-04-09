@@ -46,7 +46,7 @@ class PubdbViewPeriodical extends \Joomla\CMS\MVC\View\HtmlView
 
 		$this->state  = $this->get('State');
 		$this->item   = $this->get('Item');
-		$this->params = $app->getParams('PubDB');
+		$this->params = $app->getParams('com_pubdb');
 
 		if (!empty($this->item))
 		{
@@ -63,7 +63,7 @@ class PubdbViewPeriodical extends \Joomla\CMS\MVC\View\HtmlView
 
 		if ($this->_layout == 'edit')
 		{
-			$authorised = $user->authorise('core.create', 'PubDB');
+			$authorised = $user->authorise('core.create', 'com_pubdb');
 
 			if ($authorised !== true)
 			{

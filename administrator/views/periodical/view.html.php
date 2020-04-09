@@ -100,7 +100,7 @@ class PubdbViewPeriodical extends \Joomla\CMS\MVC\View\HtmlView
 
 		// Button for version control
 		if ($this->state->params->get('save_history', 1) && $user->authorise('core.edit')) {
-			JToolbarHelper::versions('PubDB.periodical', $this->item->id);
+			JToolbarHelper::versions('com_pubdb.periodical', $this->item->id);
 		}
 
 		if (empty($this->item->id))

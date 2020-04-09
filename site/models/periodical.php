@@ -43,11 +43,11 @@ class PubdbModelPeriodical extends \Joomla\CMS\MVC\Model\ItemModel
 	 */
 	protected function populateState()
 	{
-		$app  = Factory::getApplication('PubDB');
+		$app  = Factory::getApplication('com_pubdb');
 		$user = Factory::getUser();
 
 		// Check published state
-		if ((!$user->authorise('core.edit.state', 'PubDB')) && (!$user->authorise('core.edit', 'PubDB')))
+		if ((!$user->authorise('core.edit.state', 'com_pubdb')) && (!$user->authorise('core.edit', 'com_pubdb')))
 		{
 			$this->setState('filter.published', 1);
 			$this->setState('filter.archived', 2);
@@ -56,12 +56,12 @@ class PubdbModelPeriodical extends \Joomla\CMS\MVC\Model\ItemModel
 		// Load state from the request userState on edit or from the passed variable on default
 		if (Factory::getApplication()->input->get('layout') == 'edit')
 		{
-			$id = Factory::getApplication()->getUserState('PubDB.edit.periodical.id');
+			$id = Factory::getApplication()->getUserState('com_pubdb.edit.periodical.id');
 		}
 		else
 		{
 			$id = Factory::getApplication()->input->get('id');
-			Factory::getApplication()->setUserState('PubDB.edit.periodical.id', $id);
+			Factory::getApplication()->setUserState('com_pubdb.edit.periodical.id', $id);
 		}
 
 		$this->setState('periodical.id', $id);
@@ -149,7 +149,7 @@ class PubdbModelPeriodical extends \Joomla\CMS\MVC\Model\ItemModel
 	 */
 	public function getTable($type = 'Periodical', $prefix = 'PubdbTable', $config = array())
 	{
-		$this->addTablePath(JPATH_ADMINISTRATOR . '/components/PubDB/tables');
+		$this->addTablePath(JPATH_ADMINISTRATOR . '/components/com_pubdb/tables');
 
 		return Table::getInstance($type, $prefix, $config);
 	}

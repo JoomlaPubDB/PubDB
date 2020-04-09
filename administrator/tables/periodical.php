@@ -54,8 +54,8 @@ class PubdbTableperiodical extends \Joomla\CMS\Table\Table
 	 */
 	public function __construct(&$db)
 	{
-		JObserverMapper::addObserverClassToClass('JTableObserverContenthistory', 'PubdbTableperiodical', array('typeAlias' => 'PubDB.periodical'));
-		parent::__construct('#__pubdb_periodical', 'id', $db);
+		JObserverMapper::addObserverClassToClass('JTableObserverContenthistory', 'PubdbTableperiodical', array('typeAlias' => 'com_pubdb.periodical'));
+		parent::__construct('#__pubdb_series_title', 'id', $db);
         $this->setColumnAlias('published', 'state');
     }
 
@@ -108,13 +108,13 @@ class PubdbTableperiodical extends \Joomla\CMS\Table\Table
 			$array['metadata'] = (string) $registry;
 		}
 
-		if (!Factory::getUser()->authorise('core.admin', 'PubDB.periodical.' . $array['id']))
+		if (!Factory::getUser()->authorise('core.admin', 'com_pubdb.periodical.' . $array['id']))
 		{
 			$actions         = Access::getActionsFromFile(
-				JPATH_ADMINISTRATOR . '/components/PubDB/access.xml',
+				JPATH_ADMINISTRATOR . '/components/com_pubdb/access.xml',
 				"/access/section[@name='periodical']/"
 			);
-			$default_actions = Access::getAssetRules('PubDB.periodical.' . $array['id'])->getData();
+			$default_actions = Access::getAssetRules('com_pubdb.periodical.' . $array['id'])->getData();
 			$array_jaccess   = array();
 
 			foreach ($actions as $action)
@@ -281,7 +281,7 @@ class PubdbTableperiodical extends \Joomla\CMS\Table\Table
 	{
 		$k = $this->_tbl_key;
 
-		return 'PubDB.periodical.' . (int) $this->$k;
+		return 'com_pubdb.periodical.' . (int) $this->$k;
 	}
 
 	/**
@@ -303,7 +303,7 @@ class PubdbTableperiodical extends \Joomla\CMS\Table\Table
 		$assetParentId = $assetParent->getRootId();
 
 		// The item has the component as asset-parent
-		$assetParent->loadByName('PubDB');
+		$assetParent->loadByName('com_pubdb');
 
 		// Return the found asset-parent-id
 		if ($assetParent->id)

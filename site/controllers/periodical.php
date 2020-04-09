@@ -35,11 +35,11 @@ class PubdbControllerPeriodical extends \Joomla\CMS\MVC\Controller\BaseControlle
 		$app = Factory::getApplication();
 
 		// Get the previous edit id (if any) and the current edit id.
-		$previousId = (int) $app->getUserState('PubDB.edit.periodical.id');
+		$previousId = (int) $app->getUserState('com_pubdb.edit.periodical.id');
 		$editId     = $app->input->getInt('id', 0);
 
 		// Set the user id for the user to edit in the session.
-		$app->setUserState('PubDB.edit.periodical.id', $editId);
+		$app->setUserState('com_pubdb.edit.periodical.id', $editId);
 
 		// Get the model.
 		$model = $this->getModel('Periodical', 'PubdbModel');
@@ -57,7 +57,7 @@ class PubdbControllerPeriodical extends \Joomla\CMS\MVC\Controller\BaseControlle
 		}
 
 		// Redirect to the edit screen.
-		$this->setRedirect(Route::_('index.php?option=PubDB&view=periodicalform&layout=edit', false));
+		$this->setRedirect(Route::_('index.php?option=com_pubdb&view=periodicalform&layout=edit', false));
 	}
 
 	/**
@@ -76,7 +76,7 @@ class PubdbControllerPeriodical extends \Joomla\CMS\MVC\Controller\BaseControlle
 		// Checking if the user can remove object
 		$user = Factory::getUser();
 
-		if ($user->authorise('core.edit', 'PubDB') || $user->authorise('core.edit.state', 'PubDB'))
+		if ($user->authorise('core.edit', 'com_pubdb') || $user->authorise('core.edit.state', 'com_pubdb'))
 		{
 			$model = $this->getModel('Periodical', 'PubdbModel');
 
@@ -94,10 +94,10 @@ class PubdbControllerPeriodical extends \Joomla\CMS\MVC\Controller\BaseControlle
 			}
 
 			// Clear the profile id from the session.
-			$app->setUserState('PubDB.edit.periodical.id', null);
+			$app->setUserState('com_pubdb.edit.periodical.id', null);
 
 			// Flush the data from the session.
-			$app->setUserState('PubDB.edit.periodical.data', null);
+			$app->setUserState('com_pubdb.edit.periodical.data', null);
 
 			// Redirect to the list screen.
 			$this->setMessage(Text::_('COM_PUBDB_ITEM_SAVED_SUCCESSFULLY'));
@@ -107,7 +107,7 @@ class PubdbControllerPeriodical extends \Joomla\CMS\MVC\Controller\BaseControlle
 			if (!$item)
 			{
 				// If there isn't any menu item active, redirect to list view
-				$this->setRedirect(Route::_('index.php?option=PubDB&view=periodicals', false));
+				$this->setRedirect(Route::_('index.php?option=com_pubdb&view=periodicals', false));
 			}
 			else
 			{
@@ -135,7 +135,7 @@ class PubdbControllerPeriodical extends \Joomla\CMS\MVC\Controller\BaseControlle
 		// Checking if the user can remove object
 		$user = Factory::getUser();
 
-		if ($user->authorise('core.delete', 'PubDB'))
+		if ($user->authorise('core.delete', 'com_pubdb'))
 		{
 			$model = $this->getModel('Periodical', 'PubdbModel');
 
@@ -158,11 +158,11 @@ class PubdbControllerPeriodical extends \Joomla\CMS\MVC\Controller\BaseControlle
 					$model->checkin($return);
 				}
 
-                $app->setUserState('PubDB.edit.inventory.id', null);
-                $app->setUserState('PubDB.edit.inventory.data', null);
+                $app->setUserState('com_pubdb.edit.inventory.id', null);
+                $app->setUserState('com_pubdb.edit.inventory.data', null);
 
                 $app->enqueueMessage(Text::_('COM_PUBDB_ITEM_DELETED_SUCCESSFULLY'), 'success');
-                $app->redirect(Route::_('index.php?option=PubDB&view=periodicals', false));
+                $app->redirect(Route::_('index.php?option=com_pubdb&view=periodicals', false));
 			}
 
 			// Redirect to the list screen.

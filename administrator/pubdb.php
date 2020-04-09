@@ -15,7 +15,7 @@ use \Joomla\CMS\Factory;
 use \Joomla\CMS\Language\Text;
 
 // Access check.
-if (!Factory::getUser()->authorise('core.manage', 'PubDB'))
+if (!Factory::getUser()->authorise('core.manage', 'com_pubdb'))
 {
 	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR'));
 }

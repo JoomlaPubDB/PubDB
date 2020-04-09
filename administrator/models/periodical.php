@@ -34,7 +34,7 @@ class PubdbModelPeriodical extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @var   	string  	Alias to manage history control
 	 * @since   3.2
 	 */
-	public $typeAlias = 'PubDB.periodical';
+	public $typeAlias = 'com_pubdb.periodical';
 
 	/**
 	 * @var null  Item data
@@ -82,7 +82,7 @@ class PubdbModelPeriodical extends \Joomla\CMS\MVC\Model\AdminModel
 
             // Get the form.
             $form = $this->loadForm(
-                    'PubDB.periodical', 'periodical',
+                    'com_pubdb.periodical', 'periodical',
                     array('control' => 'jform',
                             'load_data' => $loadData
                     )
@@ -110,7 +110,7 @@ class PubdbModelPeriodical extends \Joomla\CMS\MVC\Model\AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('PubDB.edit.periodical.data', array());
+		$data = Factory::getApplication()->getUserState('com_pubdb.edit.periodical.data', array());
 
 		if (empty($data))
 		{
@@ -161,7 +161,7 @@ class PubdbModelPeriodical extends \Joomla\CMS\MVC\Model\AdminModel
 		$user = Factory::getUser();
 
 		// Access checks.
-		if (!$user->authorise('core.create', 'PubDB'))
+		if (!$user->authorise('core.create', 'com_pubdb'))
 		{
 			throw new Exception(Text::_('JERROR_CORE_CREATE_NOT_PERMITTED'));
 		}
@@ -231,7 +231,7 @@ class PubdbModelPeriodical extends \Joomla\CMS\MVC\Model\AdminModel
 			if (@$table->ordering === '')
 			{
 				$db = Factory::getDbo();
-				$db->setQuery('SELECT MAX(ordering) FROM #__pubdb_periodical');
+				$db->setQuery('SELECT MAX(ordering) FROM #__pubdb_series_title');
 				$max             = $db->loadResult();
 				$table->ordering = $max + 1;
 			}

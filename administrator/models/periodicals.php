@@ -124,7 +124,7 @@ class PubdbModelPeriodicals extends \Joomla\CMS\MVC\Model\ListModel
 				'list.select', 'DISTINCT a.*'
 			)
 		);
-		$query->from('`#__pubdb_periodical` AS a');
+		$query->from('`#__pubdb_series_title` AS a');
                 
 		// Join over the users for the checked out user
 		$query->select("uc.name AS uEditor");

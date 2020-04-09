@@ -51,6 +51,11 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 				'page_count', 'a.`page_count`',
 				'page_range', 'a.`page_range`',
 				'periodical_id', 'a.`periodical_id`',
+				'place_of_publication', 'a.`place_of_publication`',
+				'pub_med_id', 'a.`pub_med_id`',
+				'series_title_id', 'a.`series_title_id`',
+				'eisbn', 'a.`eisbn`',
+				'volume', 'a.`volume`',
 			);
 		}
 
@@ -150,6 +155,9 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 		// Join over the foreign key 'periodical_id'
 		$query->select('CONCAT(`#__pubdb_periodical_3418585`.`issn`, \' \', `#__pubdb_periodical_3418585`.`name`) AS periodicals_fk_value_3418585');
 		$query->join('LEFT', '#__pubdb_periodical AS #__pubdb_periodical_3418585 ON #__pubdb_periodical_3418585.`id` = a.`periodical_id`');
+		// Join over the foreign key 'series_title_id'
+		$query->select('`#__pubdb_series_title_3418632`.`name` AS periodicals_fk_value_3418632');
+		$query->join('LEFT', '#__pubdb_series_title AS #__pubdb_series_title_3418632 ON #__pubdb_series_title_3418632.`id` = a.`series_title_id`');
                 
 
 		// Filter by published state
@@ -176,7 +184,7 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 			else
 			{
 				$search = $db->Quote('%' . $db->escape($search, true) . '%');
-				$query->where('( a.title LIKE ' . $search . '  OR  a.subtitle LIKE ' . $search . '  OR  a.doi LIKE ' . $search . '  OR  a.isbn LIKE ' . $search . ' )');
+				$query->where('( a.title LIKE ' . $search . '  OR  a.subtitle LIKE ' . $search . '  OR  a.doi LIKE ' . $search . '  OR  a.isbn LIKE ' . $search . '  OR  a.eisbn LIKE ' . $search . ' )');
 			}
 		}
                 

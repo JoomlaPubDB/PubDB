@@ -136,11 +136,11 @@ class PubdbViewLiteratures extends \Joomla\CMS\MVC\View\HtmlView
 
 		if ($canDo->get('core.admin'))
 		{
-			JToolBarHelper::preferences('PubDB');
+			JToolBarHelper::preferences('com_pubdb');
 		}
 
 		// Set sidebar action - New in 3.0
-		JHtmlSidebar::setAction('index.php?option=PubDB&view=literatures');
+		JHtmlSidebar::setAction('index.php?option=com_pubdb&view=literatures');
 	}
 
 	/**

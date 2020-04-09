@@ -24,7 +24,7 @@ HTMLHelper::_('behavior.keepalive');
 
 // Import CSS
 $document = Factory::getDocument();
-$document->addStyleSheet(Uri::root() . 'media/PubDB/css/form.css');
+$document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 ?>
 <script type="text/javascript">
 	js = jQuery.noConflict();
@@ -37,6 +37,13 @@ $document->addStyleSheet(Uri::root() . 'media/PubDB/css/form.css');
 		}
 	});
 	js("#jform_periodical_id").trigger("liszt:updated");
+	js('input:hidden.series_title_id').each(function(){
+		var name = js(this).attr('name');
+		if(name.indexOf('series_title_idhidden')){
+			js('#jform_series_title_id option[value="'+js(this).val()+'"]').attr('selected',true);
+		}
+	});
+	js("#jform_series_title_id").trigger("liszt:updated");
 	});
 
 	Joomla.submitbutton = function (task) {
@@ -57,7 +64,7 @@ $document->addStyleSheet(Uri::root() . 'media/PubDB/css/form.css');
 </script>
 
 <form
-	action="<?php echo JRoute::_('index.php?option=PubDB&layout=edit&id=' . (int) $this->item->id); ?>"
+	action="<?php echo JRoute::_('index.php?option=com_pubdb&layout=edit&id=' . (int) $this->item->id); ?>"
 	method="post" enctype="multipart/form-data" name="adminForm" id="literature-form" class="form-validate form-horizontal">
 
 	
@@ -95,6 +102,20 @@ $document->addStyleSheet(Uri::root() . 'media/PubDB/css/form.css');
 					}
 				}
 				?>
+				<?php echo $this->form->renderField('place_of_publication'); ?>
+				<?php echo $this->form->renderField('pub_med_id'); ?>
+				<?php echo $this->form->renderField('series_title_id'); ?>
+				<?php
+				foreach((array)$this->item->series_title_id as $value)
+				{
+					if(!is_array($value))
+					{
+						echo '<input type="hidden" class="series_title_id" name="jform[series_title_idhidden]['.$value.']" value="'.$value.'" />';
+					}
+				}
+				?>
+				<?php echo $this->form->renderField('eisbn'); ?>
+				<?php echo $this->form->renderField('volume'); ?>
 				<?php if ($this->state->params->get('save_history', 1)) : ?>
 					<div class="control-group">
 						<div class="control-label"><?php echo $this->form->getLabel('version_note'); ?></div>

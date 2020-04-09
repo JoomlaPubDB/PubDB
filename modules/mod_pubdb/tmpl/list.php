@@ -1,7 +1,7 @@
 <?php
 /**
  * @version     CVS: 0.0.1
- * @package     PubDB
+ * @package     com_pubdb
  * @subpackage  mod_pubdb
  * @author      Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @copyright   2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke

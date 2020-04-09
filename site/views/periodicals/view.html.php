@@ -46,7 +46,7 @@ class PubdbViewPeriodicals extends \Joomla\CMS\MVC\View\HtmlView
 		$this->state = $this->get('State');
 		$this->items = $this->get('Items');
 		$this->pagination = $this->get('Pagination');
-		$this->params = $app->getParams('PubDB');
+		$this->params = $app->getParams('com_pubdb');
 		
 
 		// Check for errors.

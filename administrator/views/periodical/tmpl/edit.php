@@ -24,7 +24,7 @@ HTMLHelper::_('behavior.keepalive');
 
 // Import CSS
 $document = Factory::getDocument();
-$document->addStyleSheet(Uri::root() . 'media/PubDB/css/form.css');
+$document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 ?>
 <script type="text/javascript">
 	js = jQuery.noConflict();
@@ -50,7 +50,7 @@ $document->addStyleSheet(Uri::root() . 'media/PubDB/css/form.css');
 </script>
 
 <form
-	action="<?php echo JRoute::_('index.php?option=PubDB&layout=edit&id=' . (int) $this->item->id); ?>"
+	action="<?php echo JRoute::_('index.php?option=com_pubdb&layout=edit&id=' . (int) $this->item->id); ?>"
 	method="post" enctype="multipart/form-data" name="adminForm" id="periodical-form" class="form-validate form-horizontal">
 
 	

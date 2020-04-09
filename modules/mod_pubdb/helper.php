@@ -2,7 +2,7 @@
 
 /**
  * @version     CVS: 0.0.1
- * @package     PubDB
+ * @package     com_pubdb
  * @subpackage  mod_pubdb
  * @author      Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @copyright   2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -16,7 +16,7 @@ use \Joomla\CMS\Language\Text;
 /**
  * Helper for mod_pubdb
  *
- * @package     PubDB
+ * @package     com_pubdb
  * @subpackage  mod_pubdb
  * @since       1.6
  */
@@ -148,6 +148,21 @@ class ModPubdbHelper
 		case 'periodical_id':
 		$result = self::loadValueFromExternalTable('#__pubdb_periodical', 'id', '', $field_value);
 		break;
+		case 'place_of_publication':
+		$result = $field_value;
+		break;
+		case 'pub_med_id':
+		$result = $field_value;
+		break;
+		case 'series_title_id':
+		$result = self::loadValueFromExternalTable('#__pubdb_series_title', 'id', 'name', $field_value);
+		break;
+		case 'eisbn':
+		$result = $field_value;
+		break;
+		case 'volume':
+		$result = $field_value;
+		break;
 		}
 		break;
 		case '#__pubdb_periodical':
@@ -170,6 +185,24 @@ class ModPubdbHelper
 		$result = $field_value;
 		break;
 		case 'eissn':
+		$result = $field_value;
+		break;
+		}
+		break;
+		case '#__pubdb_series_title':
+		switch($field_name){
+		case 'id':
+		$result = $field_value;
+		break;
+		case 'created_by':
+		$user = JFactory::getUser($field_value);
+		$result = $user->name;
+		break;
+		case 'modified_by':
+		$user = JFactory::getUser($field_value);
+		$result = $user->name;
+		break;
+		case 'name':
 		$result = $field_value;
 		break;
 		}

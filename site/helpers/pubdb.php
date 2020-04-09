@@ -9,7 +9,7 @@
  */
 defined('_JEXEC') or die;
 
-JLoader::register('PubdbHelper', JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'PubDB' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'pubdb.php');
+JLoader::register('PubdbHelper', JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'pubdb.php');
 
 use \Joomla\CMS\Factory;
 use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
@@ -33,9 +33,9 @@ class PubdbHelpersPubdb
 		$model = null;
 
 		// If the file exists, let's
-		if (file_exists(JPATH_SITE . '/components/PubDB/models/' . strtolower($name) . '.php'))
+		if (file_exists(JPATH_SITE . '/components/com_pubdb/models/' . strtolower($name) . '.php'))
 		{
-			require_once JPATH_SITE . '/components/PubDB/models/' . strtolower($name) . '.php';
+			require_once JPATH_SITE . '/components/com_pubdb/models/' . strtolower($name) . '.php';
 			$model = BaseDatabaseModel::getInstance($name, 'PubdbModel');
 		}
 
@@ -80,7 +80,7 @@ class PubdbHelpersPubdb
         $permission = false;
         $user       = Factory::getUser();
 
-        if ($user->authorise('core.edit', 'PubDB'))
+        if ($user->authorise('core.edit', 'com_pubdb'))
         {
             $permission = true;
         }
@@ -88,7 +88,7 @@ class PubdbHelpersPubdb
         {
             if (isset($item->created_by))
             {
-                if ($user->authorise('core.edit.own', 'PubDB') && $item->created_by == $user->id)
+                if ($user->authorise('core.edit.own', 'com_pubdb') && $item->created_by == $user->id)
                 {
                     $permission = true;
                 }

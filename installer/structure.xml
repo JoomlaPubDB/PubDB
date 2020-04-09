@@ -32,5 +32,22 @@
     <field field_name="page_count" field_type="INT" field_length="11" description="Die Anzahl an betrachteten Seiten"/>
     <field field_name="page_range" field_type="VARCHAR" field_length="255" description="Der Seitenumfang aus der Literatur"/>
     <field action="change" field_name="periodical_id" field_type="INT" field_length="11" description="Das Magazin aus dem die Ausgabe kommt"/>
+    <field field_name="place_of_publication" field_type="VARCHAR" field_length="255" description="Ver&#xF6;ffentlichungsort der Literatur"/>
+    <field field_name="pub_med_id" field_type="VARCHAR" field_length="255" description=""/>
+    <field field_name="series_title_id" field_type="INT" field_length="11" description="Buchserie der Literatur"/>
+    <field action="change" field_name="eisbn" field_type="VARCHAR" field_length="13" description="Die International elektronische Standard Book Number (ISBN) f&#xFC;r die Literatur"/>
+    <field field_name="volume" field_type="VARCHAR" field_length="255" description="Ausgabe der Literatur"/>
+  </table>
+  <table action="add" table_name="#__pubdb_series_title" storage_engine="" collation="utf8mb4_unicode_ci">
+    <field action="add" field_name="id" field_type="INT" field_length="11" is_autoincrement="1" index="primary" description=""/>
+    <field action="add" field_name="ordering" field_type="INT" field_length="11" index="index" description=""/>
+    <field action="add" field_name="state" field_type="TINYINT" field_length="1" index="index" description=""/>
+    <field action="add" field_name="checked_out" field_type="INT" field_length="11" index="index" description=""/>
+    <field action="add" field_name="checked_out_time" field_type="DATETIME" description=""/>
+    <field action="add" field_name="created_by" field_type="INT" field_length="11" index="index" description=""/>
+    <field action="add" field_name="modified_by" field_type="INT" field_length="11" index="index" description=""/>
+    <field action="add" field_name="name" field_type="VARCHAR" field_length="255" description="Der Name des Magazins"/>
+    <field action="remove" field_name="issn"/>
+    <field action="remove" field_name="eissn"/>
   </table>
 </component>

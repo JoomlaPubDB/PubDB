@@ -56,7 +56,7 @@ class PubdbControllerPeriodicals extends \Joomla\CMS\MVC\Controller\AdminControl
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'warning');
 		}
 
-		$this->setRedirect('index.php?option=PubDB&view=periodicals');
+		$this->setRedirect('index.php?option=com_pubdb&view=periodicals');
 	}
 
 	/**

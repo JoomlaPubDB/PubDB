@@ -25,26 +25,26 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 
 // Import CSS
 $document = Factory::getDocument();
-$document->addStyleSheet(Uri::root() . 'administrator/components/PubDB/assets/css/pubdb.css');
-$document->addStyleSheet(Uri::root() . 'media/PubDB/css/list.css');
+$document->addStyleSheet(Uri::root() . 'administrator/components/com_pubdb/assets/css/pubdb.css');
+$document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/list.css');
 
 $user      = Factory::getUser();
 $userId    = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
 $listDirn  = $this->state->get('list.direction');
-$canOrder  = $user->authorise('core.edit.state', 'PubDB');
+$canOrder  = $user->authorise('core.edit.state', 'com_pubdb');
 $saveOrder = $listOrder == 'a.`ordering`';
 
 if ($saveOrder)
 {
-	$saveOrderingUrl = 'index.php?option=PubDB&task=periodicals.saveOrderAjax&tmpl=component';
+	$saveOrderingUrl = 'index.php?option=com_pubdb&task=periodicals.saveOrderAjax&tmpl=component';
     HTMLHelper::_('sortablelist.sortable', 'periodicalList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 
 $sortFields = $this->getSortFields();
 ?>
 
-<form action="<?php echo Route::_('index.php?option=PubDB&view=periodicals'); ?>" method="post"
+<form action="<?php echo Route::_('index.php?option=com_pubdb&view=periodicals'); ?>" method="post"
 	  name="adminForm" id="adminForm">
 	<?php if (!empty($this->sidebar)): ?>
 	<div id="j-sidebar-container" class="span2">
@@ -99,10 +99,10 @@ $sortFields = $this->getSortFields();
 				<tbody>
 				<?php foreach ($this->items as $i => $item) :
 					$ordering   = ($listOrder == 'a.ordering');
-					$canCreate  = $user->authorise('core.create', 'PubDB');
-					$canEdit    = $user->authorise('core.edit', 'PubDB');
-					$canCheckin = $user->authorise('core.manage', 'PubDB');
-					$canChange  = $user->authorise('core.edit.state', 'PubDB');
+					$canCreate  = $user->authorise('core.create', 'com_pubdb');
+					$canEdit    = $user->authorise('core.edit', 'com_pubdb');
+					$canCheckin = $user->authorise('core.manage', 'com_pubdb');
+					$canChange  = $user->authorise('core.edit.state', 'com_pubdb');
 					?>
 					<tr class="row<?php echo $i % 2; ?>">
 
@@ -146,7 +146,7 @@ $sortFields = $this->getSortFields();
 					<?php echo JHtml::_('jgrid.checkedout', $i, $item->uEditor, $item->checked_out_time, 'periodicals.', $canCheckin); ?>
 				<?php endif; ?>
 				<?php if ($canEdit) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=PubDB&task=periodical.edit&id='.(int) $item->id); ?>">
+					<a href="<?php echo JRoute::_('index.php?option=com_pubdb&task=periodical.edit&id='.(int) $item->id); ?>">
 					<?php echo $this->escape($item->issn); ?></a>
 				<?php else : ?>
 					<?php echo $this->escape($item->issn); ?>

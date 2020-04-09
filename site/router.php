@@ -10,7 +10,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-JLoader::registerPrefix('Pubdb', JPATH_SITE . '/components/PubDB/');
+JLoader::registerPrefix('Pubdb', JPATH_SITE . '/components/com_pubdb/');
 
 /**
  * Class PubdbRouter

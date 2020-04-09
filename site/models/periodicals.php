@@ -136,7 +136,7 @@ class PubdbModelPeriodicals extends \Joomla\CMS\MVC\Model\ListModel
                         )
                 );
 
-            $query->from('`#__pubdb_periodical` AS a');
+            $query->from('`#__pubdb_series_title` AS a');
             
 		// Join over the users for the checked out user.
 		$query->select('uc.name AS uEditor');
@@ -148,7 +148,7 @@ class PubdbModelPeriodicals extends \Joomla\CMS\MVC\Model\ListModel
 		// Join over the created by field 'modified_by'
 		$query->join('LEFT', '#__users AS modified_by ON modified_by.id = a.modified_by');
             
-		if (!Factory::getUser()->authorise('core.edit', 'PubDB'))
+		if (!Factory::getUser()->authorise('core.edit', 'com_pubdb'))
 		{
 			$query->where('a.state = 1');
 		}

@@ -34,7 +34,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @var   	string  	Alias to manage history control
 	 * @since   3.2
 	 */
-	public $typeAlias = 'PubDB.literature';
+	public $typeAlias = 'com_pubdb.literature';
 
 	/**
 	 * @var null  Item data
@@ -82,7 +82,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 
             // Get the form.
             $form = $this->loadForm(
-                    'PubDB.literature', 'literature',
+                    'com_pubdb.literature', 'literature',
                     array('control' => 'jform',
                             'load_data' => $loadData
                     )
@@ -110,7 +110,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('PubDB.edit.literature.data', array());
+		$data = Factory::getApplication()->getUserState('com_pubdb.edit.literature.data', array());
 
 		if (empty($data))
 		{
@@ -161,7 +161,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 		$user = Factory::getUser();
 
 		// Access checks.
-		if (!$user->authorise('core.create', 'PubDB'))
+		if (!$user->authorise('core.create', 'com_pubdb'))
 		{
 			throw new Exception(Text::_('JERROR_CORE_CREATE_NOT_PERMITTED'));
 		}
@@ -197,6 +197,18 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 				else
 				{
 					$table->periodical_id = '';
+				}
+
+				if (!empty($table->series_title_id))
+				{
+					if (is_array($table->series_title_id))
+					{
+						$table->series_title_id = implode(',', $table->series_title_id);
+					}
+				}
+				else
+				{
+					$table->series_title_id = '';
 				}
 
 

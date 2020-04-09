@@ -31,7 +31,7 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 	 */
 	public function __construct(&$db)
 	{
-		JObserverMapper::addObserverClassToClass('JTableObserverContenthistory', 'PubdbTableliterature', array('typeAlias' => 'PubDB.literature'));
+		JObserverMapper::addObserverClassToClass('JTableObserverContenthistory', 'PubdbTableliterature', array('typeAlias' => 'com_pubdb.literature'));
 		parent::__construct('#__pubdb_literature', 'id', $db);
         $this->setColumnAlias('published', 'state');
     }
@@ -97,6 +97,20 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 				$array['periodical_id'] = '';
 			}
 
+		// Support for multiple or not foreign key field: series_title_id
+			if(!empty($array['series_title_id']))
+			{
+				if(is_array($array['series_title_id'])){
+					$array['series_title_id'] = implode(',',$array['series_title_id']);
+				}
+				else if(strrpos($array['series_title_id'], ',') != false){
+					$array['series_title_id'] = explode(',',$array['series_title_id']);
+				}
+			}
+			else {
+				$array['series_title_id'] = '';
+			}
+
 		if (isset($array['params']) && is_array($array['params']))
 		{
 			$registry = new JRegistry;
@@ -111,13 +125,13 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 			$array['metadata'] = (string) $registry;
 		}
 
-		if (!Factory::getUser()->authorise('core.admin', 'PubDB.literature.' . $array['id']))
+		if (!Factory::getUser()->authorise('core.admin', 'com_pubdb.literature.' . $array['id']))
 		{
 			$actions         = Access::getActionsFromFile(
-				JPATH_ADMINISTRATOR . '/components/PubDB/access.xml',
+				JPATH_ADMINISTRATOR . '/components/com_pubdb/access.xml',
 				"/access/section[@name='literature']/"
 			);
-			$default_actions = Access::getAssetRules('PubDB.literature.' . $array['id'])->getData();
+			$default_actions = Access::getAssetRules('com_pubdb.literature.' . $array['id'])->getData();
 			$array_jaccess   = array();
 
 			foreach ($actions as $action)
@@ -279,7 +293,7 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 	{
 		$k = $this->_tbl_key;
 
-		return 'PubDB.literature.' . (int) $this->$k;
+		return 'com_pubdb.literature.' . (int) $this->$k;
 	}
 
 	/**
@@ -301,7 +315,7 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 		$assetParentId = $assetParent->getRootId();
 
 		// The item has the component as asset-parent
-		$assetParent->loadByName('PubDB');
+		$assetParent->loadByName('com_pubdb');
 
 		// Return the found asset-parent-id
 		if ($assetParent->id)

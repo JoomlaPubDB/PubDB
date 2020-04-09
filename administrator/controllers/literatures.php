@@ -56,7 +56,7 @@ class PubdbControllerLiteratures extends \Joomla\CMS\MVC\Controller\AdminControl
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'warning');
 		}
 
-		$this->setRedirect('index.php?option=PubDB&view=literatures');
+		$this->setRedirect('index.php?option=com_pubdb&view=literatures');
 	}
 
 	/**

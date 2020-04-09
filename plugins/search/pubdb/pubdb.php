@@ -76,6 +76,93 @@ class PlgSearchPubdb extends \Joomla\CMS\Plugin\CMSPlugin
 		$rows = array();
 
 		
+//Search Literatures.
+if ($limit > 0) {
+    switch ($phrase) {
+        case 'exact':
+            $text = $db->quote('%' . $db->escape($text, true) . '%', false);
+            $wheres2 = array();
+            $wheres2[] = 'a.title LIKE ' . $text;
+$wheres2[] = 'a.subtitle LIKE ' . $text;
+$wheres2[] = 'a.doi LIKE ' . $text;
+$wheres2[] = 'a.isbn LIKE ' . $text;
+$wheres2[] = 'a.eisbn LIKE ' . $text;
+$wheres2[] = 'CONCAT(`pubdb_person`.`first_name`, \' \', `pubdb_person`.`last_name`, \' \', `pubdb_person`.`middle_name`) LIKE ' . $text;
+$wheres2[] = 'CONCAT(`pubdb_person`.`first_name`, \' \', `pubdb_person`.`last_name`, \' \', `pubdb_person`.`middle_name`) LIKE ' . $text;
+$wheres2[] = 'CONCAT(`pubdb_person`.`first_name`, \' \', `pubdb_person`.`last_name`, \' \', `pubdb_person`.`middle_name`) LIKE ' . $text;
+$wheres2[] = '`pubdb_keywords`.`name` LIKE ' . $text;
+            $where = '(' . implode(') OR (', $wheres2) . ')';
+            break;
+
+        case 'all':
+        case 'any':
+        default:
+            $words = explode(' ', $text);
+            $wheres = array();
+
+            foreach ($words as $word) {
+                $word = $db->quote('%' . $db->escape($word, true) . '%', false);
+                $wheres2 = array();
+                $wheres2[] = 'a.title LIKE ' . $word;
+$wheres2[] = 'a.subtitle LIKE ' . $word;
+$wheres2[] = 'a.doi LIKE ' . $word;
+$wheres2[] = 'a.isbn LIKE ' . $word;
+$wheres2[] = 'a.eisbn LIKE ' . $word;
+$wheres2[] = 'CONCAT(`pubdb_person`.`first_name`, \' \', `pubdb_person`.`last_name`, \' \', `pubdb_person`.`middle_name`) LIKE ' . $word;
+$wheres2[] = 'CONCAT(`pubdb_person`.`first_name`, \' \', `pubdb_person`.`last_name`, \' \', `pubdb_person`.`middle_name`) LIKE ' . $word;
+$wheres2[] = 'CONCAT(`pubdb_person`.`first_name`, \' \', `pubdb_person`.`last_name`, \' \', `pubdb_person`.`middle_name`) LIKE ' . $word;
+$wheres2[] = '`pubdb_keywords`.`name` LIKE ' . $word;
+                $wheres[] = implode(' OR ', $wheres2);
+            }
+
+            $where = '(' . implode(($phrase == 'all' ? ') AND (' : ') OR ('), $wheres) . ')';
+            break;
+    }
+
+    switch ($ordering) {
+        default:
+            $order = 'a.id DESC';
+            break;
+    }
+
+    $query = $db->getQuery(true);
+
+    $query
+            ->clear()
+            ->select(
+                    array(
+                        'a.id',
+                        'a.title AS title',
+                        '"" AS created',
+                        'a.title AS text',
+                        '"Literature" AS section',
+                        '1 AS browsernav'
+                    )
+            )
+            ->from('#__pubdb_literature AS a')
+            ->innerJoin('`#__pubdb_person` AS pubdb_person ON pubdb_person.id = a.authors')
+->innerJoin('`#__pubdb_person` AS pubdb_person ON pubdb_person.id = a.translators')
+->innerJoin('`#__pubdb_person` AS pubdb_person ON pubdb_person.id = a.others_involved')
+->innerJoin('`#__pubdb_keywords` AS pubdb_keywords ON pubdb_keywords.id = a.keywords')
+            ->where('(' . $where . ')')
+            ->group('a.id')
+            ->order($order);
+
+    $db->setQuery($query, 0, $limit);
+    $list = $db->loadObjectList();
+    $limit -= count($list);
+
+    if (isset($list)) {
+        foreach ($list as $key => $item) {
+            $list[$key]->href = JRoute::_('index.php?option=com_pubdb&view=literature&id=' . $item->id, false, 2);
+        }
+    }
+
+    $rows = array_merge($list, $rows);
+}
+
+
+
 //Search Buchserien.
 if ($limit > 0) {
     switch ($phrase) {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="filter">
+        <field name="search" type="text" hint="COM_PUBDB_SEARCH_FILTER_SUBMIT"
+               label="COM_USERS_FILTER_SEARCH_DESC"
+               class="js-stools-search-string" />
+
+        <field name="access_date.from" label="COM_PUBDB_LITERATURES_ACCESS_DATE_FILTER_FROM" type="calendar" onchange="this.form.submit();" filter="safehtml" class="inputbox" showtime="false" translateformat="false" hint="COM_PUBDB_LITERATURES_ACCESS_DATE_FILTER_FROM"/>
+<field name="access_date.to" label="COM_PUBDB_LITERATURES_ACCESS_DATE_FILTER_TO" type="calendar" onchange="this.form.submit();" filter="safehtml" class="inputbox" showtime="false" translateformat="false" hint="COM_PUBDB_LITERATURES_ACCESS_DATE_FILTER_TO"/>
+<field name="keywords" type="sql" label="COM_PUBDB_FORM_LBL_LITERATURE_KEYWORDS" query="SELECT '' AS `id`, 'COM_PUBDB_LITERATURES_KEYWORDS_FILTER' AS `val` UNION SELECT `id` AS `id`, `name` AS val FROM `#__pubdb_keywords`" key_field="id" value_field="val" class="inputbox" onchange="this.form.submit()" translate="true"/>
+
+
+    </fields>
+</form>

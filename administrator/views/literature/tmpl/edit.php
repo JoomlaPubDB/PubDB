@@ -2,7 +2,7 @@
 /**
  * @version    CVS: 0.0.1
  * @package    Com_Pubdb
- * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
@@ -44,6 +44,27 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 		}
 	});
 	js("#jform_series_title_id").trigger("liszt:updated");
+	js('input:hidden.authors').each(function(){
+		var name = js(this).attr('name');
+		if(name.indexOf('authorshidden')){
+			js('#jform_authors option[value="'+js(this).val()+'"]').attr('selected',true);
+		}
+	});
+	js("#jform_authors").trigger("liszt:updated");
+	js('input:hidden.translators').each(function(){
+		var name = js(this).attr('name');
+		if(name.indexOf('translatorshidden')){
+			js('#jform_translators option[value="'+js(this).val()+'"]').attr('selected',true);
+		}
+	});
+	js("#jform_translators").trigger("liszt:updated");
+	js('input:hidden.others_involved').each(function(){
+		var name = js(this).attr('name');
+		if(name.indexOf('others_involvedhidden')){
+			js('#jform_others_involved option[value="'+js(this).val()+'"]').attr('selected',true);
+		}
+	});
+	js("#jform_others_involved").trigger("liszt:updated");
 	});
 
 	Joomla.submitbutton = function (task) {
@@ -116,6 +137,36 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 				?>
 				<?php echo $this->form->renderField('eisbn'); ?>
 				<?php echo $this->form->renderField('volume'); ?>
+				<?php echo $this->form->renderField('authors'); ?>
+				<?php
+				foreach((array)$this->item->authors as $value)
+				{
+					if(!is_array($value))
+					{
+						echo '<input type="hidden" class="authors" name="jform[authorshidden]['.$value.']" value="'.$value.'" />';
+					}
+				}
+				?>
+				<?php echo $this->form->renderField('translators'); ?>
+				<?php
+				foreach((array)$this->item->translators as $value)
+				{
+					if(!is_array($value))
+					{
+						echo '<input type="hidden" class="translators" name="jform[translatorshidden]['.$value.']" value="'.$value.'" />';
+					}
+				}
+				?>
+				<?php echo $this->form->renderField('others_involved'); ?>
+				<?php
+				foreach((array)$this->item->others_involved as $value)
+				{
+					if(!is_array($value))
+					{
+						echo '<input type="hidden" class="others_involved" name="jform[others_involvedhidden]['.$value.']" value="'.$value.'" />';
+					}
+				}
+				?>
 				<?php if ($this->state->params->get('save_history', 1)) : ?>
 					<div class="control-group">
 						<div class="control-label"><?php echo $this->form->getLabel('version_note'); ?></div>

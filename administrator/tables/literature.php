@@ -3,7 +3,7 @@
 /**
  * @version    CVS: 0.0.1
  * @package    Com_Pubdb
- * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
@@ -109,6 +109,48 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 			}
 			else {
 				$array['series_title_id'] = '';
+			}
+
+		// Support for multiple or not foreign key field: authors
+			if(!empty($array['authors']))
+			{
+				if(is_array($array['authors'])){
+					$array['authors'] = implode(',',$array['authors']);
+				}
+				else if(strrpos($array['authors'], ',') != false){
+					$array['authors'] = explode(',',$array['authors']);
+				}
+			}
+			else {
+				$array['authors'] = '';
+			}
+
+		// Support for multiple or not foreign key field: translators
+			if(!empty($array['translators']))
+			{
+				if(is_array($array['translators'])){
+					$array['translators'] = implode(',',$array['translators']);
+				}
+				else if(strrpos($array['translators'], ',') != false){
+					$array['translators'] = explode(',',$array['translators']);
+				}
+			}
+			else {
+				$array['translators'] = '';
+			}
+
+		// Support for multiple or not foreign key field: others_involved
+			if(!empty($array['others_involved']))
+			{
+				if(is_array($array['others_involved'])){
+					$array['others_involved'] = implode(',',$array['others_involved']);
+				}
+				else if(strrpos($array['others_involved'], ',') != false){
+					$array['others_involved'] = explode(',',$array['others_involved']);
+				}
+			}
+			else {
+				$array['others_involved'] = '';
 			}
 
 		if (isset($array['params']) && is_array($array['params']))

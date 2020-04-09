@@ -76,6 +76,143 @@ class PlgSearchPubdb extends \Joomla\CMS\Plugin\CMSPlugin
 		$rows = array();
 
 		
+//Search Buchserien.
+if ($limit > 0) {
+    switch ($phrase) {
+        case 'exact':
+            $text = $db->quote('%' . $db->escape($text, true) . '%', false);
+            $wheres2 = array();
+            $wheres2[] = 'CONCAT(`pubdb_person`.`first_name`, \' \', `pubdb_person`.`last_name`, \' \', `pubdb_person`.`middle_name`) LIKE ' . $text;
+            $where = '(' . implode(') OR (', $wheres2) . ')';
+            break;
+
+        case 'all':
+        case 'any':
+        default:
+            $words = explode(' ', $text);
+            $wheres = array();
+
+            foreach ($words as $word) {
+                $word = $db->quote('%' . $db->escape($word, true) . '%', false);
+                $wheres2 = array();
+                $wheres2[] = 'CONCAT(`pubdb_person`.`first_name`, \' \', `pubdb_person`.`last_name`, \' \', `pubdb_person`.`middle_name`) LIKE ' . $word;
+                $wheres[] = implode(' OR ', $wheres2);
+            }
+
+            $where = '(' . implode(($phrase == 'all' ? ') AND (' : ') OR ('), $wheres) . ')';
+            break;
+    }
+
+    switch ($ordering) {
+        default:
+            $order = 'a.id DESC';
+            break;
+    }
+
+    $query = $db->getQuery(true);
+
+    $query
+            ->clear()
+            ->select(
+                    array(
+                        'a.id',
+                        'a.name AS title',
+                        '"" AS created',
+                        'a.name AS text',
+                        '"Buchserie" AS section',
+                        '1 AS browsernav'
+                    )
+            )
+            ->from('#__pubdb_series_title AS a')
+            ->innerJoin('`#__pubdb_person` AS pubdb_person ON pubdb_person.id = a.series_title_editor')
+            ->where('(' . $where . ')')
+            ->group('a.id')
+            ->order($order);
+
+    $db->setQuery($query, 0, $limit);
+    $list = $db->loadObjectList();
+    $limit -= count($list);
+
+    if (isset($list)) {
+        foreach ($list as $key => $item) {
+            $list[$key]->href = JRoute::_('index.php?option=com_pubdb&view=series_title&id=' . $item->id, false, 2);
+        }
+    }
+
+    $rows = array_merge($list, $rows);
+}
+
+
+
+//Search Personen.
+if ($limit > 0) {
+    switch ($phrase) {
+        case 'exact':
+            $text = $db->quote('%' . $db->escape($text, true) . '%', false);
+            $wheres2 = array();
+            $wheres2[] = 'a.first_name LIKE ' . $text;
+$wheres2[] = 'a.last_name LIKE ' . $text;
+$wheres2[] = 'a.middle_name LIKE ' . $text;
+            $where = '(' . implode(') OR (', $wheres2) . ')';
+            break;
+
+        case 'all':
+        case 'any':
+        default:
+            $words = explode(' ', $text);
+            $wheres = array();
+
+            foreach ($words as $word) {
+                $word = $db->quote('%' . $db->escape($word, true) . '%', false);
+                $wheres2 = array();
+                $wheres2[] = 'a.first_name LIKE ' . $word;
+$wheres2[] = 'a.last_name LIKE ' . $word;
+$wheres2[] = 'a.middle_name LIKE ' . $word;
+                $wheres[] = implode(' OR ', $wheres2);
+            }
+
+            $where = '(' . implode(($phrase == 'all' ? ') AND (' : ') OR ('), $wheres) . ')';
+            break;
+    }
+
+    switch ($ordering) {
+        default:
+            $order = 'a.id DESC';
+            break;
+    }
+
+    $query = $db->getQuery(true);
+
+    $query
+            ->clear()
+            ->select(
+                    array(
+                        'a.id',
+                        'a.first_name AS title',
+                        '"" AS created',
+                        'a.first_name AS text',
+                        '"Person" AS section',
+                        '1 AS browsernav'
+                    )
+            )
+            ->from('#__pubdb_person AS a')
+            
+            ->where('(' . $where . ')')
+            ->group('a.id')
+            ->order($order);
+
+    $db->setQuery($query, 0, $limit);
+    $list = $db->loadObjectList();
+    $limit -= count($list);
+
+    if (isset($list)) {
+        foreach ($list as $key => $item) {
+            $list[$key]->href = JRoute::_('index.php?option=com_pubdb&view=person&id=' . $item->id, false, 2);
+        }
+    }
+
+    $rows = array_merge($list, $rows);
+}
 
 		return $rows;
 	}

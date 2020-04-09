@@ -2,7 +2,7 @@
 /**
  * @version    CVS: 0.0.1
  * @package    Com_Pubdb
- * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
@@ -209,6 +209,42 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 				else
 				{
 					$table->series_title_id = '';
+				}
+
+				if (!empty($table->authors))
+				{
+					if (is_array($table->authors))
+					{
+						$table->authors = implode(',', $table->authors);
+					}
+				}
+				else
+				{
+					$table->authors = '';
+				}
+
+				if (!empty($table->translators))
+				{
+					if (is_array($table->translators))
+					{
+						$table->translators = implode(',', $table->translators);
+					}
+				}
+				else
+				{
+					$table->translators = '';
+				}
+
+				if (!empty($table->others_involved))
+				{
+					if (is_array($table->others_involved))
+					{
+						$table->others_involved = implode(',', $table->others_involved);
+					}
+				}
+				else
+				{
+					$table->others_involved = '';
 				}
 
 

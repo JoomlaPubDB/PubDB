@@ -5,7 +5,7 @@
     <copyright>2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</copyright>
     <license>GNU General Public License Version 2 oder später; siehe LICENSE.txt</license>
     <author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
-    <authorEmail>mail@julianpfau.cloud</authorEmail>
+    <authorEmail></authorEmail>
     <authorUrl>http://</authorUrl>
     <version>CVS: 0.0.1</version>
     <description>MOD_PUBDB_DESCRIPTION</description>
@@ -57,6 +57,7 @@
 	<option value="#__pubdb_literature">#__pubdb_literature</option>
 	<option value="#__pubdb_periodical">#__pubdb_periodical</option>
 	<option value="#__pubdb_series_title">#__pubdb_series_title</option>
+	<option value="#__pubdb_person">#__pubdb_person</option>
                 </field>
                 <field 
                     name="field" type="groupedlist" default=""
@@ -84,6 +85,9 @@
 		<option value="#__pubdb_literature:series_title_id">series_title_id</option>
 		<option value="#__pubdb_literature:eisbn">eisbn</option>
 		<option value="#__pubdb_literature:volume">volume</option>
+		<option value="#__pubdb_literature:authors">authors</option>
+		<option value="#__pubdb_literature:translators">translators</option>
+		<option value="#__pubdb_literature:others_involved">others_involved</option>
 	</group>
 	<group label="#__pubdb_periodical">
 		<option value="#__pubdb_periodical:id">id</option>
@@ -98,6 +102,17 @@
 		<option value="#__pubdb_series_title:created_by">created_by</option>
 		<option value="#__pubdb_series_title:modified_by">modified_by</option>
 		<option value="#__pubdb_series_title:name">name</option>
+		<option value="#__pubdb_series_title:series_title_editor">series_title_editor</option>
+	</group>
+	<group label="#__pubdb_person">
+		<option value="#__pubdb_person:id">id</option>
+		<option value="#__pubdb_person:created_by">created_by</option>
+		<option value="#__pubdb_person:modified_by">modified_by</option>
+		<option value="#__pubdb_person:first_name">first_name</option>
+		<option value="#__pubdb_person:last_name">last_name</option>
+		<option value="#__pubdb_person:middle_name">middle_name</option>
+		<option value="#__pubdb_person:sex">sex</option>
+		<option value="#__pubdb_person:title">title</option>
 	</group>
                 </field>
                 <field 
@@ -121,6 +136,7 @@
 	<option value="#__pubdb_literature">#__pubdb_literature</option>
 	<option value="#__pubdb_periodical">#__pubdb_periodical</option>
 	<option value="#__pubdb_series_title">#__pubdb_series_title</option>
+	<option value="#__pubdb_person">#__pubdb_person</option>
                 </field>
                 <field 
                     name="item_id" type="text" filter="uint" class="input-small"

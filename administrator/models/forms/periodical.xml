@@ -13,7 +13,9 @@
     <field name="checked_out_time" default="0000-00-00 00:00:00" type="hidden" filter="unset"/>
     <field name="created_by" type="createdby" default="0" label="COM_PUBDB_FORM_LBL_PERIODICAL_CREATED_BY" description="COM_PUBDB_FORM_DESC_PERIODICAL_CREATED_BY" hidden="true" hint="COM_PUBDB_FORM_LBL_PERIODICAL_CREATED_BY"/>
     <field name="modified_by" type="modifiedby" default="0" label="COM_PUBDB_FORM_LBL_PERIODICAL_MODIFIED_BY" description="COM_PUBDB_FORM_DESC_PERIODICAL_MODIFIED_BY" hidden="true" hint="COM_PUBDB_FORM_LBL_PERIODICAL_MODIFIED_BY"/>
+    <field name="issn" maxlength="9" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_PERIODICAL_ISSN" description="COM_PUBDB_FORM_DESC_PERIODICAL_ISSN" hint="COM_PUBDB_FORM_LBL_PERIODICAL_ISSN"/>
     <field name="name" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_PERIODICAL_NAME" description="COM_PUBDB_FORM_DESC_PERIODICAL_NAME" hint="COM_PUBDB_FORM_LBL_PERIODICAL_NAME"/>
+    <field name="eissn" maxlength="9" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_PERIODICAL_EISSN" description="COM_PUBDB_FORM_DESC_PERIODICAL_EISSN" hint="COM_PUBDB_FORM_LBL_PERIODICAL_EISSN"/>
     <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
   </fieldset>
 </form>

@@ -4,7 +4,7 @@
  * @version     CVS: 0.0.1
  * @package     com_pubdb
  * @subpackage  mod_pubdb
- * @author      Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @author      Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright   2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @license     GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
@@ -163,6 +163,15 @@ class ModPubdbHelper
 		case 'volume':
 		$result = $field_value;
 		break;
+		case 'authors':
+		$result = self::loadValueFromExternalTable('#__pubdb_person', 'id', '', $field_value);
+		break;
+		case 'translators':
+		$result = self::loadValueFromExternalTable('#__pubdb_person', 'id', '', $field_value);
+		break;
+		case 'others_involved':
+		$result = self::loadValueFromExternalTable('#__pubdb_person', 'id', '', $field_value);
+		break;
 		}
 		break;
 		case '#__pubdb_periodical':
@@ -203,6 +212,39 @@ class ModPubdbHelper
 		$result = $user->name;
 		break;
 		case 'name':
+		$result = $field_value;
+		break;
+		case 'series_title_editor':
+		$result = self::loadValueFromExternalTable('#__pubdb_person', 'id', '', $field_value);
+		break;
+		}
+		break;
+		case '#__pubdb_person':
+		switch($field_name){
+		case 'id':
+		$result = $field_value;
+		break;
+		case 'created_by':
+		$user = JFactory::getUser($field_value);
+		$result = $user->name;
+		break;
+		case 'modified_by':
+		$user = JFactory::getUser($field_value);
+		$result = $user->name;
+		break;
+		case 'first_name':
+		$result = $field_value;
+		break;
+		case 'last_name':
+		$result = $field_value;
+		break;
+		case 'middle_name':
+		$result = $field_value;
+		break;
+		case 'sex':
+		$result = $field_value;
+		break;
+		case 'title':
 		$result = $field_value;
 		break;
 		}

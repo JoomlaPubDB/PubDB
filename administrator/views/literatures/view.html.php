@@ -3,7 +3,7 @@
 /**
  * @version    CVS: 0.0.1
  * @package    Com_Pubdb
- * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
@@ -161,6 +161,7 @@ class PubdbViewLiteratures extends \Joomla\CMS\MVC\View\HtmlView
 			'a.`language`' => JText::_('JGRID_HEADING_LANGUAGE'),
 			'a.`doi`' => JText::_('COM_PUBDB_LITERATURES_DOI'),
 			'a.`isbn`' => JText::_('COM_PUBDB_LITERATURES_ISBN'),
+			'a.`authors`' => JText::_('COM_PUBDB_LITERATURES_AUTHORS'),
 		);
 	}
 

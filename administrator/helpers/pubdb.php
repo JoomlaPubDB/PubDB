@@ -3,7 +3,7 @@
 /**
  * @version    CVS: 0.0.1
  * @package    Com_Pubdb
- * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
@@ -41,9 +41,15 @@ JHtmlSidebar::addEntry(
 		);
 
 JHtmlSidebar::addEntry(
-			JText::_('COM_PUBDB_TITLE_PERIODICALS'),
-			'index.php?option=com_pubdb&view=periodicals',
-			$vName == 'periodicals'
+			JText::_('COM_PUBDB_TITLE_SERIES_TITLES'),
+			'index.php?option=com_pubdb&view=series_titles',
+			$vName == 'series_titles'
+		);
+
+JHtmlSidebar::addEntry(
+			JText::_('COM_PUBDB_TITLE_PEOPLE'),
+			'index.php?option=com_pubdb&view=people',
+			$vName == 'people'
 		);
 
 	}

@@ -5,7 +5,7 @@
     <copyright>2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</copyright>
     <license>GNU General Public License Version 2 oder später; siehe LICENSE.txt</license>
     <author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
-    <authorEmail>mail@julianpfau.cloud</authorEmail>
+    <authorEmail></authorEmail>
     <authorUrl>http://</authorUrl>
     <version>CVS: 0.0.1</version>
     <description>COM_PUBDB_XML_DESCRIPTION</description>
@@ -54,7 +54,9 @@
 
 			<menu link="option=com_pubdb&amp;view=periodicals" view="periodicals" alt="Pubdb/Periodicals">COM_PUBDB_TITLE_PERIODICALS</menu>
 
-			<menu link="option=com_pubdb&amp;view=periodicals" view="periodicals" alt="Pubdb/Periodicals">COM_PUBDB_TITLE_PERIODICALS</menu>
+			<menu link="option=com_pubdb&amp;view=series_titles" view="series_titles" alt="Pubdb/Series_titles">COM_PUBDB_TITLE_SERIES_TITLES</menu>
+
+			<menu link="option=com_pubdb&amp;view=people" view="people" alt="Pubdb/People">COM_PUBDB_TITLE_PEOPLE</menu>
 
         </submenu>
         <files folder="administrator">
@@ -91,3 +93,5 @@
 		<module module="mod_pubdb" />
 	</modules>
 </extension>
+***REMOVED***
+***REMOVED***

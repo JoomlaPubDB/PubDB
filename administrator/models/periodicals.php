@@ -3,7 +3,7 @@
 /**
  * @version    CVS: 0.0.1
  * @package    Com_Pubdb
- * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
@@ -124,7 +124,7 @@ class PubdbModelPeriodicals extends \Joomla\CMS\MVC\Model\ListModel
 				'list.select', 'DISTINCT a.*'
 			)
 		);
-		$query->from('`#__pubdb_series_title` AS a');
+		$query->from('`#__pubdb_periodical` AS a');
                 
 		// Join over the users for the checked out user
 		$query->select("uc.name AS uEditor");

@@ -3,7 +3,7 @@
 /**
  * @version    CVS: 0.0.1
  * @package    Com_Pubdb
- * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
@@ -56,6 +56,9 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 				'series_title_id', 'a.`series_title_id`',
 				'eisbn', 'a.`eisbn`',
 				'volume', 'a.`volume`',
+				'authors', 'a.`authors`',
+				'translators', 'a.`translators`',
+				'others_involved', 'a.`others_involved`',
 			);
 		}
 
@@ -156,8 +159,17 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 		$query->select('CONCAT(`#__pubdb_periodical_3418585`.`issn`, \' \', `#__pubdb_periodical_3418585`.`name`) AS periodicals_fk_value_3418585');
 		$query->join('LEFT', '#__pubdb_periodical AS #__pubdb_periodical_3418585 ON #__pubdb_periodical_3418585.`id` = a.`periodical_id`');
 		// Join over the foreign key 'series_title_id'
-		$query->select('`#__pubdb_series_title_3418632`.`name` AS periodicals_fk_value_3418632');
+		$query->select('`#__pubdb_series_title_3418632`.`name` AS series_titles_fk_value_3418632');
 		$query->join('LEFT', '#__pubdb_series_title AS #__pubdb_series_title_3418632 ON #__pubdb_series_title_3418632.`id` = a.`series_title_id`');
+		// Join over the foreign key 'authors'
+		$query->select('CONCAT(`#__pubdb_person_3418647`.`first_name`, \' \', `#__pubdb_person_3418647`.`last_name`, \' \', `#__pubdb_person_3418647`.`middle_name`) AS people_fk_value_3418647');
+		$query->join('LEFT', '#__pubdb_person AS #__pubdb_person_3418647 ON #__pubdb_person_3418647.`id` = a.`authors`');
+		// Join over the foreign key 'translators'
+		$query->select('CONCAT(`#__pubdb_person_3418648`.`first_name`, \' \', `#__pubdb_person_3418648`.`last_name`, \' \', `#__pubdb_person_3418648`.`middle_name`) AS people_fk_value_3418648');
+		$query->join('LEFT', '#__pubdb_person AS #__pubdb_person_3418648 ON #__pubdb_person_3418648.`id` = a.`translators`');
+		// Join over the foreign key 'others_involved'
+		$query->select('CONCAT(`#__pubdb_person_3418649`.`first_name`, \' \', `#__pubdb_person_3418649`.`last_name`, \' \', `#__pubdb_person_3418649`.`middle_name`) AS people_fk_value_3418649');
+		$query->join('LEFT', '#__pubdb_person AS #__pubdb_person_3418649 ON #__pubdb_person_3418649.`id` = a.`others_involved`');
                 
 
 		// Filter by published state
@@ -184,7 +196,7 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 			else
 			{
 				$search = $db->Quote('%' . $db->escape($search, true) . '%');
-				$query->where('( a.title LIKE ' . $search . '  OR  a.subtitle LIKE ' . $search . '  OR  a.doi LIKE ' . $search . '  OR  a.isbn LIKE ' . $search . '  OR  a.eisbn LIKE ' . $search . ' )');
+				$query->where('( a.title LIKE ' . $search . '  OR  a.subtitle LIKE ' . $search . '  OR  a.doi LIKE ' . $search . '  OR  a.isbn LIKE ' . $search . '  OR  a.eisbn LIKE ' . $search . '  OR CONCAT(`#__pubdb_person_3418647`.`first_name`, \' \', `#__pubdb_person_3418647`.`last_name`, \' \', `#__pubdb_person_3418647`.`middle_name`) LIKE ' . $search . '  OR CONCAT(`#__pubdb_person_3418648`.`first_name`, \' \', `#__pubdb_person_3418648`.`last_name`, \' \', `#__pubdb_person_3418648`.`middle_name`) LIKE ' . $search . '  OR CONCAT(`#__pubdb_person_3418649`.`first_name`, \' \', `#__pubdb_person_3418649`.`last_name`, \' \', `#__pubdb_person_3418649`.`middle_name`) LIKE ' . $search . ' )');
 			}
 		}
                 
@@ -226,6 +238,32 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 		foreach ($items as $oneItem)
 		{
 					$oneItem->reference_type = ($oneItem->reference_type == '') ? '' : JText::_('COM_PUBDB_LITERATURES_REFERENCE_TYPE_OPTION_' . strtoupper($oneItem->reference_type));
+
+			if (isset($oneItem->authors))
+			{
+				$values    = explode(',', $oneItem->authors);
+				$textValue = array();
+
+				foreach ($values as $value)
+				{
+					$db    = JFactory::getDbo();
+					$query = $db->getQuery(true);
+					$query
+						->select('CONCAT(`#__pubdb_person_3418647`.`first_name`, \' \', `#__pubdb_person_3418647`.`last_name`, \' \', `#__pubdb_person_3418647`.`middle_name`) AS `fk_value`')
+						->from($db->quoteName('#__pubdb_person', '#__pubdb_person_3418647'))
+						->where($db->quoteName('#__pubdb_person_3418647.id') . ' = '. $db->quote($db->escape($value)));
+
+					$db->setQuery($query);
+					$results = $db->loadObject();
+
+					if ($results)
+					{
+						$textValue[] = $results->fk_value;
+					}
+				}
+
+				$oneItem->authors = !empty($textValue) ? implode(', ', $textValue) : $oneItem->authors;
+			}
 		}
 
 		return $items;

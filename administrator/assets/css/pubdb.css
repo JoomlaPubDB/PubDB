@@ -1,0 +1,31 @@
+.icon-48-literatures {
+      background-image: url(../images/l_literatures.png);
+      padding-left:60px!important;
+}
+
+.icon-48-literature {
+      background-image: url(../images/l_literatures.png);
+      padding-left:60px!important;
+}
+
+.color-box-literatures { 
+      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+
+.icon-48-periodicals {
+      background-image: url(../images/l_periodicals.png);
+      padding-left:60px!important;
+}
+
+.icon-48-periodical {
+      background-image: url(../images/l_periodicals.png);
+      padding-left:60px!important;
+}
+
+.color-box-periodicals { 
+      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+
+
+
+.other-filters{
+    padding: 0 14px;
+}

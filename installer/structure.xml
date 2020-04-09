@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<component>
+  <table action="add" table_name="#__pubdb_periodical" storage_engine="" collation="utf8mb4_unicode_ci">
+    <field field_name="id" field_type="INT" field_length="11" is_autoincrement="1" index="primary" description=""/>
+    <field field_name="ordering" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="state" field_type="TINYINT" field_length="1" index="index" description=""/>
+    <field field_name="checked_out" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="checked_out_time" field_type="DATETIME" description=""/>
+    <field field_name="created_by" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="modified_by" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="issn" field_type="VARCHAR" field_length="9" description="Die Internationale Standardnummer f&#xFC;r fortlaufende Sammelwerke (ISSN) des Magazins"/>
+    <field field_name="name" field_type="VARCHAR" field_length="255" description="Der Name des Magazins"/>
+    <field action="change" field_name="eissn" field_type="VARCHAR" field_length="9" description="Die Internationale elektronische Standardnummer f&#xFC;r fortlaufende Sammelwerke (ISSN) des Magazins"/>
+  </table>
+  <table action="add" table_name="#__pubdb_literature" storage_engine="" collation="utf8mb4_unicode_ci">
+    <field field_name="id" field_type="INT" field_length="11" is_autoincrement="1" index="primary" description=""/>
+    <field field_name="ordering" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="state" field_type="TINYINT" field_length="1" index="index" description=""/>
+    <field field_name="checked_out" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="checked_out_time" field_type="DATETIME" description=""/>
+    <field field_name="created_by" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="modified_by" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="title" field_type="VARCHAR" field_length="255" description="Haupttitel der Literatur"/>
+    <field field_name="subtitle" field_type="VARCHAR" field_length="255" description="Untertitel der Literatur"/>
+    <field field_name="published_on" field_type="DATETIME" description="Datum der Ver&#xF6;ffentlichung"/>
+    <field action="change" field_name="reference_type" field_type="VARCHAR" field_length="255" description="Art der Literatur z.B Fachliteratur, Online Quelle ..."/>
+    <field field_name="access_date" field_type="DATETIME" description="Tag des Abrufs"/>
+    <field field_name="language" field_type="VARCHAR" field_length="5" description="Sprache der Literatur"/>
+    <field field_name="doi" field_type="VARCHAR" field_length="255" description="Der Digitaler Objektbezeichner (DOI) f&#xFC;r die Literatur"/>
+    <field action="change" field_name="isbn" field_type="VARCHAR" field_length="13" description="Die International Standard Book Number (ISBN) f&#xFC;r die Literatur"/>
+    <field field_name="online_addess" field_type="VARCHAR" field_length="255" description="Die Online Adresse der Literatur"/>
+    <field field_name="page_count" field_type="INT" field_length="11" description="Die Anzahl an betrachteten Seiten"/>
+    <field field_name="page_range" field_type="VARCHAR" field_length="255" description="Der Seitenumfang aus der Literatur"/>
+    <field action="change" field_name="periodical_id" field_type="INT" field_length="11" description="Das Magazin aus dem die Ausgabe kommt"/>
+  </table>
+</component>

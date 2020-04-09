@@ -1,0 +1,38 @@
+/**
+ * @version     CVS: 0.0.1
+ * @package     PubDB
+ * @subpackage  mod_pubdb
+ * @copyright   2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ * @license     GNU General Public License Version 2 oder später; siehe LICENSE.txt
+ * @author      Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
+ */
+
+.field_name{
+    width: 16.66666666666667%;
+    display: inline-block;
+    float: left;
+}
+
+.field_value{
+    width: 83.33333333333333%;
+    display: inline-block;
+    float:left;
+}
+
+.table{
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.table tr{
+    border: none;
+}
+
+.table td, .table th{
+    padding: 8px;
+    line-height: 18px;
+    text-align: left;
+    vertical-align: top;
+    border: none;
+    border-top: 1px solid #ddd;
+}

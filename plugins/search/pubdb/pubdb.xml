@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="plugin" group="search">
+    <name>plg_search_pubdb</name>
+    <author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
+    <creationDate>2020-04-09</creationDate>
+    <copyright>2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</copyright>
+    <license>GNU General Public License Version 2 oder später; siehe LICENSE.txt</license>
+    <authorEmail>mail@julianpfau.cloud</authorEmail>
+    <authorUrl>http://</authorUrl>
+    <version>CVS: 0.0.1</version>
+    <description>PLG_SEARCH_COM_PUBDB_XML_DESCRIPTION</description>
+    <files>
+        <filename plugin="pubdb">pubdb.php</filename>
+        <filename>index.html</filename>
+    </files>
+    <languages folder="languages">
+        
+			<language tag="de-DE">de-DE/de-DE.plg_search_pubdb.ini</language>
+			<language tag="de-DE">de-DE/de-DE.plg_search_pubdb.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+
+            <fieldset name="basic">
+                <field name="search_limit" type="text" default="50" size="5"
+                       description="PLG_SEARCH_COM_PUBDB_FIELD_SEARCHLIMIT_DESC"
+                       label="PLG_SEARCH_COM_PUBDB_FIELD_SEARCHLIMIT_LABEL" />
+            </fieldset>
+
+        </fields>
+    </config>
+</extension>

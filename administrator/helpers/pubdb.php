@@ -64,6 +64,12 @@ JHtmlSidebar::addEntry(
 			$vName == 'keywords'
 		);
 
+JHtmlSidebar::addEntry(
+			JText::_('COM_PUBDB_TITLE_CITATIONSTYLES'),
+			'index.php?option=com_pubdb&view=citationstyles',
+			$vName == 'citationstyles'
+		);
+
 	}
 
 	/**

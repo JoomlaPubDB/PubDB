@@ -62,6 +62,8 @@
 
 			<menu link="option=com_pubdb&amp;view=keywords" view="keywords" alt="Pubdb/Keywords">COM_PUBDB_TITLE_KEYWORDS</menu>
 
+			<menu link="option=com_pubdb&amp;view=citationstyles" view="citationstyles" alt="Pubdb/Citationstyles">COM_PUBDB_TITLE_CITATIONSTYLES</menu>
+
         </submenu>
         <files folder="administrator">
             <filename>access.xml</filename>

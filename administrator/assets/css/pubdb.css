@@ -76,6 +76,19 @@
 .color-box-keywords { 
       float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
 
+.icon-48-citationstyles {
+      background-image: url(../images/l_citationstyles.png);
+      padding-left:60px!important;
+}
+
+.icon-48-citationstyle {
+      background-image: url(../images/l_citationstyles.png);
+      padding-left:60px!important;
+}
+
+.color-box-citationstyles { 
+      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+
 
 
 .other-filters{

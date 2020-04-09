@@ -291,6 +291,27 @@ class ModPubdbHelper
 		break;
 		}
 		break;
+		case '#__pubdb_citation_style':
+		switch($field_name){
+		case 'id':
+		$result = $field_value;
+		break;
+		case 'created_by':
+		$user = JFactory::getUser($field_value);
+		$result = $user->name;
+		break;
+		case 'modified_by':
+		$user = JFactory::getUser($field_value);
+		$result = $user->name;
+		break;
+		case 'name':
+		$result = $field_value;
+		break;
+		case 'string':
+		$result = $field_value;
+		break;
+		}
+		break;
 		}
 
 		return $result;

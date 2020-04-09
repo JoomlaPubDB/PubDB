@@ -60,6 +60,7 @@
 	<option value="#__pubdb_person">#__pubdb_person</option>
 	<option value="#__pubdb_publisher">#__pubdb_publisher</option>
 	<option value="#__pubdb_keywords">#__pubdb_keywords</option>
+	<option value="#__pubdb_citation_style">#__pubdb_citation_style</option>
                 </field>
                 <field 
                     name="field" type="groupedlist" default=""
@@ -130,6 +131,13 @@
 		<option value="#__pubdb_keywords:modified_by">modified_by</option>
 		<option value="#__pubdb_keywords:name">name</option>
 	</group>
+	<group label="#__pubdb_citation_style">
+		<option value="#__pubdb_citation_style:id">id</option>
+		<option value="#__pubdb_citation_style:created_by">created_by</option>
+		<option value="#__pubdb_citation_style:modified_by">modified_by</option>
+		<option value="#__pubdb_citation_style:name">name</option>
+		<option value="#__pubdb_citation_style:string">string</option>
+	</group>
                 </field>
                 <field 
                     name="offset" type="text" default="0" filter="uint" class="input-small"
@@ -155,6 +163,7 @@
 	<option value="#__pubdb_person">#__pubdb_person</option>
 	<option value="#__pubdb_publisher">#__pubdb_publisher</option>
 	<option value="#__pubdb_keywords">#__pubdb_keywords</option>
+	<option value="#__pubdb_citation_style">#__pubdb_citation_style</option>
                 </field>
                 <field 
                     name="item_id" type="text" filter="uint" class="input-small"

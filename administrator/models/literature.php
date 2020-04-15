@@ -1,6 +1,6 @@
 <?php
 /**
- * @version    CVS: 0.0.1
+ * @version    CVS: 0.0.3
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -187,6 +187,18 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\AdminModel
 					throw new Exception($table->getError());
 				}
 				
+				if (!empty($table->reference_type))
+				{
+					if (is_array($table->reference_type))
+					{
+						$table->reference_type = implode(',', $table->reference_type);
+					}
+				}
+				else
+				{
+					$table->reference_type = '';
+				}
+
 				if (!empty($table->periodical_id))
 				{
 					if (is_array($table->periodical_id))

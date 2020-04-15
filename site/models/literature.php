@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version    CVS: 0.0.1
+ * @version    CVS: 0.0.3
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -134,7 +134,40 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\ItemModel
 		{
 			$this->_item->modified_by_name = JFactory::getUser($this->_item->modified_by)->name;
 		}
-					$this->_item->reference_type = JText::_('COM_PUBDB_LITERATURES_REFERENCE_TYPE_OPTION_' . $this->_item->reference_type);
+
+		if (isset($this->_item->reference_type) && $this->_item->reference_type != '')
+		{
+			if (is_object($this->_item->reference_type))
+			{
+				$this->_item->reference_type = ArrayHelper::fromObject($this->_item->reference_type);
+			}
+
+			$values = (is_array($this->_item->reference_type)) ? $this->_item->reference_type : explode(',',$this->_item->reference_type);
+
+			$textValue = array();
+
+			foreach ($values as $value)
+			{
+				$db    = JFactory::getDbo();
+				$query = $db->getQuery(true);
+
+				$query
+					->select('`#__pubdb_reference_types_3418098`.`name`')
+					->from($db->quoteName('#__pubdb_reference_types', '#__pubdb_reference_types_3418098'))
+					->where($db->quoteName('id') . ' = ' . $db->quote($value));
+
+				$db->setQuery($query);
+				$results = $db->loadObject();
+
+				if ($results)
+				{
+					$textValue[] = $results->name;
+				}
+			}
+
+			$this->_item->reference_type = !empty($textValue) ? implode(', ', $textValue) : $this->_item->reference_type;
+
+		}
 
 		if (isset($this->_item->periodical_id) && $this->_item->periodical_id != '')
 		{

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version     CVS: 0.0.1
+ * @version     CVS: 0.0.3
  * @package     com_pubdb
  * @subpackage  mod_pubdb
  * @author      Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
@@ -112,6 +112,15 @@ class ModPubdbHelper
 		$user = JFactory::getUser($field_value);
 		$result = $user->name;
 		break;
+		case 'year':
+		$result = $field_value;
+		break;
+		case 'month':
+		$result = $field_value;
+		break;
+		case 'day':
+		$result = $field_value;
+		break;
 		case 'title':
 		$result = $field_value;
 		break;
@@ -122,7 +131,7 @@ class ModPubdbHelper
 		$result = $field_value;
 		break;
 		case 'reference_type':
-		$result = $field_value;
+		$result = self::loadValueFromExternalTable('#__pubdb_reference_types', 'id', 'name', $field_value);
 		break;
 		case 'access_date':
 		$result = $field_value;
@@ -238,6 +247,9 @@ class ModPubdbHelper
 		$user = JFactory::getUser($field_value);
 		$result = $user->name;
 		break;
+		case 'first_name_initial':
+		$result = $field_value;
+		break;
 		case 'first_name':
 		$result = $field_value;
 		break;
@@ -308,6 +320,48 @@ class ModPubdbHelper
 		$result = $field_value;
 		break;
 		case 'string':
+		$result = $field_value;
+		break;
+		}
+		break;
+		case '#__pubdb_reference_types':
+		switch($field_name){
+		case 'id':
+		$result = $field_value;
+		break;
+		case 'created_by':
+		$user = JFactory::getUser($field_value);
+		$result = $user->name;
+		break;
+		case 'modified_by':
+		$user = JFactory::getUser($field_value);
+		$result = $user->name;
+		break;
+		case 'name':
+		$result = $field_value;
+		break;
+		}
+		break;
+		case '#__pubdb_blocks':
+		switch($field_name){
+		case 'id':
+		$result = $field_value;
+		break;
+		case 'created_by':
+		$user = JFactory::getUser($field_value);
+		$result = $user->name;
+		break;
+		case 'modified_by':
+		$user = JFactory::getUser($field_value);
+		$result = $user->name;
+		break;
+		case 'prefix':
+		$result = $field_value;
+		break;
+		case 'name':
+		$result = $field_value;
+		break;
+		case 'suffix':
 		$result = $field_value;
 		break;
 		}

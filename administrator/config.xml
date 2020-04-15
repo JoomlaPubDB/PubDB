@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <fieldset label="COM_PUBDB" name="pubdb">
-        
+        <field name="default_citation_style" query="SELECT * FROM #__pubdb_citation_style" key_field="id" value_field="name" type="sql" label="COM_PUBDB_FORM_LBL_DEFAULT_CITATION_STYLE" description="COM_PUBDB_FORM_DESC_DEFAULT_CITATION_STYLE" hint="COM_PUBDB_FORM_LBL_DEFAULT_CITATION_STYLE"/>
+
     </fieldset>
 
     <fieldset name="permissions" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">

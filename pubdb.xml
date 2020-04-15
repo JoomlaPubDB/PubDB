@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.0" method="upgrade">
     <name>com_pubdb</name>
-    <creationDate>2020-04-09</creationDate>
+    <creationDate>2020-04-15</creationDate>
     <copyright>2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</copyright>
     <license>GNU General Public License Version 2 oder später; siehe LICENSE.txt</license>
     <author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
     <authorEmail></authorEmail>
-    <authorUrl>http://</authorUrl>
-    <version>CVS: 0.0.1</version>
+    <authorUrl></authorUrl>
+    <version>CVS: 0.0.3</version>
     <description>COM_PUBDB_XML_DESCRIPTION</description>
-    
+
     <scriptfile>script.php</scriptfile>
-    
+
     <install> <!-- Runs on install -->
         <sql>
             <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
@@ -43,13 +43,13 @@
         <folder>css</folder>
     </media>
     <languages folder="site/languages">
-        
+
 			<language tag="de-DE">de-DE/de-DE.com_pubdb.ini</language>
     </languages>
     <administration>
         <menu>COM_PUBDB</menu>
         <submenu>
-            
+
 			<menu link="option=com_pubdb&amp;view=literatures" view="literatures" alt="Pubdb/Literatures">COM_PUBDB_TITLE_LITERATURES</menu>
 
 			<menu link="option=com_pubdb&amp;view=periodicals" view="periodicals" alt="Pubdb/Periodicals">COM_PUBDB_TITLE_PERIODICALS</menu>
@@ -63,6 +63,10 @@
 			<menu link="option=com_pubdb&amp;view=keywords" view="keywords" alt="Pubdb/Keywords">COM_PUBDB_TITLE_KEYWORDS</menu>
 
 			<menu link="option=com_pubdb&amp;view=citationstyles" view="citationstyles" alt="Pubdb/Citationstyles">COM_PUBDB_TITLE_CITATIONSTYLES</menu>
+
+			<menu link="option=com_pubdb&amp;view=referencetypes" view="referencetypes" alt="Pubdb/Referencetypes">COM_PUBDB_TITLE_REFERENCETYPES</menu>
+
+			<menu link="option=com_pubdb&amp;view=blocks" view="blocks" alt="Pubdb/Blocks">COM_PUBDB_TITLE_BLOCKS</menu>
 
         </submenu>
         <files folder="administrator">
@@ -80,7 +84,7 @@
             <folder>views</folder>
         </files>
         <languages folder="administrator/languages">
-            
+
 			<language tag="de-DE">de-DE/de-DE.com_pubdb.ini</language>
 			<language tag="de-DE">de-DE/de-DE.com_pubdb.sys.ini</language>
         </languages>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version    CVS: 0.0.1
+ * @version    CVS: 0.0.3
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -30,6 +30,13 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 	js = jQuery.noConflict();
 	js(document).ready(function () {
 		
+	js('input:hidden.reference_type').each(function(){
+		var name = js(this).attr('name');
+		if(name.indexOf('reference_typehidden')){
+			js('#jform_reference_type option[value="'+js(this).val()+'"]').attr('selected',true);
+		}
+	});
+	js("#jform_reference_type").trigger("liszt:updated");
 	js('input:hidden.periodical_id').each(function(){
 		var name = js(this).attr('name');
 		if(name.indexOf('periodical_idhidden')){
@@ -110,6 +117,9 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 	<input type="hidden" name="jform[checked_out_time]" value="<?php echo $this->item->checked_out_time; ?>" />
 	<?php echo $this->form->renderField('created_by'); ?>
 	<?php echo $this->form->renderField('modified_by'); ?>
+	<input type="hidden" name="jform[year]" value="<?php echo $this->item->year; ?>" />
+	<input type="hidden" name="jform[month]" value="<?php echo $this->item->month; ?>" />
+	<input type="hidden" name="jform[day]" value="<?php echo $this->item->day; ?>" />
 	<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'literature')); ?>
 	<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'literature', JText::_('COM_PUBDB_TAB_LITERATURE', true)); ?>
 	<div class="row-fluid">
@@ -120,6 +130,15 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 				<?php echo $this->form->renderField('subtitle'); ?>
 				<?php echo $this->form->renderField('published_on'); ?>
 				<?php echo $this->form->renderField('reference_type'); ?>
+				<?php
+				foreach((array)$this->item->reference_type as $value)
+				{
+					if(!is_array($value))
+					{
+						echo '<input type="hidden" class="reference_type" name="jform[reference_typehidden]['.$value.']" value="'.$value.'" />';
+					}
+				}
+				?>
 				<?php echo $this->form->renderField('access_date'); ?>
 				<?php echo $this->form->renderField('language'); ?>
 				<?php echo $this->form->renderField('doi'); ?>

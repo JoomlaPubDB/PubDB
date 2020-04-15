@@ -24,12 +24,6 @@ class PubdbLiteraturesHelper
 {
   /**
    * Public entrypoint for class usage
-   *
-   * @since  0.0.1
-   */
-
-  /**
-   * Public entrypoint for class usage
    * @param $literatures
    * @param $citation_style
    * @since  0.0.1

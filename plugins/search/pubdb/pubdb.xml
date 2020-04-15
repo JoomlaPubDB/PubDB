@@ -2,12 +2,12 @@
 <extension version="3.1" type="plugin" group="search">
     <name>plg_search_pubdb</name>
     <author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
-    <creationDate>2020-04-09</creationDate>
+    <creationDate>2020-04-15</creationDate>
     <copyright>2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</copyright>
     <license>GNU General Public License Version 2 oder später; siehe LICENSE.txt</license>
     <authorEmail></authorEmail>
-    <authorUrl>http://</authorUrl>
-    <version>CVS: 0.0.1</version>
+    <authorUrl></authorUrl>
+    <version>CVS: 0.0.3</version>
     <description>PLG_SEARCH_COM_PUBDB_XML_DESCRIPTION</description>
     <files>
         <filename plugin="pubdb">pubdb.php</filename>

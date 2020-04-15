@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.0" method="upgrade" client="site">
     <name>MOD_PUBDB_NAME</name>
-    <creationDate>2020-04-09</creationDate>
+    <creationDate>2020-04-15</creationDate>
     <copyright>2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</copyright>
     <license>GNU General Public License Version 2 oder später; siehe LICENSE.txt</license>
     <author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
     <authorEmail></authorEmail>
-    <authorUrl>http://</authorUrl>
-    <version>CVS: 0.0.1</version>
+    <authorUrl></authorUrl>
+    <version>CVS: 0.0.3</version>
     <description>MOD_PUBDB_DESCRIPTION</description>
     
     <files>
@@ -61,6 +61,8 @@
 	<option value="#__pubdb_publisher">#__pubdb_publisher</option>
 	<option value="#__pubdb_keywords">#__pubdb_keywords</option>
 	<option value="#__pubdb_citation_style">#__pubdb_citation_style</option>
+	<option value="#__pubdb_reference_types">#__pubdb_reference_types</option>
+	<option value="#__pubdb_blocks">#__pubdb_blocks</option>
                 </field>
                 <field 
                     name="field" type="groupedlist" default=""
@@ -71,6 +73,9 @@
 		<option value="#__pubdb_literature:id">id</option>
 		<option value="#__pubdb_literature:created_by">created_by</option>
 		<option value="#__pubdb_literature:modified_by">modified_by</option>
+		<option value="#__pubdb_literature:year">year</option>
+		<option value="#__pubdb_literature:month">month</option>
+		<option value="#__pubdb_literature:day">day</option>
 		<option value="#__pubdb_literature:title">title</option>
 		<option value="#__pubdb_literature:subtitle">subtitle</option>
 		<option value="#__pubdb_literature:published_on">published_on</option>
@@ -113,6 +118,7 @@
 		<option value="#__pubdb_person:id">id</option>
 		<option value="#__pubdb_person:created_by">created_by</option>
 		<option value="#__pubdb_person:modified_by">modified_by</option>
+		<option value="#__pubdb_person:first_name_initial">first_name_initial</option>
 		<option value="#__pubdb_person:first_name">first_name</option>
 		<option value="#__pubdb_person:last_name">last_name</option>
 		<option value="#__pubdb_person:middle_name">middle_name</option>
@@ -137,6 +143,20 @@
 		<option value="#__pubdb_citation_style:modified_by">modified_by</option>
 		<option value="#__pubdb_citation_style:name">name</option>
 		<option value="#__pubdb_citation_style:string">string</option>
+	</group>
+	<group label="#__pubdb_reference_types">
+		<option value="#__pubdb_reference_types:id">id</option>
+		<option value="#__pubdb_reference_types:created_by">created_by</option>
+		<option value="#__pubdb_reference_types:modified_by">modified_by</option>
+		<option value="#__pubdb_reference_types:name">name</option>
+	</group>
+	<group label="#__pubdb_blocks">
+		<option value="#__pubdb_blocks:id">id</option>
+		<option value="#__pubdb_blocks:created_by">created_by</option>
+		<option value="#__pubdb_blocks:modified_by">modified_by</option>
+		<option value="#__pubdb_blocks:prefix">prefix</option>
+		<option value="#__pubdb_blocks:name">name</option>
+		<option value="#__pubdb_blocks:suffix">suffix</option>
 	</group>
                 </field>
                 <field 
@@ -164,6 +184,8 @@
 	<option value="#__pubdb_publisher">#__pubdb_publisher</option>
 	<option value="#__pubdb_keywords">#__pubdb_keywords</option>
 	<option value="#__pubdb_citation_style">#__pubdb_citation_style</option>
+	<option value="#__pubdb_reference_types">#__pubdb_reference_types</option>
+	<option value="#__pubdb_blocks">#__pubdb_blocks</option>
                 </field>
                 <field 
                     name="item_id" type="text" filter="uint" class="input-small"

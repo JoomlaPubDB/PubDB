@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version    CVS: 0.0.1
+ * @version    CVS: 0.0.3
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -76,6 +76,20 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 		{
 			$array['published_on'] = '';
 		}
+
+		// Support for multiple or not foreign key field: reference_type
+			if(!empty($array['reference_type']))
+			{
+				if(is_array($array['reference_type'])){
+					$array['reference_type'] = implode(',',$array['reference_type']);
+				}
+				else if(strrpos($array['reference_type'], ',') != false){
+					$array['reference_type'] = explode(',',$array['reference_type']);
+				}
+			}
+			else {
+				$array['reference_type'] = '';
+			}
 
 		// Support for empty date field: access_date
 		if($array['access_date'] == '0000-00-00' )

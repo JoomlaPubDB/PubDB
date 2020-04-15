@@ -1,6 +1,6 @@
 <?php
 /**
- * @version    CVS: 0.0.1
+ * @version    CVS: 0.0.3
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -61,6 +61,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 	<input type="hidden" name="jform[checked_out_time]" value="<?php echo $this->item->checked_out_time; ?>" />
 	<?php echo $this->form->renderField('created_by'); ?>
 	<?php echo $this->form->renderField('modified_by'); ?>
+	<input type="hidden" name="jform[first_name_initial]" value="<?php echo $this->item->first_name_initial; ?>" />
 	<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'person')); ?>
 	<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'person', JText::_('COM_PUBDB_TAB_PERSON', true)); ?>
 	<div class="row-fluid">

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version    CVS: 0.0.1
+ * @version    CVS: 0.0.3
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -40,6 +40,9 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 				'state', 'a.state',
 				'created_by', 'a.created_by',
 				'modified_by', 'a.modified_by',
+				'year', 'a.year',
+				'month', 'a.month',
+				'day', 'a.day',
 				'title', 'a.title',
 				'subtitle', 'a.subtitle',
 				'published_on', 'a.published_on',
@@ -166,6 +169,9 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 
 		// Join over the created by field 'modified_by'
 		$query->join('LEFT', '#__users AS modified_by ON modified_by.id = a.modified_by');
+		// Join over the foreign key 'reference_type'
+		$query->select('`#__pubdb_reference_types_3418098`.`name` AS referencetypes_fk_value_3418098');
+		$query->join('LEFT', '#__pubdb_reference_types AS #__pubdb_reference_types_3418098 ON #__pubdb_reference_types_3418098.`id` = a.`reference_type`');
 		// Join over the foreign key 'periodical_id'
 		$query->select('CONCAT(`#__pubdb_periodical_3418585`.`issn`, \' \', `#__pubdb_periodical_3418585`.`name`) AS periodicals_fk_value_3418585');
 		$query->join('LEFT', '#__pubdb_periodical AS #__pubdb_periodical_3418585 ON #__pubdb_periodical_3418585.`id` = a.`periodical_id`');
@@ -255,7 +261,34 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 		
 		foreach ($items as $item)
 		{
-				$item->reference_type = empty($item->reference_type) ? '' : JText::_('COM_PUBDB_LITERATURES_REFERENCE_TYPE_OPTION_' . strtoupper($item->reference_type));
+
+			if (isset($item->reference_type))
+			{
+
+				$values    = explode(',', $item->reference_type);
+				$textValue = array();
+
+				foreach ($values as $value)
+				{
+					$db    = JFactory::getDbo();
+					$query = $db->getQuery(true);
+					$query
+						->select('`#__pubdb_reference_types_3418098`.`name`')
+						->from($db->quoteName('#__pubdb_reference_types', '#__pubdb_reference_types_3418098'))
+						->where($db->quoteName('#__pubdb_reference_types_3418098.id') . ' = '. $db->quote($db->escape($value)));
+
+					$db->setQuery($query);
+					$results = $db->loadObject();
+
+					if ($results)
+					{
+						$textValue[] = $results->name;
+					}
+				}
+
+				$item->reference_type = !empty($textValue) ? implode(', ', $textValue) : $item->reference_type;
+			}
+
 
 			if (isset($item->periodical_id))
 			{

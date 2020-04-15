@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version    CVS: 0.0.1
+ * @version    CVS: 0.0.3
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -68,6 +68,18 @@ JHtmlSidebar::addEntry(
 			JText::_('COM_PUBDB_TITLE_CITATIONSTYLES'),
 			'index.php?option=com_pubdb&view=citationstyles',
 			$vName == 'citationstyles'
+		);
+
+JHtmlSidebar::addEntry(
+			JText::_('COM_PUBDB_TITLE_REFERENCETYPES'),
+			'index.php?option=com_pubdb&view=referencetypes',
+			$vName == 'referencetypes'
+		);
+
+JHtmlSidebar::addEntry(
+			JText::_('COM_PUBDB_TITLE_BLOCKS'),
+			'index.php?option=com_pubdb&view=blocks',
+			$vName == 'blocks'
 		);
 
 	}

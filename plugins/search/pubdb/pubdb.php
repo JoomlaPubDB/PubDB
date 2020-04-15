@@ -275,9 +275,9 @@ $wheres2[] = 'a.middle_name LIKE ' . $word;
             ->select(
                     array(
                         'a.id',
-                        'a.first_name AS title',
+                        'a.first_name_initial AS title',
                         '"" AS created',
-                        'a.first_name AS text',
+                        'a.first_name_initial AS text',
                         '"Person" AS section',
                         '1 AS browsernav'
                     )

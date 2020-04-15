@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     CVS: 0.0.1
+ * @version     CVS: 0.0.3
  * @package     com_pubdb
  * @subpackage  mod_pubdb
  * @author      Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>

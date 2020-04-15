@@ -5,5 +5,7 @@ DROP TABLE IF EXISTS `#__pubdb_person`;
 DROP TABLE IF EXISTS `#__pubdb_publisher`;
 DROP TABLE IF EXISTS `#__pubdb_keywords`;
 DROP TABLE IF EXISTS `#__pubdb_citation_style`;
+DROP TABLE IF EXISTS `#__pubdb_reference_types`;
+DROP TABLE IF EXISTS `#__pubdb_blocks`;
 
 DELETE FROM `#__content_types` WHERE (type_alias LIKE 'com_pubdb.%');

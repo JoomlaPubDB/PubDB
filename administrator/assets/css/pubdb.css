@@ -89,6 +89,32 @@
 .color-box-citationstyles { 
       float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
 
+.icon-48-referencetypes {
+      background-image: url(../images/l_referencetypes.png);
+      padding-left:60px!important;
+}
+
+.icon-48-referencetype {
+      background-image: url(../images/l_referencetypes.png);
+      padding-left:60px!important;
+}
+
+.color-box-referencetypes { 
+      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+
+.icon-48-blocks {
+      background-image: url(../images/l_blocks.png);
+      padding-left:60px!important;
+}
+
+.icon-48-block {
+      background-image: url(../images/l_blocks.png);
+      padding-left:60px!important;
+}
+
+.color-box-blocks { 
+      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+
 
 
 .other-filters{

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version    CVS: 0.0.1
+ * @version    CVS: 0.0.3
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -38,6 +38,7 @@ class PubdbModelPeople extends \Joomla\CMS\MVC\Model\ListModel
 				'state', 'a.`state`',
 				'created_by', 'a.`created_by`',
 				'modified_by', 'a.`modified_by`',
+				'first_name_initial', 'a.`first_name_initial`',
 				'first_name', 'a.`first_name`',
 				'last_name', 'a.`last_name`',
 				'middle_name', 'a.`middle_name`',
@@ -52,6 +53,8 @@ class PubdbModelPeople extends \Joomla\CMS\MVC\Model\ListModel
     
         
     
+        
+
         
 	/**
 	 * Method to auto-populate the model state.

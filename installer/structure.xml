@@ -23,7 +23,7 @@
     <field field_name="title" field_type="VARCHAR" field_length="255" description="Haupttitel der Literatur"/>
     <field field_name="subtitle" field_type="VARCHAR" field_length="255" description="Untertitel der Literatur"/>
     <field field_name="published_on" field_type="DATETIME" description="Datum der Ver&#xF6;ffentlichung"/>
-    <field action="change" field_name="reference_type" field_type="VARCHAR" field_length="255" description="Art der Literatur z.B Fachliteratur, Online Quelle ..."/>
+    <field action="change" field_name="reference_type" field_type="INT" field_length="11" description="Art der Literatur z.B Fachliteratur, Online Quelle ..."/>
     <field field_name="access_date" field_type="DATETIME" description="Tag des Abrufs"/>
     <field field_name="language" field_type="VARCHAR" field_length="5" description="Sprache der Literatur"/>
     <field field_name="doi" field_type="VARCHAR" field_length="255" description="Der Digitaler Objektbezeichner (DOI) f&#xFC;r die Literatur"/>
@@ -42,6 +42,9 @@
     <field action="change" field_name="others_involved" field_type="TEXT" description="Andere Beteiligte an der Literatur"/>
     <field field_name="publishers" field_type="TEXT" description="Verlage der Literatur"/>
     <field field_name="keywords" field_type="TEXT" description="Schl&#xFC;sselw&#xF6;rter der Literatur"/>
+    <field field_name="year" field_type="DOUBLE" description="Jahr der Publikation"/>
+    <field action="change" field_name="month" field_type="DOUBLE" description="Monat der Publikation"/>
+    <field action="change" field_name="day" field_type="DOUBLE" description="Tag der Publikation"/>
     <field action="remove" field_name="parent_literature"/>
   </table>
   <table action="add" table_name="#__pubdb_series_title" storage_engine="" collation="utf8mb4_unicode_ci">
@@ -70,6 +73,7 @@
     <field action="change" field_name="middle_name" field_type="VARCHAR" field_length="255" description="Mittelname der Person"/>
     <field field_name="sex" field_type="VARCHAR" field_length="255" description="Geschlecht der Person"/>
     <field field_name="title" field_type="VARCHAR" field_length="255" description="Titel der Person"/>
+    <field field_name="first_name_initial" field_type="VARCHAR" field_length="255" description="Anfangsbuchstabe des Vornamens"/>
   </table>
   <table action="add" table_name="#__pubdb_publisher" storage_engine="" collation="utf8mb4_unicode_ci">
     <field field_name="id" field_type="INT" field_length="11" is_autoincrement="1" index="primary" description=""/>
@@ -100,6 +104,28 @@
     <field field_name="created_by" field_type="INT" field_length="11" index="index" description=""/>
     <field field_name="modified_by" field_type="INT" field_length="11" index="index" description=""/>
     <field field_name="name" field_type="VARCHAR" field_length="255" description="Name des Zitierstile"/>
-    <field field_name="string" field_type="TEXT" description="Zitier Pattern"/>
+    <field action="change" field_name="string" field_type="TEXT" description="Zitier Pattern in JSON"/>
+  </table>
+  <table action="add" table_name="#__pubdb_blocks" storage_engine="" collation="utf8mb4_unicode_ci">
+    <field field_name="prefix" field_type="VARCHAR" field_length="255" description="Prefex des Feldes"/>
+    <field field_name="id" field_type="INT" field_length="11" is_autoincrement="1" index="primary" description=""/>
+    <field action="change" field_name="name" field_type="VARCHAR" field_length="255" description="Entspricht dem Datenbank Feldnamen oder einem Formatierungszeichen (&quot;,&quot; oder &quot;: &quot;)"/>
+    <field field_name="ordering" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="suffix" field_type="VARCHAR" field_length="255" description="Suffix des Feldes"/>
+    <field field_name="state" field_type="TINYINT" field_length="1" index="index" description=""/>
+    <field field_name="checked_out" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="checked_out_time" field_type="DATETIME" description=""/>
+    <field field_name="created_by" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="modified_by" field_type="INT" field_length="11" index="index" description=""/>
+  </table>
+  <table action="add" table_name="#__pubdb_reference_types" storage_engine="" collation="utf8mb4_unicode_ci">
+    <field field_name="id" field_type="INT" field_length="11" is_autoincrement="1" index="primary" description=""/>
+    <field field_name="ordering" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="state" field_type="TINYINT" field_length="1" index="index" description=""/>
+    <field field_name="checked_out" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="checked_out_time" field_type="DATETIME" description=""/>
+    <field field_name="created_by" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="modified_by" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="name" field_type="VARCHAR" field_length="255" description="Name des Referenz Typen"/>
   </table>
 </component>

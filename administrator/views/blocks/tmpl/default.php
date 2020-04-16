@@ -1,10 +1,10 @@
 <?php
 /**
- * @version    CVS: 0.0.3
+ * @version    CVS: 0.0.5
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
- * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
+ * @license    GNU General Public License Version 2 oder neuer; siehe LICENSE.txt
  */
 
 // No direct access
@@ -145,19 +145,19 @@ $sortFields = $this->getSortFields();
 
 					<?php echo $item->id; ?>
 				</td>				<td>
+
+					<?php echo $item->prefix; ?>
+				</td>				<td>
 				<?php if (isset($item->checked_out) && $item->checked_out && ($canEdit || $canChange)) : ?>
 					<?php echo JHtml::_('jgrid.checkedout', $i, $item->uEditor, $item->checked_out_time, 'blocks.', $canCheckin); ?>
 				<?php endif; ?>
 				<?php if ($canEdit) : ?>
 					<a href="<?php echo JRoute::_('index.php?option=com_pubdb&task=block.edit&id='.(int) $item->id); ?>">
-					<?php echo $this->escape($item->prefix); ?></a>
+					<?php echo $this->escape($item->name); ?></a>
 				<?php else : ?>
-					<?php echo $this->escape($item->prefix); ?>
+					<?php echo $this->escape($item->name); ?>
 				<?php endif; ?>
 
-				</td>				<td>
-
-					<?php echo $item->name; ?>
 				</td>				<td>
 
 					<?php echo $item->suffix; ?>

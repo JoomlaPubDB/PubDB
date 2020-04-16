@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.0" method="upgrade" client="site">
     <name>MOD_PUBDB_NAME</name>
-    <creationDate>2020-04-15</creationDate>
+    <creationDate>2020-04-16</creationDate>
     <copyright>2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</copyright>
-    <license>GNU General Public License Version 2 oder später; siehe LICENSE.txt</license>
+    <license>GNU General Public License Version 2 oder neuer; siehe LICENSE.txt</license>
     <author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
     <authorEmail></authorEmail>
     <authorUrl></authorUrl>
-    <version>CVS: 0.0.3</version>
+    <version>CVS: 0.0.5</version>
     <description>MOD_PUBDB_DESCRIPTION</description>
     
     <files>

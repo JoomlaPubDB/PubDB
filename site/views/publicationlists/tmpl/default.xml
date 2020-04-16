@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_PUBDB_TITLE_LIST_VIEW_PUBLICATIONLISTS" option="View">
+        <message>
+                        <![CDATA[COM_PUBDB_TITLE_LIST_VIEW_PUBLICATIONLISTS_DESC]]>
+        </message>
+	</layout>
+
+    <fields name="params">
+        <fieldset
+                name="basic"
+                label="COM_PUBDB_FIELDSET_ITEM_ID_SELECT_LABEL">
+
+            <field
+                    name="citation_style"
+                    query="SELECT DISTINCT `id`,`name` FROM #__pubdb_citation_style ORDER BY `id`"
+                    type="sql"
+                    key_field="id"
+                    value_field="name"
+                    label="COM_PUBDB_TAB_CITATIONSTYLE"
+                    require="true"
+                    description="JGLOBAL_SHOW_TITLE_DESC">
+            </field>
+
+            <field
+                    name="item_ids"
+                    query="SELECT DISTINCT `id`,`title` FROM #__pubdb_literature ORDER BY `id`"
+                    type="sql"
+                    key_field="id"
+                    value_field="title"
+                    label="COM_PUBDB_TITLE_LITERATURES"
+                    require="true"
+                    multiple="multiple"
+                    description="JGLOBAL_SHOW_TITLE_DESC">
+            </field>
+
+            <field
+                    name="authors"
+                    query="SELECT DISTINCT `id`, concat (`last_name`,', ', `first_name`) as name FROM #__pubdb_person ORDER BY `id`"
+                    type="sql"
+                    key_field="id"
+                    value_field="name"
+                    label="COM_PUBDB_LITERATURES_AUTHORS"
+                    require="true"
+                    multiple="multiple"
+                    description="JGLOBAL_SHOW_TITLE_DESC">
+            </field>
+
+            <field
+                    name="periodicals"
+                    query="SELECT DISTINCT `id`,`name` FROM #__pubdb_periodical ORDER BY `id`"
+                    type="sql"
+                    key_field="id"
+                    value_field="name"
+                    label="COM_PUBDB_TITLE_PERIODICAL"
+                    require="true"
+                    multiple="multiple"
+                    description="JGLOBAL_SHOW_TITLE_DESC">
+            </field>
+
+            <field
+                    name="series_titles"
+                    query="SELECT DISTINCT `id`,`name` FROM #__pubdb_series_title ORDER BY `id`"
+                    type="sql"
+                    key_field="id"
+                    value_field="name"
+                    label="COM_PUBDB_TITLE_SERIES_TITLE"
+                    require="true"
+                    multiple="multiple"
+                    description="JGLOBAL_SHOW_TITLE_DESC">
+            </field>
+
+        </fieldset>
+    </fields>
+</metadata>

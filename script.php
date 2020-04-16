@@ -4,7 +4,7 @@
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
- * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
+ * @license    GNU General Public License Version 2 oder neuer; siehe LICENSE.txt
  */
 
 define('MODIFIED', 1);
@@ -19,6 +19,7 @@ use \Joomla\CMS\Language\Text;
  * Updates the database structure of the component
  *
  * @version  Release: 0.2b
+ * @author   Component Creator <support@component-creator.com>
  * @since    0.1b
  */
 class com_pubdbInstallerScript

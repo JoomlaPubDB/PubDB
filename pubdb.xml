@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.0" method="upgrade">
     <name>com_pubdb</name>
-    <creationDate>2020-04-15</creationDate>
+    <creationDate>2020-04-16</creationDate>
     <copyright>2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</copyright>
-    <license>GNU General Public License Version 2 oder später; siehe LICENSE.txt</license>
+    <license>GNU General Public License Version 2 oder neuer; siehe LICENSE.txt</license>
     <author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
     <authorEmail></authorEmail>
     <authorUrl></authorUrl>
-    <version>CVS: 0.0.3</version>
+    <version>CVS: 0.0.5</version>
     <description>COM_PUBDB_XML_DESCRIPTION</description>
-
+    
     <scriptfile>script.php</scriptfile>
-
+    
     <install> <!-- Runs on install -->
         <sql>
             <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
@@ -43,13 +43,13 @@
         <folder>css</folder>
     </media>
     <languages folder="site/languages">
-
+        
 			<language tag="de-DE">de-DE/de-DE.com_pubdb.ini</language>
     </languages>
     <administration>
         <menu>COM_PUBDB</menu>
         <submenu>
-
+            
 			<menu link="option=com_pubdb&amp;view=literatures" view="literatures" alt="Pubdb/Literatures">COM_PUBDB_TITLE_LITERATURES</menu>
 
 			<menu link="option=com_pubdb&amp;view=periodicals" view="periodicals" alt="Pubdb/Periodicals">COM_PUBDB_TITLE_PERIODICALS</menu>
@@ -84,7 +84,7 @@
             <folder>views</folder>
         </files>
         <languages folder="administrator/languages">
-
+            
 			<language tag="de-DE">de-DE/de-DE.com_pubdb.ini</language>
 			<language tag="de-DE">de-DE/de-DE.com_pubdb.sys.ini</language>
         </languages>

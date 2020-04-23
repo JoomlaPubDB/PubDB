@@ -260,19 +260,19 @@ INSERT INTO `#__pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Accessed
 INSERT INTO `#__pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', ']', '');
 
 #Reference Types
-INSERT INTO `#_pubdb_reference_types`(`name`) VALUES ('Book');
-INSERT INTO `#_pubdb_reference_types`(`name`) VALUES ('Book edited');
-INSERT INTO `#_pubdb_reference_types`(`name`) VALUES ('Journal print');
-INSERT INTO `#_pubdb_reference_types`(`name`) VALUES ('Journal online');
-INSERT INTO `#_pubdb_reference_types`(`name`) VALUES ('Website');
-INSERT INTO `#_pubdb_reference_types`(`name`) VALUES ('Website article/blog');
-INSERT INTO `#_pubdb_reference_types`(`name`) VALUES ('Website social media');
+INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Book');
+INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Book edited');
+INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Journal print');
+INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Journal online');
+INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Website');
+INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Website article/blog');
+INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Website social media');
 
 #Citation styles
-INSERT INTO `#_pubdb_citation_style`(`name`, `string`) VALUES ('Harvard', '{"-1": [], "1": [1,2,5,28,5,30,3,9,28,5,4,30,11,7,14,7,17,6,43,5,8,24,7], "2": [1,2,5,28,5,30,3,9,28,5,4,30,11,7,14,7,27,7,17,6,43,5,8,24,7], "3": [1,2,5,28,5,30,3,4,11,7,14,40,5,24,7], "4": [1,2,5,28,5,30,3,4,11,7,14,7,40,5,46,24,7,47,22,48,49,18,50,7]}')
+INSERT INTO `#__pubdb_citation_style`(`name`, `string`) VALUES ('Harvard', '{"-1": [], "1": [1,2,5,28,5,30,3,9,28,5,4,30,11,7,14,7,17,6,43,5,8,24,7], "2": [1,2,5,28,5,30,3,9,28,5,4,30,11,7,14,7,27,7,17,6,43,5,8,24,7], "3": [1,2,5,28,5,30,3,4,11,7,14,40,5,24,7], "4": [1,2,5,28,5,30,3,4,11,7,14,7,40,5,46,24,7,47,22,48,49,18,50,7]}')
 
 #Front End VIEW
-CREATE VIEW `#__pubdb_publication_list` AS
+CREATE VIEW IF NOT EXISTS `#__pubdb_publication_list` AS
 SELECT
     l.id,
     l.title,
@@ -290,19 +290,19 @@ SELECT
     l.volume,
     l.authors,
     (
-        SELECT GROUP_CONCAT(last_name SEPARATOR ", ") FROM #_pubdb_person as p WHERE FIND_IN_SET(p.id, l.authors) > 0 ORDER BY last_name DESC
+        SELECT GROUP_CONCAT(last_name SEPARATOR ", ") FROM #__pubdb_person as p WHERE FIND_IN_SET(p.id, l.authors) > 0 ORDER BY last_name DESC
     )
               as "authors_last_name",
     (
-        SELECT GROUP_CONCAT(first_name SEPARATOR ", ") FROM #_pubdb_person as p WHERE FIND_IN_SET(p.id, l.authors) > 0 ORDER BY first_name DESC
+        SELECT GROUP_CONCAT(first_name SEPARATOR ", ") FROM #__pubdb_person as p WHERE FIND_IN_SET(p.id, l.authors) > 0 ORDER BY first_name DESC
     )
               as "authors_first_name",
     (
-        SELECT GROUP_CONCAT(first_name_initial SEPARATOR ", ") FROM #_pubdb_person as p WHERE FIND_IN_SET(p.id, l.authors) > 0 ORDER BY first_name_initial DESC
+        SELECT GROUP_CONCAT(first_name_initial SEPARATOR ", ") FROM #__pubdb_person as p WHERE FIND_IN_SET(p.id, l.authors) > 0 ORDER BY first_name_initial DESC
     )
               as "authors_first_name_initial",
     (
-        SELECT GROUP_CONCAT(sex SEPARATOR ", ") FROM #_pubdb_person as p WHERE FIND_IN_SET(p.id, l.authors) > 0 ORDER BY sex DESC
+        SELECT GROUP_CONCAT(sex SEPARATOR ", ") FROM #__pubdb_person as p WHERE FIND_IN_SET(p.id, l.authors) > 0 ORDER BY sex DESC
     )
               as "authors_author_sex",
 
@@ -316,13 +316,13 @@ SELECT
     publisher.name as publishers
 
 FROM
-    #_pubdb_literature as l
+    #__pubdb_literature as l
 
-left join #_pubdb_reference_types as type
+left join #__pubdb_reference_types as type
        on l.reference_type = type.id
 
-left join #_pubdb_keywords as keywords
+left join #__pubdb_keywords as keywords
           on l.keywords = keywords.id
 
-left join #_pubdb_publisher as publisher
+left join #__pubdb_publisher as publisher
           on l.publishers = publisher.id

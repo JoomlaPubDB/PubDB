@@ -14,11 +14,11 @@ CREATE TABLE IF NOT EXISTS `#__pubdb_literature` (
 `subtitle` VARCHAR(255)  NOT NULL ,
 `published_on` DATETIME NOT NULL ,
 `reference_type` INT NOT NULL ,
-`access_date` DATETIME NOT NULL ,
+`access_date` DATETIME NOT NULL DEFAULT NOW(),
 `language` VARCHAR(5)  NOT NULL ,
 `doi` VARCHAR(255)  NOT NULL ,
 `isbn` VARCHAR(13)  NOT NULL ,
-`online_addess` VARCHAR(255)  NOT NULL ,
+`online_address` VARCHAR(255)  NOT NULL ,
 `page_count` INT(11)  NOT NULL ,
 `page_range` VARCHAR(255)  NOT NULL ,
 `periodical_id` INT NOT NULL ,
@@ -204,3 +204,69 @@ SELECT * FROM ( SELECT 'Block','com_pubdb.block','{"special":{"dbtable":"#__pubd
 WHERE NOT EXISTS (
 	SELECT type_alias FROM `#__content_types` WHERE (`type_alias` = 'com_pubdb.block')
 ) LIMIT 1;
+
+# Default entries
+# Blocks
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Repetition start', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Split First/Main', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Split Main/Last', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Repetition end', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', ',', ' ');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', ':', ' ');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', '.', ' ');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'pp.', ' ');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES (' ', 'and', ' ');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Year', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('(', 'Year', ')');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Month', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Day', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Title', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Subtitle', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Published_on', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Place_of_publication', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Access_date', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Language', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'DOI', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'ISBN', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Online_address', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Page_count', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Page_range', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Pub_med_id', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'eISBN', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Volume', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Author_last_name', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Author_first_name', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Author_first_name_initial', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Author_sex', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Translator_last_name', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Translator_last_name', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Translator_first_name', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Translator_first_name_initial', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Translator_sex', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Others_involved_last_name', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Others_involved_first_name', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Others_involved_first_name_initial', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Others_involved_sex', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Periodical_name', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Periodical_ISSN', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Periodical_eISSN', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Publisher_name', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Series_title_name', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Series_title_editor', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES (' [', 'online', '] ');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES (' ', 'Available at:', ' ');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', '[', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', 'Accessed', '');
+INSERT INTO `jos_pubdb_blocks` (`prefix`, `name`, `suffix`) VALUES ('', ']', '');
+
+#Reference Types
+INSERT INTO `jos_pubdb_reference_types`(`name`) VALUES ('Book');
+INSERT INTO `jos_pubdb_reference_types`(`name`) VALUES ('Book edited');
+INSERT INTO `jos_pubdb_reference_types`(`name`) VALUES ('Journal print');
+INSERT INTO `jos_pubdb_reference_types`(`name`) VALUES ('Journal online');
+INSERT INTO `jos_pubdb_reference_types`(`name`) VALUES ('Website');
+INSERT INTO `jos_pubdb_reference_types`(`name`) VALUES ('Website article/blog');
+INSERT INTO `jos_pubdb_reference_types`(`name`) VALUES ('Website social media');
+
+#Citation styles
+INSERT INTO `jos_pubdb_citation_style`(`name`, `string`) VALUES ('Harvard', '{"-1": [], "1": [1,2,5,28,5,30,3,9,28,5,4,30,11,7,14,7,17,6,43,5,8,24,7], "2": [1,2,5,28,5,30,3,9,28,5,4,30,11,7,14,7,27,7,17,6,43,5,8,24,7], "3": [1,2,5,28,5,30,3,4,11,7,14,40,5,24,7], "4": [1,2,5,28,5,30,3,4,11,7,14,7,40,5,46,24,7,47,22,48,49,18,50,7]}')

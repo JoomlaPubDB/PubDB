@@ -282,7 +282,7 @@ SELECT
     l.language,
     l.doi,
     l.isbn,
-    l.online_addess,
+    l.online_address,
     l.page_count,
     l.page_range,
     l.pub_med_id,

@@ -271,7 +271,7 @@ INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Website social media');
 #Citation styles
 INSERT INTO `#__pubdb_citation_style`(`name`, `string`) VALUES ('Harvard', '{"-1": [], "1": [1,2,5,28,5,30,3,9,28,5,4,30,11,7,14,7,17,6,43,5,8,24,7], "2": [1,2,5,28,5,30,3,9,28,5,4,30,11,7,14,7,27,7,17,6,43,5,8,24,7], "3": [1,2,5,28,5,30,3,4,11,7,14,40,5,24,7], "4": [1,2,5,28,5,30,3,4,11,7,14,7,40,5,46,24,7,47,22,48,49,18,50,7]}')
 
-#Front End VIEW
+/*#Front End VIEW
 CREATE OR REPLACE VIEW `#__pubdb_publication_list` AS
 SELECT
     l.id,
@@ -325,4 +325,4 @@ left join #__pubdb_keywords as keywords
           on l.keywords = keywords.id
 
 left join #__pubdb_publisher as publisher
-          on l.publishers = publisher.id;
+          on l.publishers = publisher.id;*/

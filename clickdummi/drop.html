@@ -65,10 +65,7 @@
 
     function submitClicked() {
       if (document.getElementById("text").value == "") {
-        var counter = 0;
-        for (var n in blocks) {
-          counter++;
-        }
+        arrayString = [];
         var ol = document.getElementById("orderedlist");
         var items = ol.getElementsByTagName("li");
         for (var i = 0; i < items.length; ++i) {
@@ -79,9 +76,10 @@
           }
         }
         var textField = document.getElementById("text");
-        var txt = document.createTextNode(arrayString.toString());
-        textField.appendChild(txt);
+        var txt = arrayString.toString();
+        textField.value = txt;
       } else {
+        $("#orderedlist").empty();
         var fieldText = document.getElementById("text").value;
         var newArray = fieldText.split(",");
         newArray.forEach(function (item, index) {
@@ -90,6 +88,17 @@
           $(li).addClass(item);
           var content = document.createTextNode(blocks[item]);
           li.appendChild(content);
+          $(li).draggable({
+            connectToSortable: "#orderedlist",
+            revert: function (valid) {
+              if (!valid) {
+                $(this).remove();
+                document.getElementById("text").value = "";
+              } else {
+                return true;
+              }
+            },
+          });
           var ol = document.getElementById("orderedlist");
           ol.appendChild(li);
         });
@@ -97,6 +106,7 @@
     }
 
     $(document).ready(function () {
+      document.getElementById("text").value = "";
       //$("#orderedlist").sortable();
 
       blocks = {
@@ -120,9 +130,10 @@
       $(".block").draggable({ helper: "clone", revert: "invalid" });
 
       $(".area").droppable({
-        accept: ".original, .cloned",
+        accept: ".original, .cloned, .fromArray",
         drop: function (ev, ui) {
           if ($(ui.draggable).hasClass("original")) {
+            document.getElementById("text").value = "";
             var element = ui.draggable.clone();
             $(element).addClass("cloned");
             $(element).removeClass("original");
@@ -131,6 +142,7 @@
               revert: function (valid) {
                 if (!valid) {
                   $(this).remove();
+                  document.getElementById("text").value = "";
                 } else {
                   return true;
                 }

@@ -14,6 +14,7 @@
     <field name="created_by" type="createdby" default="0" label="COM_PUBDB_FORM_LBL_REFERENCETYPE_CREATED_BY" description="COM_PUBDB_FORM_DESC_REFERENCETYPE_CREATED_BY" hidden="true" hint="COM_PUBDB_FORM_LBL_REFERENCETYPE_CREATED_BY"/>
     <field name="modified_by" type="modifiedby" default="0" label="COM_PUBDB_FORM_LBL_REFERENCETYPE_MODIFIED_BY" description="COM_PUBDB_FORM_DESC_REFERENCETYPE_MODIFIED_BY" hidden="true" hint="COM_PUBDB_FORM_LBL_REFERENCETYPE_MODIFIED_BY"/>
     <field name="name" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_REFERENCETYPE_NAME" description="COM_PUBDB_FORM_DESC_REFERENCETYPE_NAME" hint="COM_PUBDB_FORM_LBL_REFERENCETYPE_NAME"/>
+    <field name="lable" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_REFERENCETYPE_LABLE" description="COM_PUBDB_FORM_DESC_REFERENCETYPE_LABLE" hint="COM_PUBDB_FORM_LBL_REFERENCETYPE_LABLE"/>
     <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
   </fieldset>
 </form>

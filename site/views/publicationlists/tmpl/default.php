@@ -33,62 +33,179 @@ $canDelete  = $user->authorise('core.delete', 'com_pubdb');
 // Import CSS
 $document = Factory::getDocument();
 $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/list.css');
+//$document->addScript('https://code.jquery.com/jquery-3.5.0.js"');
+
+//add Datatable.JS Scripts
+$document->addScript('https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js');
+$document->addScriptDeclaration('jQuery.noConflict();');
+
+$document->addScript('https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.js');
+$document->addScript('https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js');
+
+//add Datatable.JS CSS
+$document->addStyleSheet('https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css');
+
+$document->addStyleSheet('https://cdn.datatables.net/searchpanes/1.0.1/css/searchPanes.dataTables.min.css');
 
 ?>
+<table id="example" class="display">
+  <thead>
+  <tr>
+    <th>Publication List</th>
+    <th>Author</th>
+    <th>Year</th>
+    <th>Month</th>
+    <th>Day</th>
+  </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+
+<script>
+  let data = [
+    {
+      "title": "G'schichten aus'm Paulaner Garten",
+      "subtitle": "for Real",
+      "published_on": "",
+      "access_date": "",
+      "doi": "",
+      "isbn": "",
+      "online_address": "",
+      "page_count": "",
+      "page_range": "",
+      "pub_med_id": "",
+      "eisbn": "",
+      "volume": "",
+      "authors": [
+        "Julian Pfau",
+        "Florian Warnke"
+      ],
+      "year": "2020",
+      "month": "4",
+      "day": "1",
+      "formatted_string": "G'schichten aus'm Paulaner Garten (2020)"
+    },
+    {
+      "title": "Einführung in die Wirtschaftsinformatik:",
+      "subtitle": "Fallstudie",
+      "published_on": "",
+      "access_date": "",
+      "doi": "",
+      "isbn": "",
+      "online_address": "",
+      "page_count": "",
+      "page_range": "",
+      "pub_med_id": "",
+      "eisbn": "",
+      "volume": "",
+      "authors": [
+        "Stephan Daurer",
+        "Michael Bächle",
+        "Arthur Kolb"
+      ],
+      "year": "2019",
+      "month": "5",
+      "day": "2",
+      "formatted_string": "Einführung in die Wirtschaftsinformatik (2019)"
+    }
+  ];
+
+  jQuery(document).ready(function() {
+      //init data table with citation  style column
+      jQuery('#example').DataTable({
+        "data": data,
+        "columns": [
+          {"data": "formatted_string"},
+          {"data": "authors"},
+          {"data": "year"},
+          {"data": "month"},
+          {"data": "day"}
+        ],
+        searchPanes:{
+          layout: 'columns-4',
+        },
+        dom: 'Pfrtip',
+        columnDefs:[
+          {
+            searchPanes:{
+              show: true,
+            },
+            targets: [0, 1, 2],
+          },
+          {
+            targets: [0],
+            visible: true,
+            searchable: true,
+          },
+          {
+            targets: [1, 2, 3, 4],
+            visible: false,
+            searchable: true
+          }
+
+        ]
+      });
+    }
+  );
+</script>
+
+
 
 
 <form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post"
       name="adminForm" id="adminForm">
 
-    <?php echo JLayoutHelper::render('default_filter', array('view' => $this), dirname(__FILE__)); ?>
-    <div class="table-responsive">
-        <table class="table table-striped" id="literatureList">
-            <thead>
-            <tr>
-                <th width="5%">
-                        Publikation
-                    </th>
-            </tr>
-            </thead>
-            <tfoot>
-            <tr>
-                <td colspan="<?php echo isset($this->items[0]) ? count(get_object_vars($this->items[0])) : 10; ?>">
-                </td>
-            </tr>
-            </tfoot>
-            <tbody>
-            <?php foreach ($this->items as $i => $item) : ?>
-            <tr><td><?php print( $item); ?></td></tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-    <?php if ($canCreate) : ?>
-        <a href="<?php echo Route::_('index.php?option=com_pubdb&task=literatureform.edit&id=0', false, 0); ?>"
-           class="btn btn-success btn-small"><i
-                class="icon-plus"></i>
-            <?php echo Text::_('COM_PUBDB_ADD_ITEM'); ?></a>
-    <?php endif; ?>
+  <?php echo JLayoutHelper::render('default_filter', array('view' => $this), dirname(__FILE__)); ?>
+  <div class="table-responsive">
+    <table class="table table-striped" id="literatureList">
+      <thead>
+      <tr>
+        <th width="5%">
+          Publikation
+        </th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td colspan="<?php echo isset($this->items[0]) ? count(get_object_vars($this->items[0])) : 10; ?>">
+        </td>
+      </tr>
+      </tfoot>
+      <tbody>
+      <?php foreach ($this->items as $i => $item) : ?>
+        <tr><td><?php print( $item); ?></td></tr>
+      <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+  <?php if ($canCreate) : ?>
+    <a href="<?php echo Route::_('index.php?option=com_pubdb&task=literatureform.edit&id=0', false, 0); ?>"
+       class="btn btn-success btn-small"><i
+        class="icon-plus"></i>
+      <?php echo Text::_('COM_PUBDB_ADD_ITEM'); ?></a>
+  <?php endif; ?>
 
-    <input type="hidden" name="task" value=""/>
-    <input type="hidden" name="boxchecked" value="0"/>
-    <input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>"/>
-    <input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>"/>
-    <?php echo HTMLHelper::_('form.token'); ?>
+  <input type="hidden" name="task" value=""/>
+  <input type="hidden" name="boxchecked" value="0"/>
+  <input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>"/>
+  <input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>"/>
+  <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
 <?php if($canDelete) : ?>
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-        jQuery(document).ready(function () {
-            jQuery('.delete-button').click(deleteItem);
-        });
+    jQuery(document).ready(function () {
+      jQuery('.delete-button').click(deleteItem);
+    });
 
-        function deleteItem() {
+    function deleteItem() {
 
-            if (!confirm("<?php echo Text::_('COM_PUBDB_DELETE_MESSAGE'); ?>")) {
-                return false;
-            }
-        }
-    </script>
+      if (!confirm("<?php echo Text::_('COM_PUBDB_DELETE_MESSAGE'); ?>")) {
+        return false;
+      }
+    }
+  </script>
 <?php endif; ?>

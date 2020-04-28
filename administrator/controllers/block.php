@@ -1,6 +1,6 @@
 <?php
 /**
- * @version    CVS: 0.0.5
+ * @version    CVS: 0.0.6
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version    CVS: 0.0.5
+ * @version    CVS: 0.0.6
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -80,13 +80,10 @@ $sortFields = $this->getSortFields();
 				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_BLOCKS_ID', 'a.`id`', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_BLOCKS_PREFIX', 'a.`prefix`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
 				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_BLOCKS_NAME', 'a.`name`', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_BLOCKS_SUFFIX', 'a.`suffix`', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_BLOCKS_LABLE', 'a.`lable`', $listDirn, $listOrder); ?>
 				</th>
 
 					
@@ -145,9 +142,6 @@ $sortFields = $this->getSortFields();
 
 					<?php echo $item->id; ?>
 				</td>				<td>
-
-					<?php echo $item->prefix; ?>
-				</td>				<td>
 				<?php if (isset($item->checked_out) && $item->checked_out && ($canEdit || $canChange)) : ?>
 					<?php echo JHtml::_('jgrid.checkedout', $i, $item->uEditor, $item->checked_out_time, 'blocks.', $canCheckin); ?>
 				<?php endif; ?>
@@ -160,7 +154,7 @@ $sortFields = $this->getSortFields();
 
 				</td>				<td>
 
-					<?php echo $item->suffix; ?>
+					<?php echo $item->lable; ?>
 				</td>
 
 					</tr>

@@ -132,6 +132,7 @@ CREATE TABLE IF NOT EXISTS `#__pubdb_reference_types` (
 `created_by` INT(11)  NOT NULL ,
 `modified_by` INT(11)  NOT NULL ,
 `name` VARCHAR(255)  NOT NULL ,
+`lable` VARCHAR(255)  NOT NULL ,
 PRIMARY KEY (`id`)
 ) DEFAULT COLLATE=utf8mb4_unicode_ci;
 
@@ -144,9 +145,8 @@ CREATE TABLE IF NOT EXISTS `#__pubdb_blocks` (
 `checked_out_time` DATETIME NOT NULL DEFAULT "0000-00-00 00:00:00",
 `created_by` INT(11)  NOT NULL ,
 `modified_by` INT(11)  NOT NULL ,
-`prefix` VARCHAR(255)  NOT NULL ,
 `name` VARCHAR(255)  NOT NULL ,
-`suffix` VARCHAR(255)  NOT NULL ,
+`lable` VARCHAR(255)  NOT NULL ,
 PRIMARY KEY (`id`)
 ) DEFAULT COLLATE=utf8mb4_unicode_ci;
 

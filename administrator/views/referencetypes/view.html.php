@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version    CVS: 0.0.5
+ * @version    CVS: 0.0.6
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -154,6 +154,7 @@ class PubdbViewReferencetypes extends \Joomla\CMS\MVC\View\HtmlView
 			'a.`id`' => JText::_('JGRID_HEADING_ID'),
 			'a.`ordering`' => JText::_('JGRID_HEADING_ORDERING'),
 			'a.`state`' => JText::_('JSTATUS'),
+			'a.`lable`' => JText::_('COM_PUBDB_REFERENCETYPES_LABLE'),
 		);
 	}
 

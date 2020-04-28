@@ -1,6 +1,6 @@
 <?php
 /**
- * @version    CVS: 0.0.5
+ * @version    CVS: 0.0.6
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -79,6 +79,9 @@ $sortFields = $this->getSortFields();
 									<th class='left'>
 				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_REFERENCETYPES_ID', 'a.`id`', $listDirn, $listOrder); ?>
 				</th>
+				<th class='left'>
+				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_REFERENCETYPES_LABLE', 'a.`lable`', $listDirn, $listOrder); ?>
+				</th>
 
 					
 				</tr>
@@ -135,6 +138,17 @@ $sortFields = $this->getSortFields();
 										<td>
 
 					<?php echo $item->id; ?>
+				</td>				<td>
+				<?php if (isset($item->checked_out) && $item->checked_out && ($canEdit || $canChange)) : ?>
+					<?php echo JHtml::_('jgrid.checkedout', $i, $item->uEditor, $item->checked_out_time, 'referencetypes.', $canCheckin); ?>
+				<?php endif; ?>
+				<?php if ($canEdit) : ?>
+					<a href="<?php echo JRoute::_('index.php?option=com_pubdb&task=referencetype.edit&id='.(int) $item->id); ?>">
+					<?php echo $this->escape($item->lable); ?></a>
+				<?php else : ?>
+					<?php echo $this->escape($item->lable); ?>
+				<?php endif; ?>
+
 				</td>
 
 					</tr>

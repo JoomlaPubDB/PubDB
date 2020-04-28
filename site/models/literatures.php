@@ -51,7 +51,7 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
 				'language', 'a.language',
 				'doi', 'a.doi',
 				'isbn', 'a.isbn',
-				'online_addess', 'a.online_addess',
+				'online_address', 'a.online_address',
 				'page_count', 'a.page_count',
 				'page_range', 'a.page_range',
 				'periodical_id', 'a.periodical_id',

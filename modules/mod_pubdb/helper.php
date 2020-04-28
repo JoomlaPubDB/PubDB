@@ -145,7 +145,7 @@ class ModPubdbHelper
 		case 'isbn':
 		$result = $field_value;
 		break;
-		case 'online_addess':
+		case 'online_address':
 		$result = $field_value;
 		break;
 		case 'page_count':

@@ -84,7 +84,7 @@
 		<option value="#__pubdb_literature:language">language</option>
 		<option value="#__pubdb_literature:doi">doi</option>
 		<option value="#__pubdb_literature:isbn">isbn</option>
-		<option value="#__pubdb_literature:online_addess">online_addess</option>
+		<option value="#__pubdb_literature:online_address">online_address</option>
 		<option value="#__pubdb_literature:page_count">page_count</option>
 		<option value="#__pubdb_literature:page_range">page_range</option>
 		<option value="#__pubdb_literature:periodical_id">periodical_id</option>

@@ -28,7 +28,7 @@
     <field field_name="language" field_type="VARCHAR" field_length="5" description="Sprache der Literatur"/>
     <field field_name="doi" field_type="VARCHAR" field_length="255" description="Der Digitaler Objektbezeichner (DOI) f&#xFC;r die Literatur"/>
     <field action="change" field_name="isbn" field_type="VARCHAR" field_length="13" description="Die International Standard Book Number (ISBN) f&#xFC;r die Literatur"/>
-    <field field_name="online_addess" field_type="VARCHAR" field_length="255" description="Die Online Adresse der Literatur"/>
+    <field action="change" old_name="online_addess" new_name="online_address" field_name="online_address" field_type="VARCHAR" field_length="255" description="Die Online Adresse der Literatur"/>
     <field field_name="page_count" field_type="INT" field_length="11" description="Die Anzahl an betrachteten Seiten"/>
     <field field_name="page_range" field_type="VARCHAR" field_length="255" description="Der Seitenumfang aus der Literatur"/>
     <field action="change" field_name="periodical_id" field_type="INT" field_length="11" description="Das Magazin aus dem die Ausgabe kommt"/>

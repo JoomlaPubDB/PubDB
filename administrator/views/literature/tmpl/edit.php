@@ -143,7 +143,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 				<?php echo $this->form->renderField('language'); ?>
 				<?php echo $this->form->renderField('doi'); ?>
 				<?php echo $this->form->renderField('isbn'); ?>
-				<?php echo $this->form->renderField('online_addess'); ?>
+				<?php echo $this->form->renderField('online_address'); ?>
 				<?php echo $this->form->renderField('page_count'); ?>
 				<?php echo $this->form->renderField('page_range'); ?>
 				<?php echo $this->form->renderField('periodical_id'); ?>

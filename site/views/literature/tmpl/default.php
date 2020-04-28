@@ -58,8 +58,8 @@ defined('_JEXEC') or die;
 		</tr>
 
 		<tr>
-			<th><?php echo JText::_('COM_PUBDB_FORM_LBL_LITERATURE_ONLINE_ADDESS'); ?></th>
-			<td><?php echo $this->item->online_addess; ?></td>
+			<th><?php echo JText::_('COM_PUBDB_FORM_LBL_LITERATURE_ONLINE_ADDRESS'); ?></th>
+			<td><?php echo $this->item->online_address; ?></td>
 		</tr>
 
 		<tr>

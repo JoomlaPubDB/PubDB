@@ -66,21 +66,21 @@ class PubdbLiteraturesCitation
     private function mapEntry($pattern, $entry)
     {
         $result = "";
-        $ref_type = $entry->reference_type;
+        $ref_type_id = self::getRefIdFromDb($entry->ref_type);
 
         $author_state = 0;
         $next_is_delimiter = false;
         $first_is_empty = false;
         $delimiter = null;
-        // Block is int id from block_db
-        for ($i = 0; $i < count((array)$pattern[$ref_type]); $i++) {
-            $block = $pattern[$ref_type][$i];
+        // Block is int id from block_  db
+        for ($i = 0; $i < count((array)$pattern[$ref_type_id]); $i++) {
+            $block = $pattern[$ref_type_id][$i];
 
             //Author logic
             if ($block <= 4) {
                 if ($block == 2) {
                     $next_is_delimiter = true;
-                    $first_is_empty = ($pattern[$ref_type][$i - 1] == 1);
+                    $first_is_empty = ($pattern[$ref_type_id][$i - 1] == 1);
                 }
                 $author_state = $block;
                 continue;
@@ -171,6 +171,27 @@ class PubdbLiteraturesCitation
         $pattern = $db->loadResult();
         $pattern = json_decode($pattern, 1);
         return $pattern;
+    }
+
+    /**
+     * Was passiert hier
+     *
+     * @param $ref_type
+     * @return String pattern
+     *
+     * @since  0.0.1
+     */
+
+    private function getRefIdFromDb($ref_type)
+    {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query
+            ->select($db->qn('id'))
+            ->from($db->quoteName('#__pubdb_reference_types'))
+            ->where($db->quoteName('name') . ' LIKE ' . $db->quote($ref_type));
+        $db->setQuery($query);
+        return $db->loadResult();
     }
 
     private function formatAuthorsField($item)

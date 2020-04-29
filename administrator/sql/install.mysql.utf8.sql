@@ -238,7 +238,6 @@ INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Authors_first_name');
 INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Authors_first_name_initial');
 INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Authors_sex');
 INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Translator_last_name');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Translator_last_name');
 INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Translator_first_name');
 INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Translator_first_name_initial');
 INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Translator_sex');

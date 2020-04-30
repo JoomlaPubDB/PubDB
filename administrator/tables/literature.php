@@ -56,6 +56,11 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 		$input = JFactory::getApplication()->input;
 		$task = $input->getString('task', '');
 
+        $datetime = new DateTime($array['published_on']);
+        $array['year'] = $datetime->format('Y');
+        $array['month'] = $datetime->format('m');
+        $array['day'] = $datetime->format('d');
+
 		if ($array['id'] == 0 && empty($array['created_by']))
 		{
 			$array['created_by'] = JFactory::getUser()->id;

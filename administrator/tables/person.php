@@ -56,7 +56,17 @@ class PubdbTableperson extends \Joomla\CMS\Table\Table
 		$input = JFactory::getApplication()->input;
 		$task = $input->getString('task', '');
 
-		if ($array['id'] == 0 && empty($array['created_by']))
+        $first = trim($array['first_name']);
+        foreach (explode(" ", $first) as $part)
+            $array['first_name_initial'] .= " " . ucfirst(trim($part)[0]) . ".";
+
+        if ($array['middle_name'] != "" && !empty($array['middle_name'])) {
+            $middle = trim($array['middle_name']);
+            foreach (explode(" ", $middle) as $part)
+                $array['first_name_initial'] .= " " . ucfirst(trim($part)[0]) . ".";
+        }
+
+        if ($array['id'] == 0 && empty($array['created_by']))
 		{
 			$array['created_by'] = JFactory::getUser()->id;
 		}

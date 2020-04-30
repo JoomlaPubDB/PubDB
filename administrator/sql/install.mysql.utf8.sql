@@ -260,13 +260,23 @@ INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('(');
 INSERT INTO `#__pubdb_blocks` (`name`) VALUES (')');
 
 #Reference Types
-INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Book');
-INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Book edited');
-INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Journal print');
-INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Journal online');
-INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Website');
-INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Website article/blog');
-INSERT INTO `#__pubdb_reference_types`(`name`) VALUES ('Website social media');
+INSERT INTO `#__pubdb_reference_types` (`id`, `ordering`, `state`, `checked_out`, `checked_out_time`, `created_by`, `modified_by`, `name`, `lable`) VALUES
+(1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Misc', ''),
+(2, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Article', 'An article from a journal, magazine, newspaper, or periodical.'),
+(3, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Book', 'A book where the publisher is clearly identifiable.'),
+(4, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Booklet', 'A printed work that is bound, but does not have a clearly identifiable publisher or supporting institution.'),
+(5, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'conference', 'An article that has been included in conference proceedings.'),
+(6, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'inbook', 'A section, such as a chapter, or a page range within a book.'),
+(7, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'incollection', 'A titled section of a book. Such as a short story within the larger collection of short stories that make up the book.'),
+(8, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'inproceedings', 'A paper that has been published in conference proceedings. The usage of conference and inproceedings is the same.'),
+(9, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'manual', 'A technical manual for a machine software such as would come with a purchase to explain operation to the new owner.'),
+(10, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'masterthesis', 'A thesis written for the Master’s level degree.'),
+(11, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'manual', 'A technical manual for a machine software such as would come with a purchase to explain operation to the new owner.'),
+(12, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'masterthesis', 'A thesis written for the Master’s level degree.'),
+(13, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'phdthesis', 'A thesis written for the PhD level degree.'),
+(14, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'proceedings', 'A conference proceeding.'),
+(15, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'techreport', 'An institutionally published report such as a report from a school, a government organization, an organization, or a company. This entry type is also frequently used for white papers and working papers.'),
+(16, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'unpublished', 'A document that has not been officially published such as a paper draft or manuscript in preparation.');
 
 #Citation styles
 INSERT INTO `#__pubdb_citation_style`(`name`, `string`) VALUES ('Harvard', '{"-1": [], "1": [1,2,5,28,5,30,3,9,28,5,4,30,11,7,14,7,17,6,43,5,8,24,7], "2": [1,2,5,28,5,30,3,9,28,5,4,30,11,7,14,7,27,7,17,6,43,5,8,24,7], "3": [1,2,5,28,5,30,3,4,11,7,14,40,5,24,7], "4": [1,2,5,28,5,30,3,4,11,7,14,7,40,5,46,24,7,47,22,48,49,18,50,7]}');

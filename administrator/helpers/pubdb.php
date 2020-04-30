@@ -82,6 +82,11 @@ JHtmlSidebar::addEntry(
 			$vName == 'blocks'
 		);
 
+JHtmlSidebar::addEntry(
+      JText::_('COM_PUBDB_TITLE_IMPORTER'),
+      'index.php?option=com_pubdb&view=importer',
+      $vName == 'blocks'
+    );
 	}
 
 	/**

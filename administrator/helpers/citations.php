@@ -129,7 +129,7 @@ class PubdbLiteraturesCitation
                                     break;
                                 case 3:
                                     //Last
-                                    if ($j == $repetition_amount - 1) $result .= $person_part . " ";
+                                    if ($j != 0 && $j == $repetition_amount - 1) $result .= $person_part;
                                     break;
                             }
                         }

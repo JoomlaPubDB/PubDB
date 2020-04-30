@@ -72,45 +72,81 @@ class PubdbLiteraturesCitation
         $next_is_delimiter = false;
         $first_is_empty = false;
         $delimiter = null;
+        $repetition_amount = -1;
+
+        $is_in_rep = false;
+        $person_blocks = [];
         // Block is int id from block_  db
         for ($i = 0; $i < count((array)$pattern[$ref_type_id]); $i++) {
             $block = $pattern[$ref_type_id][$i];
 
-            //Author logic
-            if ($block <= 4) {
-                if ($block == 2) {
-                    $next_is_delimiter = true;
-                    $first_is_empty = ($pattern[$ref_type_id][$i - 1] == 1);
-                }
-                $author_state = $block;
-                continue;
+            //Repetition logic
+            if ($block == 1) {
+                $is_in_rep = true;
+                $repetition_amount = count(explode(',', $entry->authors_first_name));
+            }
+
+            if ($block == 2) {
+                $next_is_delimiter = true;
+                $first_is_empty = ($pattern[$ref_type_id][$i - 1] == 1);
             } elseif ($next_is_delimiter) {
-                $delimiter = self::tmp($block, $entry);
+                $delimiter = self::getFormattedBlock($block, $entry);
                 $next_is_delimiter = false;
                 continue;
             }
 
-            switch ($author_state) {
-                //Split First/Main
-                case 2:
-                    $result .= $delimiter;
-                    if ($first_is_empty) {
-                        $result = substr($result, 0, strlen($delimiter) * -1);
-                        $first_is_empty = false;
+            if ($is_in_rep) {
+                //Cash data for repetition
+                array_push($person_blocks, $block);
+
+                //Fill on end with repetition
+                if ($block == 4) {
+                    $is_in_rep = false;
+
+                    //For each person
+                    for ($j = 0; $j < $repetition_amount; $j++) {
+                        //For each block
+                        foreach ($person_blocks as $person_block) {
+                            //Is repetition block
+                            if ($person_block <= 4) {
+                                $author_state = $person_block;
+                                continue;
+                            }
+                            //Is a content block
+                            if (27 <= $person_block && $person_block <= 38)
+                                $person_part = explode(',', self::getFormattedBlock($person_block, $entry))[$j];
+                            //Is a format block
+                            else
+                                $person_part = self::getFormattedBlock($person_block, $entry);
+
+                            switch ($author_state) {
+                                case 1:
+                                    if ($j == 0 && !$first_is_empty) $result .= $person_part;
+                                    break;
+                                case 2:
+                                    if ($j == 0 && $first_is_empty) $result .= $person_part;
+                                    if ($j != 0 && $j != $repetition_amount - 1) $result .= $person_part;
+                                    break;
+                                case 3:
+                                    //Last
+                                    if ($j == $repetition_amount - 1) $result .= $person_part . " ";
+                                    break;
+                            }
+                        }
+                        if ($j != $repetition_amount - 1) $result .= $delimiter;
                     }
-                    //Repetition logic
-                    break;
-                //End
-                case 4:
+
+                    //Reset
                     $author_state = 0;
                     $next_is_delimiter = false;
                     $first_is_empty = false;
                     $delimiter = null;
-                    break;
+                    $repetition_amount = -1;
+                }
+                continue;
             }
 
-            $result .= self::tmp($block, $entry);
-
+            $result .= self::getFormattedBlock($block, $entry);
         }
         return $result;
     }
@@ -125,27 +161,25 @@ class PubdbLiteraturesCitation
      * @since  0.0.1
      */
 
-    private function tmp($block, $entry)
+    private function getFormattedBlock($block, $entry)
     {
         global $blocks;
         $result = "";
 
-        //All the other stuff
-        //Has format function or get from DB
+        //Has format function
         $blockName = ucfirst(strtolower($blocks[$block]['name']));
-        if (method_exists(self::class, 'format' . $blockName . 'Field')) {
+        if (method_exists(self::class, 'format' . $blockName . 'Field'))
             $content = call_user_func(array(__CLASS__, 'format' . $blockName . 'Field'), $entry);
-        } else {
+        //get from DB
+        else
             $content = strtolower($blocks[$block]['name']);
-        }
 
         //Content is from DB or just format (e.g. "," or ":")
-        if ($content != null && array_key_exists($content, (array)$entry)) {
+        if ($content != null && array_key_exists($content, (array)$entry))
             $result .= $entry->$content;
-            $result .= " ";
-        } else {
-            $result .= $content;
-        }
+        else
+            $result .= $content . " ";
+
         return $result;
     }
 
@@ -192,10 +226,5 @@ class PubdbLiteraturesCitation
             ->where($db->quoteName('name') . ' LIKE ' . $db->quote($ref_type));
         $db->setQuery($query);
         return $db->loadResult();
-    }
-
-    private function formatAuthorsField($item)
-    {
-        $arrAuthors = explode(",", $item->author_last_name);
     }
 }

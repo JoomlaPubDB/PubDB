@@ -68,6 +68,7 @@ $document->addStyleSheet('https://cdn.datatables.net/searchpanes/1.0.1/css/searc
         //init data table with citation  style column
         jQuery('#example').DataTable({
           "data": data,
+          "stateSave": true,
           "columns": [
             {"data": "formatted_string"},
             {"data": "authors"},
@@ -76,8 +77,16 @@ $document->addStyleSheet('https://cdn.datatables.net/searchpanes/1.0.1/css/searc
           ],
           searchPanes:{
             layout: 'columns-4',
+            viewTotal: true,
+            cascadePanes: true,
           },
           dom: 'Pfrtip',
+          language: {
+            searchPanes: {
+              count: '{total} found',
+              countFiltered: '{shown} of {total}'
+            }
+          },
           columnDefs:[
             {
               searchPanes:{

@@ -68,6 +68,8 @@
 
 			<menu link="option=com_pubdb&amp;view=blocks" view="blocks" alt="Pubdb/Blocks">COM_PUBDB_TITLE_BLOCKS</menu>
 
+            <menu link="option=com_pubdb&amp;view=importer" view="importer" alt="Pubdb/Importer">COM_PUBDB_TITLE_IMPORTER</menu>
+
         </submenu>
         <files folder="administrator">
             <filename>access.xml</filename>

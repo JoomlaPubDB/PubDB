@@ -15,7 +15,6 @@
 *.sig
 
 pkg/
-src/
 
 ### Code ###
 .vscode/*

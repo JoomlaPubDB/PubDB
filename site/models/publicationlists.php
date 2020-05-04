@@ -127,6 +127,7 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
     // Create select statement
     $query->select('*');
     $query->from($db->quoteName('#__pubdb_publication_list'));
+    $query->setLimit(1);
     $db->setQuery($query);
     $params = $this->state->get('parameters.menu');
     $preFilter = $this->getResultFromParams($params);
@@ -147,7 +148,7 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
     $query = $db->getQuery(true);
     $query->select($db->quoteName('id'));
     $query->from($db->quoteName('#__pubdb_publication_list'));
-
+    $query->setLimit(1);
     //extract menu params
     foreach( (array) $menu_item as $param_list) {
       //loop to get params from menu item

@@ -2,7 +2,7 @@
 
 require (JPATH_COMPONENT . '/helpers/vendor/autoload.php');
 
-use JFactory;
+//use JFactory;
 
 JLoader::register('PubdbBibTexImporter', JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'importer.php');
 

@@ -93,18 +93,6 @@ class PubdbModelImporter extends \Joomla\CMS\MVC\Model\AdminModel
   {
     // Check the session for previously entered form data.
     $data = Factory::getApplication()->getUserState('com_pubdb.edit.importer.data', array());
-
-    if (empty($data))
-    {
-      if ($this->item === null)
-      {
-        $this->item = $this->getItem();
-      }
-
-      $data = $this->item;
-
-    }
-
     return $data;
   }
 }

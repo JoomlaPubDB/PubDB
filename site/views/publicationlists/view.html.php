@@ -44,6 +44,8 @@ class PubdbViewPublicationlists extends \Joomla\CMS\MVC\View\HtmlView
     $app = Factory::getApplication();
 
     $this->state = $this->get('State');
+    //workaround to get all results
+    $this->state->set('list.limit', 1000);
     $this->items = $this->get('Items');
     $this->pagination = $this->get('Pagination');
     $this->params = $app->getParams('com_pubdb');

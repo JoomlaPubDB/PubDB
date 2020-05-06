@@ -316,7 +316,7 @@ SELECT
     (
         SELECT GROUP_CONCAT(sex SEPARATOR ", ") FROM #__pubdb_person as p WHERE FIND_IN_SET(p.id, l.authors) > 0 ORDER BY sex DESC
     )
-                   as "authors_author_sex",
+                   as "authors_sex",
 
     l.year,
     l.month,

@@ -147,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `#__pubdb_blocks` (
                                                  `modified_by` INT(11)  NOT NULL ,
                                                  `name` VARCHAR(255)  NOT NULL ,
                                                  `lable` VARCHAR(255)  NOT NULL ,
+                                                 `category` VARCHAR(255)  NOT NULL ,
                                                  PRIMARY KEY (`id`)
 ) DEFAULT COLLATE=utf8mb4_unicode_ci;
 
@@ -207,57 +208,57 @@ WHERE NOT EXISTS (
 
 # Default entries
 # Blocks
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Repetition start');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Split First/Main');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Split Main/Last');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Repetition end');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES (', ');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES (': ');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('. ');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('pp.');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('and ');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Year');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Month');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Day');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Title');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Subtitle');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Published_on');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Place_of_publication');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Access_date');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Language');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('DOI');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('ISBN');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Online_address');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Page_count');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Page_range');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Pub_med_id');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('eISBN');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Volume');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Authors_last_name');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Authors_first_name');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Authors_first_name_initial');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Authors_sex');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Translator_last_name');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Translator_first_name');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Translator_first_name_initial');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Translator_sex');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Others_involved_last_name');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Others_involved_first_name');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Others_involved_first_name_initial');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Others_involved_sex');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Periodical_name');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Periodical_ISSN');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Periodical_eISSN');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Publisher_name');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Series_title_name');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Series_title_editor');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('online');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Available at:');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('[');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('Accessed');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES (']');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES ('(');
-INSERT INTO `#__pubdb_blocks` (`name`) VALUES (')');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Repetition start', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Split First/Main', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Split Main/Last', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Repetition end', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES (', ', '', '2');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES (': ', '', '2');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('. ', '', '2');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('pp.', '', '2');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('and ', '', '2');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Year', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Month', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Day', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Title', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Subtitle', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Published_on', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Place_of_publication', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Access_date', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Language', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('DOI', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('ISBN', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Online_address', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Page_count', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Page_range', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Pub_med_id', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('eISBN', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Volume', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Authors_last_name', '', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Authors_first_name', '', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Authors_first_name_initial', '', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Authors_sex', '', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Translator_last_name', '', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Translator_first_name', '', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Translator_first_name_initial', '', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Translator_sex', '', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Others_involved_last_name', '', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Others_involved_first_name', '', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Others_involved_first_name_initial', '', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Others_involved_sex', '', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Periodical_name', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Periodical_ISSN', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Periodical_eISSN', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Publisher_name', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Series_title_name', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Series_title_editor', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('online', '', '2');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Available at:', '', '2');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('[', '', '2');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Accessed', '', '2');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES (']', '', '2');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('(', '', '2');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES (')', '', '2');
 
 #Reference Types
 INSERT INTO `#__pubdb_reference_types` (`id`, `ordering`, `state`, `checked_out`, `checked_out_time`, `created_by`, `modified_by`, `name`, `lable`) VALUES

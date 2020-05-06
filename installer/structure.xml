@@ -116,6 +116,9 @@
     <field field_name="created_by" field_type="INT" field_length="11" index="index" description=""/>
     <field field_name="modified_by" field_type="INT" field_length="11" index="index" description=""/>
     <field field_name="lable" field_type="VARCHAR" field_length="255" description="Label zur Anzeige des Blockes."/>
+    <field field_name="category" field_type="VARCHAR" field_length="255" description="Zu welcher Kategorie geh&#xF6;rt der Block"/>
+    <field action="remove" field_name="prefix"/>
+    <field action="remove" field_name="suffix"/>
   </table>
   <table action="add" table_name="#__pubdb_reference_types" storage_engine="" collation="utf8mb4_unicode_ci">
     <field field_name="id" field_type="INT" field_length="11" is_autoincrement="1" index="primary" description=""/>

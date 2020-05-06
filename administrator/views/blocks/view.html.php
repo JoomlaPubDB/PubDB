@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version    CVS: 0.0.6
+ * @version    CVS: 0.0.7
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -156,6 +156,7 @@ class PubdbViewBlocks extends \Joomla\CMS\MVC\View\HtmlView
 			'a.`state`' => JText::_('JSTATUS'),
 			'a.`name`' => JText::_('COM_PUBDB_BLOCKS_NAME'),
 			'a.`lable`' => JText::_('COM_PUBDB_BLOCKS_LABLE'),
+			'a.`category`' => JText::_('COM_PUBDB_BLOCKS_CATEGORY'),
 		);
 	}
 

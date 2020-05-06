@@ -1,6 +1,6 @@
 <?php
 /**
- * @version    CVS: 0.0.6
+ * @version    CVS: 0.0.7
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -69,6 +69,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 				<legend><?php echo JText::_('COM_PUBDB_FIELDSET_BLOCK'); ?></legend>
 				<?php echo $this->form->renderField('name'); ?>
 				<?php echo $this->form->renderField('lable'); ?>
+				<?php echo $this->form->renderField('category'); ?>
 				<?php if ($this->state->params->get('save_history', 1)) : ?>
 					<div class="control-group">
 						<div class="control-label"><?php echo $this->form->getLabel('version_note'); ?></div>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version     CVS: 0.0.5
+ * @version     CVS: 0.0.7
  * @package     com_pubdb
  * @subpackage  mod_pubdb
  * @author      Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
@@ -340,6 +340,9 @@ class ModPubdbHelper
 		case 'name':
 		$result = $field_value;
 		break;
+		case 'lable':
+		$result = $field_value;
+		break;
 		}
 		break;
 		case '#__pubdb_blocks':
@@ -355,13 +358,13 @@ class ModPubdbHelper
 		$user = JFactory::getUser($field_value);
 		$result = $user->name;
 		break;
-		case 'prefix':
-		$result = $field_value;
-		break;
 		case 'name':
 		$result = $field_value;
 		break;
-		case 'suffix':
+		case 'lable':
+		$result = $field_value;
+		break;
+		case 'category':
 		$result = $field_value;
 		break;
 		}

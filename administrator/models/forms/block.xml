@@ -15,6 +15,11 @@
     <field name="modified_by" type="modifiedby" default="0" label="COM_PUBDB_FORM_LBL_BLOCK_MODIFIED_BY" description="COM_PUBDB_FORM_DESC_BLOCK_MODIFIED_BY" hidden="true" hint="COM_PUBDB_FORM_LBL_BLOCK_MODIFIED_BY"/>
     <field name="name" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_BLOCK_NAME" description="COM_PUBDB_FORM_DESC_BLOCK_NAME" hint="COM_PUBDB_FORM_LBL_BLOCK_NAME"/>
     <field name="lable" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_BLOCK_LABLE" description="COM_PUBDB_FORM_DESC_BLOCK_LABLE" hint="COM_PUBDB_FORM_LBL_BLOCK_LABLE"/>
+    <field name="category" type="list" required="true" label="COM_PUBDB_FORM_LBL_BLOCK_CATEGORY" description="COM_PUBDB_FORM_DESC_BLOCK_CATEGORY" hint="COM_PUBDB_FORM_LBL_BLOCK_CATEGORY">
+      <option value="1">COM_PUBDB_BLOCKS_CATEGORY_OPTION_1</option>
+      <option value="2">COM_PUBDB_BLOCKS_CATEGORY_OPTION_2</option>
+      <option value="3">COM_PUBDB_BLOCKS_CATEGORY_OPTION_3</option>
+    </field>
     <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
   </fieldset>
 </form>

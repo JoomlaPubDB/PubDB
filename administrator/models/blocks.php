@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version    CVS: 0.0.5
+ * @version    CVS: 0.0.7
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -38,9 +38,9 @@ class PubdbModelBlocks extends \Joomla\CMS\MVC\Model\ListModel
 				'state', 'a.`state`',
 				'created_by', 'a.`created_by`',
 				'modified_by', 'a.`modified_by`',
-				'prefix', 'a.`prefix`',
 				'name', 'a.`name`',
-				'suffix', 'a.`suffix`',
+				'lable', 'a.`lable`',
+				'category', 'a.`category`',
 			);
 		}
 
@@ -148,7 +148,7 @@ class PubdbModelBlocks extends \Joomla\CMS\MVC\Model\ListModel
 		{
 			$query->where('a.state = ' . (int) $published);
 		}
-		elseif ($published === '')
+		elseif (empty($published))
 		{
 			$query->where('(a.state IN (0, 1))');
 		}
@@ -169,6 +169,14 @@ class PubdbModelBlocks extends \Joomla\CMS\MVC\Model\ListModel
 			}
 		}
                 
+
+		// Filtering category
+		$filter_category = $this->state->get("filter.category");
+
+		if ($filter_category !== null && (is_numeric($filter_category) || !empty($filter_category)))
+		{
+			$query->where("a.`category` = '".$db->escape($filter_category)."'");
+		}
 		// Add the list ordering clause.
 		$orderCol  = $this->state->get('list.ordering', "a.id");
 		$orderDirn = $this->state->get('list.direction', "ASC");
@@ -190,6 +198,10 @@ class PubdbModelBlocks extends \Joomla\CMS\MVC\Model\ListModel
 	{
 		$items = parent::getItems();
                 
+		foreach ($items as $oneItem)
+		{
+					$oneItem->category = JText::_('COM_PUBDB_BLOCKS_CATEGORY_OPTION_' . strtoupper($oneItem->category));
+		}
 
 		return $items;
 	}

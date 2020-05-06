@@ -1,6 +1,6 @@
 <?php
 /**
- * @version    CVS: 0.0.5
+ * @version    CVS: 0.0.7
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -121,6 +121,21 @@ class PubdbModelBlock extends \Joomla\CMS\MVC\Model\AdminModel
 
 			$data = $this->item;
                         
+
+			// Support for multiple or not foreign key field: category
+			$array = array();
+
+			foreach ((array) $data->category as $value)
+			{
+				if (!is_array($value))
+				{
+					$array[] = $value;
+				}
+			}
+			if(!empty($array)){
+
+			$data->category = $array;
+			}
 		}
 
 		return $data;

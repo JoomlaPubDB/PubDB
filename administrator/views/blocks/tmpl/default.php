@@ -1,6 +1,6 @@
 <?php
 /**
- * @version    CVS: 0.0.6
+ * @version    CVS: 0.0.7
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -85,6 +85,9 @@ $sortFields = $this->getSortFields();
 				<th class='left'>
 				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_BLOCKS_LABLE', 'a.`lable`', $listDirn, $listOrder); ?>
 				</th>
+				<th class='left'>
+				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_BLOCKS_CATEGORY', 'a.`category`', $listDirn, $listOrder); ?>
+				</th>
 
 					
 				</tr>
@@ -155,6 +158,9 @@ $sortFields = $this->getSortFields();
 				</td>				<td>
 
 					<?php echo $item->lable; ?>
+				</td>				<td>
+
+					<?php echo $item->category; ?>
 				</td>
 
 					</tr>

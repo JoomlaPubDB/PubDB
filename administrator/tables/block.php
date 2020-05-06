@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version    CVS: 0.0.5
+ * @version    CVS: 0.0.7
  * @package    Com_Pubdb
  * @author     Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke <>
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
@@ -94,6 +94,27 @@ class PubdbTableblock extends \Joomla\CMS\Table\Table
 			$array['modified_by'] = JFactory::getUser()->id;
 		}
 
+		// Support for multiple field: category
+		if (isset($array['category']))
+		{
+			if (is_array($array['category']))
+			{
+				$array['category'] = implode(',',$array['category']);
+			}
+			elseif (strpos($array['category'], ',') != false)
+			{
+				$array['category'] = explode(',',$array['category']);
+			}
+			elseif (strlen($array['category']) == 0)
+			{
+				$array['category'] = '';
+			}
+		}
+		else
+		{
+			$array['category'] = '';
+		}
+
 		if (isset($array['params']) && is_array($array['params']))
 		{
 			$registry = new JRegistry;
@@ -183,6 +204,11 @@ class PubdbTableblock extends \Joomla\CMS\Table\Table
 		if (!$this->isUnique('name'))
 		{
 			throw new Exception('Your <b>name</b> item "<b>' . $this->name . '</b>" already exists');
+		}
+		// Check if lable is unique
+		if (!$this->isUnique('lable'))
+		{
+			throw new Exception('Your <b>lable</b> item "<b>' . $this->lable . '</b>" already exists');
 		}
 		
 

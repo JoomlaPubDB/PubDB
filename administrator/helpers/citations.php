@@ -67,6 +67,8 @@ class PubdbLiteraturesCitation
   {
     $result = "";
     $ref_type_id = self::getRefIdFromDb($entry->ref_type);
+    if (!array_key_exists($ref_type_id, $pattern))
+      $ref_type_id = -1;
 
     $author_state = 0;
     $next_is_delimiter = false;

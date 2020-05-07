@@ -57,13 +57,15 @@ class PubdbTableperson extends \Joomla\CMS\Table\Table
 		$task = $input->getString('task', '');
 
         $first = trim($array['first_name']);
-        foreach (explode(" ", $first) as $part)
+        if (!empty($first)) {
+          foreach (explode(" ", $first) as $part)
             $array['first_name_initial'] .= " " . ucfirst(trim($part)[0]) . ".";
 
-        if ($array['middle_name'] != "" && !empty($array['middle_name'])) {
+          if ($array['middle_name'] != "" && !empty($array['middle_name'])) {
             $middle = trim($array['middle_name']);
             foreach (explode(" ", $middle) as $part)
-                $array['first_name_initial'] .= " " . ucfirst(trim($part)[0]) . ".";
+              $array['first_name_initial'] .= " " . ucfirst(trim($part)[0]) . ".";
+          }
         }
 
         if ($array['id'] == 0 && empty($array['created_by']))

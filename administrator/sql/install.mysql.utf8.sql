@@ -208,7 +208,7 @@ WHERE NOT EXISTS (
 
 # Default entries
 # Blocks
-INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Repetition start', '', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Repetition start', 'COM_PUBDB_BLOCKS_Repetition_start', '1');
 INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Split First/Main', '', '1');
 INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Split Main/Last', '', '1');
 INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Repetition end', '', '1');
@@ -280,7 +280,7 @@ INSERT INTO `#__pubdb_reference_types` (`id`, `ordering`, `state`, `checked_out`
 (16, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'unpublished', 'A document that has not been officially published such as a paper draft or manuscript in preparation.');
 
 #Citation styles
-INSERT INTO `#__pubdb_citation_style`(`name`, `string`) VALUES ('Harvard', '{"-1": [], "1": [1,2,5,28,5,30,3,9,28,5,4,30,11,7,14,7,17,6,43,5,8,24,7], "2": [1,2,5,28,5,30,3,9,28,5,4,30,11,7,14,7,27,7,17,6,43,5,8,24,7], "3": [1,2,5,28,5,30,3,4,11,7,14,40,5,24,7], "4": [1,2,5,28,5,30,3,4,11,7,14,7,40,5,46,24,7,47,22,48,49,18,50,7]}');
+INSERT INTO `#__pubdb_citation_style`(`name`, `string`) VALUES ('Harvard', '{"-1":[1,2,5,27,5,29,3,9,27,5,29,4,50,10,51,7,13,7,16,6,42,7],"2":[1,2,5,27,5,29,3,9,27,5,29,4,50,10,51,7,13,7,42,5,26,6,8,23],"3":[1,2,5,27,5,29,3,9,27,5,29,4,50,10,51,7,13,7,16,6,42,7]}');
 
 #Front End VIEW
 CREATE OR REPLACE VIEW `#__pubdb_publication_list` AS
@@ -323,9 +323,17 @@ SELECT
     l.day,
     type.name as ref_type,
 
+
     keywords.name as keywords,
 
-    publisher.name as publishers
+    periodical.name as periodical_name,
+    periodical.issn as periodical_issn,
+    periodical.eissn as periodical_eissn,
+
+    series_title.name as series_title_name,
+    series_title.series_title_editor as series_title_editor,
+
+    publisher.name as publisher_name
 
 FROM
     #__pubdb_literature as l
@@ -335,6 +343,12 @@ FROM
 
 left join #__pubdb_keywords as keywords
           on l.keywords = keywords.id
+
+left join #__pubdb_periodical as periodical
+          on l.periodical_id = periodical.id
+
+left join #__pubdb_series_title as series_title
+          on l.series_title_id = series_title.id
 
 left join #__pubdb_publisher as publisher
           on l.publishers = publisher.id;

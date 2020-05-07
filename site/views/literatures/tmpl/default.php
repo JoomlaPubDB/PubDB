@@ -100,7 +100,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/list.css');
 		<?php foreach ($this->items as $i => $item) : ?>
 			<?php $canEdit = $user->authorise('core.edit', 'com_pubdb'); ?>
 
-			
+
 			<tr class="row<?php echo $i % 2; ?>">
 
 				<?php if (isset($this->items[0]->state)) : ?>
@@ -133,7 +133,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/list.css');
 				</td>
 				<td>
 
-					<?php echo $item->ref_type; ?>
+					<?php echo $item->reference_type; ?>
 				</td>
 				<td>
 

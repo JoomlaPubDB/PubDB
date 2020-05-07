@@ -120,6 +120,10 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\ItemModel
       $this->_item->modified_by_name = JFactory::getUser($this->_item->modified_by)->name;
     }
 
+    if (isset($this->_item->online_address)) {
+      $this->_item->online_address = "<a href='" . $this->_item->online_address . "'>" . $this->_item->online_address . "</a>";
+    }
+
     if (isset($this->_item->reference_type) && $this->_item->reference_type != '') {
       if (is_object($this->_item->reference_type)) {
         $this->_item->reference_type = ArrayHelper::fromObject($this->_item->reference_type);

@@ -200,7 +200,7 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
     // build json object
     for ($i = 0 ; $i < count($items); $i ++){
       $tmpItem = (array) $items[$i];
-      $tmpItem['formatted_string'] = $formattedStrings[$i];
+      $tmpItem['formatted_string'] = " <a href=" . JRoute::_('index.php?option=com_pubdb&view=literature&id=' . (int)$items[$i]->id) . ">" . $formattedStrings[$i] . "</a>";
       $tmpItem['authors'] = $this->getAuthorsFromItem($tmpItem);
       $arrReturn[] = $tmpItem;
     }

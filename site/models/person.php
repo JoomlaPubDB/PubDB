@@ -134,7 +134,8 @@ class PubdbModelPerson extends \Joomla\CMS\MVC\Model\ItemModel
 		{
 			$this->_item->modified_by_name = JFactory::getUser($this->_item->modified_by)->name;
 		}
-					$this->_item->sex = JText::_('COM_PUBDB_PEOPLE_SEX_OPTION_' . $this->_item->sex);
+    if (!empty($this->_item->sex))
+      $this->_item->sex = JText::_('COM_PUBDB_PEOPLE_SEX_OPTION_' . $this->_item->sex);
 
             return $this->_item;
         }

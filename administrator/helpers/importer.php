@@ -37,7 +37,7 @@ class PubdbBibTexImporter
       "isbn" => "isbn",
       "journal" => "periodical_id", //reference done
       "month" => "month",
-      "pages" => "page_count",
+      "pages" => "page_range",
       "publisher" => "publishers", //reference done
       "type" => "reference_type", //reference done
       "title" => "title",

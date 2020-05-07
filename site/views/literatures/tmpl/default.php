@@ -133,7 +133,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/list.css');
 				</td>
 				<td>
 
-					<?php echo $item->reference_type; ?>
+					<?php echo $item->ref_type; ?>
 				</td>
 				<td>
 

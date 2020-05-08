@@ -28,8 +28,7 @@ $query = $db->getQuery(true);
 $query
   ->select($db->quoteName(array('id', 'name')))
   ->from($db->quoteName('#__pubdb_blocks'))
-  ->where($db->quoteName('category') . '= 1')
-  /*->where($db->quoteName('id') . '> 4')*/;
+  ->where($db->quoteName('category') . '= 1');
 $db->setQuery($query);
 $blocks=$db->loadAssocList('id', 'name');
 
@@ -45,7 +44,8 @@ $query = $db->getQuery(true);
 $query
   ->select($db->quoteName(array('id', 'name')))
   ->from($db->quoteName('#__pubdb_blocks'))
-  ->where($db->quoteName('category') . '= 3');
+  ->where($db->quoteName('category') . '= 3')
+  /*->where($db->quoteName('id') . '> 4')*/;
 $db->setQuery($query);
 $authorBlocks=$db->loadAssocList('id', 'name');
 
@@ -194,11 +194,11 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                 });
                 var ol = document.getElementById("orderedAuthorList");
                 ol.appendChild(li);
-                if (item == "10"){
+                if (item == "4"){
                   authorFlag = false;
                 }      
           } else {
-                if (item=="7") {
+                if (item=="1") {
                   document.getElementById("authorArea").style.display = "flex";
                   document.getElementById("clonedAuthorArea").style.display =
                     "flex";

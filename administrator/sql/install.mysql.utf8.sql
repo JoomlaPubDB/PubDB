@@ -210,10 +210,10 @@ WHERE NOT EXISTS (
 
 # Default entries
 # Blocks
-INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Repetition start', 'COM_PUBDB_REPETITION_START', '1');
-INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Split First/Main', 'COM_PUBDB_SPLIT_FIRST_MAIN', '1');
-INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Split Main/Last', 'COM_PUBDB_SPLIT_MAIN_LAST', '1');
-INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Repetition end', 'COM_PUBDB_REPETITION_END', '1');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Repetition start', 'COM_PUBDB_REPETITION_START', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Split First/Main', 'COM_PUBDB_SPLIT_FIRST_MAIN', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Split Main/Last', 'COM_PUBDB_SPLIT_MAIN_LAST', '3');
+INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('Repetition end', 'COM_PUBDB_REPETITION_END', '3');
 INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES (', ', 'COM_PUBDB_COMMA', '2');
 INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES (': ', 'COM_PUBDB_COLON', '2');
 INSERT INTO `#__pubdb_blocks` (`name`, `lable`, `category`) VALUES ('. ', 'COM_PUBDB_POINT', '2');

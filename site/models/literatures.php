@@ -158,7 +158,7 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
                         )
                 );
 
-            $query->from('`#__pubdb_literature` AS a');
+            $query->from('`#__pubdb_publication_list` AS a');
             
 //		// Join over the users for the checked out user.
 //		$query->select('uc.name AS uEditor');
@@ -211,7 +211,7 @@ class PubdbModelLiteratures extends \Joomla\CMS\MVC\Model\ListModel
                 else
                 {
                     $search = $db->Quote('%' . $db->escape($search, true) . '%');
-                    $query->where('( a.title LIKE ' . $search . '  OR  a.subtitle LIKE ' . $search . '  OR  a.doi LIKE ' . $search . '  OR  a.isbn LIKE ' . $search . '  OR authors_first_name LIKE ' . $search . '  OR authors_last_name LIKE ' . $search . '  OR authors_first_name_initial LIKE ' . $search . ' )');
+                    $query->where('( a.title LIKE ' . $search . '  OR  a.subtitle LIKE ' . $search . '  OR  a.doi LIKE ' . $search . '  OR  a.isbn LIKE ' . $search . '  OR a.authors_first_name LIKE ' . $search . '  OR a.authors_last_name LIKE ' . $search . '  OR authors_first_name_initial LIKE ' . $search . ' )');
                 }
             }
             

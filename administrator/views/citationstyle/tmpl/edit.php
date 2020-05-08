@@ -22,6 +22,33 @@ HTMLHelper::_('behavior.formvalidation');
 HTMLHelper::_('formbehavior.chosen', 'select');
 HTMLHelper::_('behavior.keepalive');
 
+$db = JFactory::getDbo();
+$query = $db->getQuery(true);
+
+$query
+  ->select($db->quoteName(array('id', 'name')))
+  ->from($db->quoteName('#__pubdb_blocks'))
+  ->where($db->quoteName('category') . '= 1')
+  /*->where($db->quoteName('id') . '> 4')*/;
+$db->setQuery($query);
+$blocks=$db->loadAssocList('id', 'name');
+
+$query = $db->getQuery(true);
+$query
+  ->select($db->quoteName(array('id', 'name')))
+  ->from($db->quoteName('#__pubdb_blocks'))
+  ->where($db->quoteName('category') . '= 2');
+$db->setQuery($query);
+$specialBlocks = $db->loadAssocList('id', 'name');
+
+$query = $db->getQuery(true);
+$query
+  ->select($db->quoteName(array('id', 'name')))
+  ->from($db->quoteName('#__pubdb_blocks'))
+  ->where($db->quoteName('category') . '= 3');
+$db->setQuery($query);
+$authorBlocks=$db->loadAssocList('id', 'name');
+
 // Import CSS
 $document = Factory::getDocument();
 $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
@@ -194,7 +221,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                   });
                   var ol = document.getElementById("orderedAuthorList");
                   ol.appendChild(li);
-                  item="3";
+                  item="-3";
                   authorFlag = true;
                 } 
                 var li = document.createElement("li");
@@ -210,7 +237,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                   connectToSortable: "#orderedlist",
                   revert: function (valid) {
                     if (!valid) {
-                      if (jQuery(this).hasClass("3")) {
+                      if (jQuery(this).hasClass("-3")) {
                           jQuery("#orderedAuthorList").empty();
                           document.getElementById("authorArea").style.display =
                             "none";
@@ -264,17 +291,17 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
             }
           }
         }
-        if(arrayString.includes("3")){
-          var indexToSplit = arrayString.indexOf("3");
+        if(arrayString.includes("-3")){
+          var indexToSplit = arrayString.indexOf("-3");
           var first = arrayString.slice(0, indexToSplit);
           var third = arrayString.slice(indexToSplit + 1);
           var resultArray = first.concat(arrayStringAuthor).concat(third);
           var textField = document.getElementById("jform_string");
-          var txt = resultArray.toString();
+          var txt = '{"-1:"[' + resultArray.toString() + ']}';
           textField.value = txt;
         } else {
           var textField = document.getElementById("jform_string");
-          var txt = arrayString.toString();
+          var txt = '{"-1:"[' + arrayString.toString() + ']}';
           textField.value = txt;
         }
       }
@@ -284,34 +311,12 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
       
       //jQuery("#orderedlist").sortable();
 
-      blocks = {
-        1: "Titel",
-        2: "Untertitel",
-        3: "Autor",
-        4: "Verlag",
-        5: "Erscheinungsjahr",
-        6: "Seitenzahl",
-      };
+        blocks = JSON.parse('<?php echo json_encode($blocks) ?>');
+        blocks["-3"] = "Author";
 
-      authorBlocks = {
-        7: "RepetitionStart",
-        8: "SplitFirstMain",
-        9: "SplitMainLast",
-        10: "RepetitionEnd",
-        11: "Vorname",
-        12: "Nachname",
-        13: "Initial",
-      };
+        authorBlocks = JSON.parse('<?php echo json_encode($authorBlocks) ?>');
 
-      specialBlocks = {
-        14: ",",
-        15: ";",
-        16: '"',
-        17: '(',
-        18: ")",
-        19: "[",
-        20: "]",
-      };
+        specialBlocks = JSON.parse('<?php echo json_encode($specialBlocks) ?>');
 
       loadItems();
 
@@ -351,7 +356,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
         accept: ".original, .cloned, .originalCharacter, .clonedCharacter",
         drop: function (ev, ui) {
           if (jQuery(ui.draggable).hasClass("original") || (jQuery(ui.draggable).hasClass("originalCharacter"))) {
-            if (jQuery(ui.draggable).hasClass("3")) {
+            if (jQuery(ui.draggable).hasClass("-3")) {
               document.getElementById("authorArea").style.display = "flex";
               document.getElementById("clonedAuthorArea").style.display =
                 "flex";
@@ -371,7 +376,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
               connectToSortable: "#orderedlist",
               revert: function (valid) {
                 if (!valid) {
-                  if (jQuery(this).hasClass("3")) {
+                  if (jQuery(this).hasClass("-3")) {
                     jQuery("#orderedAuthorList").empty();
                     document.getElementById("authorArea").style.display =
                       "none";

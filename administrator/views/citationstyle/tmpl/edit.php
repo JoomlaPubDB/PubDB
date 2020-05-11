@@ -105,7 +105,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
     }
     .clonedBlock {
       margin-right: 3px;
-      font-size:20px;
+      font-size:15px;
     }
     .containers {
       display: flex;
@@ -123,38 +123,51 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
     }
     .partAuthor1 {
       height:100px;
-      width: 100px;
       border-color: "grey";
       border-width: 1px;
       border-radius: 10px;
       border-style: dotted;
       flex-grow:1;
+      flex: 1;
       display: flex;
       flex-direction: row;
       align-items: center;
     }
     .partAuthor2 {
-      margin-right: 20px;
-      margin-left: 20px;
       height:100px;
-      width: 100px;
+      margin-left: 10px;
+      margin-right: 10px;
       border-color: "grey";
       border-width: 1px;
       border-radius: 10px;
       border-style: dotted;
-      flex-grow:1;
+      flex-grow: 1;
+      flex: 1;
       display: flex;
       flex-direction: row;
       align-items: center;
     }
     .partAuthor3 {
       height:100px;
-      width: 100px;
       border-color: "grey";
       border-width: 1px;
       border-radius: 10px;
       border-style: dotted;
-      flex-grow:1;
+      flex-grow: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .partAuthor4 {
+      height:100px;
+      border-color: "grey";
+      margin-left: 10px;
+      border-width: 1px;
+      border-radius: 10px;
+      border-style: dotted;
+      flex-grow:0.2;
+      flex: 0.2;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -193,6 +206,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
     var arrayStringAuthor1 = [];
     var arrayStringAuthor2 = [];
     var arrayStringAuthor3 = [];
+    var arrayStringAuthor4 = [];
 
 
     //Excecuted when the page is loaded. If a citationstlye is available, it loads it's blocks into the views.
@@ -216,7 +230,8 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 
           var secondIndexToSplit = rest.indexOf("2");
           var second = rest.slice(0, secondIndexToSplit);
-          rest = rest.slice(secondIndexToSplit + 1);
+          var specialChar = rest.slice(secondIndexToSplit + 1, secondIndexToSplit + 2);
+          rest = rest.slice(secondIndexToSplit + 2);
 
           var thirdIndexToSplit = rest.indexOf("3");
           var third = rest.slice(0, thirdIndexToSplit);
@@ -255,6 +270,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                             "none";
                           document.getElementById("clonedAuthorArea").style.display =
                             "none";
+                          jQuery(".-3").addClass("original");
                         }
                       jQuery(this).remove();
                       document.getElementById("jform_string").value = "";
@@ -266,6 +282,9 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                 });
                 var ol = document.getElementById("orderedlist");
                 ol.appendChild(li); 
+                if (item == "-3") {
+                  jQuery(".-3").removeClass("original");
+                }
           });
 
           second.forEach(function (item, index) {
@@ -351,6 +370,58 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                 var ol = document.getElementById("orderedAuthorList3");
                 ol.appendChild(li);
           });
+
+          specialChar.forEach(function (item, index) {
+                var li = document.createElement("li");
+                jQuery(li).addClass(item);
+                jQuery(li).addClass("clonedBlock");
+                var content = document.createTextNode(specialBlocks[item]);
+                jQuery(li).addClass("clonedCharacter4");
+                li.appendChild(content);
+                jQuery(li).draggable({
+                  //connectToSortable: "#orderedAuthorList",
+                  revert: function (valid) {
+                    if (!valid) {
+                      jQuery(this).remove();
+                      document.getElementById("jform_string").value = "";
+                    } else {
+                      //jQuery(".clonedAuthor").css("top", "auto").css("left", "auto");
+                      return true;
+                    }
+                  },
+                });
+                var ol = document.getElementById("orderedAuthorList4");
+                ol.appendChild(li);
+          });
+
+        } else {
+            newArray.forEach(function (item, index) {
+                var li = document.createElement("li");
+                jQuery(li).addClass(item);
+                jQuery(li).addClass("clonedBlock");
+                if(item in blocks){
+                  var content = document.createTextNode(blocks[item]);
+                  jQuery(li).addClass("cloned");
+                } else {
+                  var content = document.createTextNode(specialBlocks[item]);
+                  jQuery(li).addClass("clonedCharacter");
+                }
+                li.appendChild(content);
+                jQuery(li).draggable({
+                  //connectToSortable: "#orderedlist",
+                  revert: function (valid) {
+                    if (!valid) {
+                      jQuery(this).remove();
+                      document.getElementById("jform_string").value = "";
+                    } else {
+                      //jQuery(".cloned").css("top", "auto").css("left", "auto");
+                      return true;
+                    }
+                  },
+                });
+                var ol = document.getElementById("orderedlist");
+                ol.appendChild(li); 
+          });
         }
       }
     }
@@ -421,12 +492,22 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
             }
           }
         }
+        arrayStringAuthor4 = [];
+        var olAuthor = document.getElementById("partAuthor4");
+        var authorItems = olAuthor.getElementsByTagName("li");
+        for (var t = 0; t < authorItems.length; ++t) {
+          for (f in specialBlocks){
+            if (jQuery(authorItems[t]).hasClass(f)) {
+              arrayStringAuthor4.push(f);
+            }
+          }
+        }
 
         if(arrayString.includes("-3")){
           var indexToSplit = arrayString.indexOf("-3");
           var first = arrayString.slice(0, indexToSplit);
           var last = arrayString.slice(indexToSplit + 1);
-          var mid = [1].concat(arrayStringAuthor1).concat([2]).concat(arrayStringAuthor2).concat([3]).concat(arrayStringAuthor3).concat([4]);
+          var mid = [1].concat(arrayStringAuthor1).concat([2]).concat(arrayStringAuthor4).concat(arrayStringAuthor2).concat([3]).concat(arrayStringAuthor3).concat([4]);
           var resultArray = first.concat(mid).concat(last);
           var textField = document.getElementById("jform_string");
           //var txt = '{"-1:"[' + resultArray.toString() + ']}';
@@ -438,8 +519,6 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
           var txt = arrayString.toString();
           textField.value = txt;
         }
-        
-
       }
     }
 
@@ -454,7 +533,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 
         specialBlocks = JSON.parse('<?php echo json_encode($specialBlocks) ?>');
 
-      loadItems();
+      
 
       Object.entries(blocks).forEach(([key, value]) => {
         var li = document.createElement("li");
@@ -486,6 +565,8 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
         ol.appendChild(li);
       });
 
+      loadItems();
+
       jQuery(".block").draggable({ helper: "clone", revert: "invalid" });
 
       jQuery(".clonedArea").droppable({
@@ -515,9 +596,9 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                       "none";
                     document.getElementById("clonedAuthorArea").style.display =
                       "none";
+                    jQuery(".-3").addClass("original");
                   }
                   jQuery(this).remove();
-                  jQuery(".-3").addClass("original");
                   document.getElementById("jform_string").value = "";
                 } else {
                   //jQuery(".cloned").css("top", "auto").css("left", "auto");
@@ -633,6 +714,33 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
           }
         },
       });
+
+      jQuery(".partAuthor4").droppable({
+        accept: ".clonedCharacter4, .originalCharacter",
+        drop: function (ev, ui) {
+          if (jQuery(ui.draggable).hasClass("originalCharacter")) {
+            document.getElementById("jform_string").value = "";
+            var element = ui.draggable.clone();
+            jQuery(element).removeClass("block");
+            jQuery(element).addClass("clonedBlock");
+            jQuery(element).addClass("clonedCharacter4");
+            jQuery(element).removeClass("originalCharacter");
+            jQuery(element).draggable({
+              //connectToSortable: "#orderedlist",
+              revert: function (valid) {
+                if (!valid) {
+                  jQuery(this).remove();
+                  document.getElementById("jform_string").value = "";
+                } else {
+                  //jQuery(".clonedAuthor").css("top", "auto").css("left", "auto");
+                  return true;
+                }
+              },
+            });
+            jQuery("#orderedAuthorList4").append(element);
+          }
+        },
+      });
     });
   </script>
 
@@ -720,6 +828,13 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                             style="list-style-type: none;"
                             class="containers"
                             id="orderedAuthorList3"
+                          ></ol>
+                      </div>
+                      <div class="partAuthor4" id="partAuthor4">
+                          <ol
+                            style="list-style-type: none;"
+                            class="containers"
+                            id="orderedAuthorList4"
                           ></ol>
                       </div>
                       </div>

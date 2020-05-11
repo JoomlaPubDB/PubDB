@@ -92,13 +92,8 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
       min-height: 100px;
       margin-bottom: 20px;
       max-width: 100%;
-      border-color: grey;
-      border-width: 1px;
-      border-radius: 10px;
-      border-style: dotted;
       display: none;
       flex-direction: row;
-      align-items: center;
     }
     .block {
       border-width: 1px;
@@ -125,6 +120,44 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
       align-items: center;
       flex-wrap: wrap;
       margin: 0px 0px 0px 0px !important;
+    }
+    .partAuthor1 {
+      height:100px;
+      width: 100px;
+      border-color: "grey";
+      border-width: 1px;
+      border-radius: 10px;
+      border-style: dotted;
+      flex-grow:1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .partAuthor2 {
+      margin-right: 20px;
+      margin-left: 20px;
+      height:100px;
+      width: 100px;
+      border-color: "grey";
+      border-width: 1px;
+      border-radius: 10px;
+      border-style: dotted;
+      flex-grow:1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .partAuthor3 {
+      height:100px;
+      width: 100px;
+      border-color: "grey";
+      border-width: 1px;
+      border-radius: 10px;
+      border-style: dotted;
+      flex-grow:1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
   </style>
 
@@ -157,88 +190,67 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
     var authorBlocks;
     var specialBlocks;
     var arrayString = [];
-    var arrayStringAuthor = [];
+    var arrayStringAuthor1 = [];
+    var arrayStringAuthor2 = [];
+    var arrayStringAuthor3 = [];
 
 
+    //Excecuted when the page is loaded. If a citationstlye is available, it loads it's blocks into the views.
     function loadItems(){
+
       if(document.getElementById("jform_string").value !== ""){
         document.getElementById("authorArea").style.display = "none";
         document.getElementById("clonedAuthorArea").style.display ="none";
         jQuery("#orderedlist").empty();
-        jQuery("#orderedAuthorList").empty();
+        jQuery("#orderedAuthorList1").empty();
+        jQuery("#orderedAuthorList2").empty();
+        jQuery("#orderedAuthorList3").empty();
         var fieldText = document.getElementById("jform_string").value;
         var newArray = fieldText.split(",");
-        var authorFlag = false;
-        newArray.forEach(function (item, index) {
-          if(authorFlag == true ){
+
+        if(newArray.includes("1")){
+          //Split Array until author starts (1) and add "-3" for author field
+          var firstIndexToSplit = newArray.indexOf("1");
+          var first = newArray.slice(0, firstIndexToSplit).concat(["-3"]);
+          var rest = newArray.slice(firstIndexToSplit + 1);
+
+          var secondIndexToSplit = rest.indexOf("2");
+          var second = rest.slice(0, secondIndexToSplit);
+          rest = rest.slice(secondIndexToSplit + 1);
+
+          var thirdIndexToSplit = rest.indexOf("3");
+          var third = rest.slice(0, thirdIndexToSplit);
+          rest = rest.slice(thirdIndexToSplit + 1);
+
+          var fourthIndexToSplit = rest.indexOf("4");
+          var fourth = rest.slice(0, fourthIndexToSplit);
+          var last = rest.slice(fourthIndexToSplit + 1);
+          
+          var newResulArray = first.concat(last);
+          
+          document.getElementById("authorArea").style.display = "flex";
+          document.getElementById("clonedAuthorArea").style.display = "flex";
+
+          newResulArray.forEach(function (item, index) {
                 var li = document.createElement("li");
-                jQuery(li).addClass("clonedBlock clonedAuthor");
                 jQuery(li).addClass(item);
-                if(item in authorBlocks){
-                  var content = document.createTextNode(authorBlocks[item]);
-                } else {
-                  var content = document.createTextNode(specialBlocks[item]);
-                }
-                li.appendChild(content);
-                jQuery(li).draggable({
-                  connectToSortable: "#orderedAuthorList",
-                  revert: function (valid) {
-                    if (!valid) {
-                      jQuery(this).remove();
-                      document.getElementById("jform_string").value = "";
-                    } else {
-                      jQuery(".clonedAuthor").css("top", "auto").css("left", "auto");
-                      return false;
-                    }
-                  },
-                });
-                var ol = document.getElementById("orderedAuthorList");
-                ol.appendChild(li);
-                if (item == "4"){
-                  authorFlag = false;
-                }      
-          } else {
-                if (item=="1") {
-                  document.getElementById("authorArea").style.display = "flex";
-                  document.getElementById("clonedAuthorArea").style.display =
-                    "flex";
-                  var li = document.createElement("li");
-                  jQuery(li).addClass("clonedBlock clonedAuthor");
-                  jQuery(li).addClass(item);
-                  var content = document.createTextNode(authorBlocks[item]);
-                  li.appendChild(content);
-                  jQuery(li).draggable({
-                    connectToSortable: "#orderedAuthorList",
-                    revert: function (valid) {
-                      if (!valid) {
-                        jQuery(this).remove();
-                        document.getElementById("jform_string").value = "";
-                      } else {
-                        jQuery(".clonedAuthor").css("top", "auto").css("left", "auto");
-                        return false;
-                      }
-                    },
-                  });
-                  var ol = document.getElementById("orderedAuthorList");
-                  ol.appendChild(li);
-                  item="-3";
-                  authorFlag = true;
-                } 
-                var li = document.createElement("li");
-                jQuery(li).addClass("clonedBlock cloned");
-                jQuery(li).addClass(item);
+                jQuery(li).addClass("clonedBlock");
                 if(item in blocks){
                   var content = document.createTextNode(blocks[item]);
+                  jQuery(li).addClass("cloned");
                 } else {
                   var content = document.createTextNode(specialBlocks[item]);
+                  jQuery(li).addClass("clonedCharacter");
                 }
                 li.appendChild(content);
                 jQuery(li).draggable({
-                  connectToSortable: "#orderedlist",
+                  //connectToSortable: "#orderedlist",
                   revert: function (valid) {
                     if (!valid) {
                       if (jQuery(this).hasClass("-3")) {
-                          jQuery("#orderedAuthorList").empty();
+                          jQuery("#orderedAuthorList1").empty();
+                          jQuery("#orderedAuthorList2").empty();
+                          jQuery("#orderedAuthorList3").empty();
                           document.getElementById("authorArea").style.display =
                             "none";
                           document.getElementById("clonedAuthorArea").style.display =
@@ -247,17 +259,105 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                       jQuery(this).remove();
                       document.getElementById("jform_string").value = "";
                     } else {
-                      jQuery(".cloned").css("top", "auto").css("left", "auto");
-                      return false;
+                      //jQuery(".cloned").css("top", "auto").css("left", "auto");
+                      return true;
                     }
                   },
                 });
                 var ol = document.getElementById("orderedlist");
-                ol.appendChild(li);  
-          }
-        });
+                ol.appendChild(li); 
+          });
+
+          second.forEach(function (item, index) {
+                var li = document.createElement("li");
+                jQuery(li).addClass(item);
+                jQuery(li).addClass("clonedBlock");
+                if(item in authorBlocks){
+                  var content = document.createTextNode(authorBlocks[item]);
+                  jQuery(li).addClass("clonedAuthor1");
+                } else {
+                  var content = document.createTextNode(specialBlocks[item]);
+                  jQuery(li).addClass("clonedCharacter1");
+                }
+                li.appendChild(content);
+                jQuery(li).draggable({
+                  //connectToSortable: "#orderedAuthorList",
+                  revert: function (valid) {
+                    if (!valid) {
+                      jQuery(this).remove();
+                      document.getElementById("jform_string").value = "";
+                    } else {
+                      //jQuery(".clonedAuthor").css("top", "auto").css("left", "auto");
+                      return true;
+                    }
+                  },
+                });
+                var ol = document.getElementById("orderedAuthorList1");
+                ol.appendChild(li);
+          });
+
+          third.forEach(function (item, index) {
+                var li = document.createElement("li");
+                jQuery(li).addClass(item);
+                jQuery(li).addClass("clonedBlock");
+                if(item in authorBlocks){
+                  var content = document.createTextNode(authorBlocks[item]);
+                  jQuery(li).addClass("clonedAuthor2");
+                } else {
+                  var content = document.createTextNode(specialBlocks[item]);
+                  jQuery(li).addClass("clonedCharacter2");
+                }
+                li.appendChild(content);
+                jQuery(li).draggable({
+                  //connectToSortable: "#orderedAuthorList",
+                  revert: function (valid) {
+                    if (!valid) {
+                      jQuery(this).remove();
+                      document.getElementById("jform_string").value = "";
+                    } else {
+                      //jQuery(".clonedAuthor").css("top", "auto").css("left", "auto");
+                      return true;
+                    }
+                  },
+                });
+                var ol = document.getElementById("orderedAuthorList2");
+                ol.appendChild(li);
+          });
+
+          fourth.forEach(function (item, index) {
+                var li = document.createElement("li");
+                jQuery(li).addClass(item);
+                jQuery(li).addClass("clonedBlock");
+                if(item in authorBlocks){
+                  var content = document.createTextNode(authorBlocks[item]);
+                  jQuery(li).addClass("clonedAuthor3");
+                } else {
+                  var content = document.createTextNode(specialBlocks[item]);
+                  jQuery(li).addClass("clonedCharacter3");
+                }
+                li.appendChild(content);
+                jQuery(li).draggable({
+                  //connectToSortable: "#orderedAuthorList",
+                  revert: function (valid) {
+                    if (!valid) {
+                      jQuery(this).remove();
+                      document.getElementById("jform_string").value = "";
+                    } else {
+                      //jQuery(".clonedAuthor").css("top", "auto").css("left", "auto");
+                      return true;
+                    }
+                  },
+                });
+                var ol = document.getElementById("orderedAuthorList3");
+                ol.appendChild(li);
+          });
+        }
       }
-    };
+    }
+
+
+
+        
 
     function submitClicked() {
       if (document.getElementById("jform_string").value == "") {
@@ -276,34 +376,70 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
             }
           }
         }
-        arrayStringAuthor = [];
-        var olAuthor = document.getElementById("clonedAuthorArea");
+        arrayStringAuthor1 = [];
+        var olAuthor = document.getElementById("partAuthor1");
         var authorItems = olAuthor.getElementsByTagName("li");
         for (var t = 0; t < authorItems.length; ++t) {
           for (z in authorBlocks) {
             if (jQuery(authorItems[t]).hasClass(z)) {
-              arrayStringAuthor.push(z);
+              arrayStringAuthor1.push(z);
             }
           }
           for (f in specialBlocks){
             if (jQuery(authorItems[t]).hasClass(f)) {
-              arrayStringAuthor.push(f);
+              arrayStringAuthor1.push(f);
             }
           }
         }
+        arrayStringAuthor2 = [];
+        var olAuthor = document.getElementById("partAuthor2");
+        var authorItems = olAuthor.getElementsByTagName("li");
+        for (var t = 0; t < authorItems.length; ++t) {
+          for (z in authorBlocks) {
+            if (jQuery(authorItems[t]).hasClass(z)) {
+              arrayStringAuthor2.push(z);
+            }
+          }
+          for (f in specialBlocks){
+            if (jQuery(authorItems[t]).hasClass(f)) {
+              arrayStringAuthor2.push(f);
+            }
+          }
+        }
+        arrayStringAuthor3 = [];
+        var olAuthor = document.getElementById("partAuthor3");
+        var authorItems = olAuthor.getElementsByTagName("li");
+        for (var t = 0; t < authorItems.length; ++t) {
+          for (z in authorBlocks) {
+            if (jQuery(authorItems[t]).hasClass(z)) {
+              arrayStringAuthor3.push(z);
+            }
+          }
+          for (f in specialBlocks){
+            if (jQuery(authorItems[t]).hasClass(f)) {
+              arrayStringAuthor3.push(f);
+            }
+          }
+        }
+
         if(arrayString.includes("-3")){
           var indexToSplit = arrayString.indexOf("-3");
           var first = arrayString.slice(0, indexToSplit);
-          var third = arrayString.slice(indexToSplit + 1);
-          var resultArray = first.concat(arrayStringAuthor).concat(third);
+          var last = arrayString.slice(indexToSplit + 1);
+          var mid = [1].concat(arrayStringAuthor1).concat([2]).concat(arrayStringAuthor2).concat([3]).concat(arrayStringAuthor3).concat([4]);
+          var resultArray = first.concat(mid).concat(last);
           var textField = document.getElementById("jform_string");
-          var txt = '{"-1:"[' + resultArray.toString() + ']}';
+          //var txt = '{"-1:"[' + resultArray.toString() + ']}';
+          var txt = resultArray.toString();
           textField.value = txt;
         } else {
           var textField = document.getElementById("jform_string");
-          var txt = '{"-1:"[' + arrayString.toString() + ']}';
+          //var txt = '{"-1:"[' + arrayString.toString() + ']}';
+          var txt = arrayString.toString();
           textField.value = txt;
         }
+        
+
       }
     }
 
@@ -356,11 +492,6 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
         accept: ".original, .cloned, .originalCharacter, .clonedCharacter",
         drop: function (ev, ui) {
           if (jQuery(ui.draggable).hasClass("original") || (jQuery(ui.draggable).hasClass("originalCharacter"))) {
-            if (jQuery(ui.draggable).hasClass("-3")) {
-              document.getElementById("authorArea").style.display = "flex";
-              document.getElementById("clonedAuthorArea").style.display =
-                "flex";
-            }
             document.getElementById("jform_string").value = "";
             var element = ui.draggable.clone();
             jQuery(element).addClass("clonedBlock");
@@ -377,13 +508,16 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
               revert: function (valid) {
                 if (!valid) {
                   if (jQuery(this).hasClass("-3")) {
-                    jQuery("#orderedAuthorList").empty();
+                    jQuery("#orderedAuthorList1").empty();
+                    jQuery("#orderedAuthorList2").empty();
+                    jQuery("#orderedAuthorList3").empty();
                     document.getElementById("authorArea").style.display =
                       "none";
                     document.getElementById("clonedAuthorArea").style.display =
                       "none";
                   }
                   jQuery(this).remove();
+                  jQuery(".-3").addClass("original");
                   document.getElementById("jform_string").value = "";
                 } else {
                   //jQuery(".cloned").css("top", "auto").css("left", "auto");
@@ -392,12 +526,18 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
               },
             });
             jQuery("#orderedlist").append(element);
+            if (jQuery(ui.draggable).hasClass("-3")) {
+              jQuery(".-3").removeClass("original");
+              document.getElementById("authorArea").style.display = "flex";
+              document.getElementById("clonedAuthorArea").style.display =
+                "flex";
+            }
           }
         },
       });
 
-      jQuery(".clonedAuthorArea").droppable({
-        accept: ".originalAuthor, .clonedAuthor, .clonedCharacter, .originalCharacter",
+      jQuery(".partAuthor1").droppable({
+        accept: ".originalAuthor, .clonedAuthor1, .clonedCharacter1, .originalCharacter",
         drop: function (ev, ui) {
           if (jQuery(ui.draggable).hasClass("originalAuthor") || (jQuery(ui.draggable).hasClass("originalCharacter"))) {
             document.getElementById("jform_string").value = "";
@@ -405,10 +545,10 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
             jQuery(element).removeClass("block");
             jQuery(element).addClass("clonedBlock");
             if(jQuery(ui.draggable).hasClass("originalAuthor")){
-              jQuery(element).addClass("clonedAuthor");
+              jQuery(element).addClass("clonedAuthor1");
               jQuery(element).removeClass("originalAuthor");
             } else{
-              jQuery(element).addClass("clonedCharacter");
+              jQuery(element).addClass("clonedCharacter1");
               jQuery(element).removeClass("originalCharacter");
             }
             jQuery(element).draggable({
@@ -423,7 +563,73 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                 }
               },
             });
-            jQuery("#orderedAuthorList").append(element);
+            jQuery("#orderedAuthorList1").append(element);
+          }
+        },
+      });
+
+
+      jQuery(".partAuthor2").droppable({
+        accept: ".originalAuthor, .clonedAuthor2, .clonedCharacter2, .originalCharacter",
+        drop: function (ev, ui) {
+          if (jQuery(ui.draggable).hasClass("originalAuthor") || (jQuery(ui.draggable).hasClass("originalCharacter"))) {
+            document.getElementById("jform_string").value = "";
+            var element = ui.draggable.clone();
+            jQuery(element).removeClass("block");
+            jQuery(element).addClass("clonedBlock");
+            if(jQuery(ui.draggable).hasClass("originalAuthor")){
+              jQuery(element).addClass("clonedAuthor2");
+              jQuery(element).removeClass("originalAuthor");
+            } else{
+              jQuery(element).addClass("clonedCharacter2");
+              jQuery(element).removeClass("originalCharacter");
+            }
+            jQuery(element).draggable({
+              //connectToSortable: "#orderedlist",
+              revert: function (valid) {
+                if (!valid) {
+                  jQuery(this).remove();
+                  document.getElementById("jform_string").value = "";
+                } else {
+                  //jQuery(".clonedAuthor").css("top", "auto").css("left", "auto");
+                  return true;
+                }
+              },
+            });
+            jQuery("#orderedAuthorList2").append(element);
+          }
+        },
+      });
+
+
+      jQuery(".partAuthor3").droppable({
+        accept: ".originalAuthor, .clonedAuthor3, .clonedCharacter3, .originalCharacter",
+        drop: function (ev, ui) {
+          if (jQuery(ui.draggable).hasClass("originalAuthor") || (jQuery(ui.draggable).hasClass("originalCharacter"))) {
+            document.getElementById("jform_string").value = "";
+            var element = ui.draggable.clone();
+            jQuery(element).removeClass("block");
+            jQuery(element).addClass("clonedBlock");
+            if(jQuery(ui.draggable).hasClass("originalAuthor")){
+              jQuery(element).addClass("clonedAuthor3");
+              jQuery(element).removeClass("originalAuthor");
+            } else{
+              jQuery(element).addClass("clonedCharacter3");
+              jQuery(element).removeClass("originalCharacter");
+            }
+            jQuery(element).draggable({
+              //connectToSortable: "#orderedlist",
+              revert: function (valid) {
+                if (!valid) {
+                  jQuery(this).remove();
+                  document.getElementById("jform_string").value = "";
+                } else {
+                  //jQuery(".clonedAuthor").css("top", "auto").css("left", "auto");
+                  return true;
+                }
+              },
+            });
+            jQuery("#orderedAuthorList3").append(element);
           }
         },
       });
@@ -495,11 +701,27 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                         ></ol>
                       </div>
                       <div class="clonedAuthorArea" id="clonedAuthorArea">
-                        <ol
-                          style="list-style-type: none;"
-                          class="containers"
-                          id="orderedAuthorList"
-                        ></ol>
+                        <div class="partAuthor1" id="partAuthor1">
+                          <ol
+                            style="list-style-type: none;"
+                            class="containers"
+                            id="orderedAuthorList1"
+                          ></ol>
+                      </div>
+                      <div class="partAuthor2" id="partAuthor2">
+                          <ol
+                            style="list-style-type: none;"
+                            class="containers"
+                            id="orderedAuthorList2"
+                          ></ol>
+                      </div>
+                      <div class="partAuthor3" id="partAuthor3">
+                          <ol
+                            style="list-style-type: none;"
+                            class="containers"
+                            id="orderedAuthorList3"
+                          ></ol>
+                      </div>
                       </div>
             </div>
             <div class="specialCharacters" style="flex:0.4">

@@ -120,8 +120,16 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\ItemModel
       $this->_item->modified_by_name = JFactory::getUser($this->_item->modified_by)->name;
     }
 
-    if (isset($this->_item->online_address)) {
+    if (isset($this->_item->online_address) && $this->_item->online_address != '') {
       $this->_item->online_address = "<a href='" . $this->_item->online_address . "'>" . $this->_item->online_address . "</a>";
+    }
+
+    if (isset($this->_item->access_date) && $this->_item->access_date == '0000-00-00 00:00:00') {
+      $this->_item->access_date = '';
+    }
+
+    if (isset($this->_item->published_on) && $this->_item->published_on == '0000-00-00 00:00:00') {
+      $this->_item->published_on = '';
     }
 
     if (isset($this->_item->reference_type) && $this->_item->reference_type != '') {

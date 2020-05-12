@@ -1,4 +1,4 @@
-# SET GLOBAL sort_buffer_size=524288;
+SET GLOBAL sort_buffer_size=524288;
 
 CREATE TABLE IF NOT EXISTS `#__pubdb_literature` (
                                                      `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,

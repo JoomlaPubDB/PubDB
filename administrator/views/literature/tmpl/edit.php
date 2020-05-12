@@ -171,6 +171,9 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 				<?php echo $this->form->renderField('eisbn'); ?>
 				<?php echo $this->form->renderField('volume'); ?>
 				<?php echo $this->form->renderField('authors'); ?>
+                <button onclick="Joomla.submitbutton('person.add');" class="btn btn-small button-new btn-success">
+                    <span class="icon-new icon-white" aria-hidden="true"></span>
+                    Neuer Autor</button>
 				<?php
 				foreach((array)$this->item->authors as $value)
 				{

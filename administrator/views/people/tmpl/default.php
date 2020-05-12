@@ -162,8 +162,16 @@ $sortFields = $this->getSortFields();
 				<?php endif; ?>
 
 				</td>				<td>
+				<?php if (isset($item->checked_out) && $item->checked_out && ($canEdit || $canChange)) : ?>
+					<?php echo JHtml::_('jgrid.checkedout', $i, $item->uEditor, $item->checked_out_time, 'people.', $canCheckin); ?>
+				<?php endif; ?>
+				<?php if ($canEdit) : ?>
+					<a href="<?php echo JRoute::_('index.php?option=com_pubdb&task=person.edit&id='.(int) $item->id); ?>">
+					<?php echo $this->escape($item->last_name); ?></a>
+				<?php else : ?>
+					<?php echo $this->escape($item->last_name); ?>
+				<?php endif; ?>
 
-					<?php echo $item->last_name; ?>
 				</td>				<td>
 
 					<?php echo $item->middle_name; ?>

@@ -191,7 +191,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\ItemModel
       if (!empty($textValue)) {
         $tmp = "";
         foreach ($textValue as $val)
-          $tmp .= " <a href=" . JRoute::_('index.php?view=person&id=' . (int)$val->id) . ">" . trim($val->fk_value) . "</a>,";
+          $tmp .= " <a href=" . JRoute::_(JUri::root() . 'index.php?view=person&id=' . (int)$val->id) . ">" . trim($val->fk_value) . "</a>,";
         $tmp = rtrim($tmp, ", ");
 
         $this->_item->periodical_id = $tmp;

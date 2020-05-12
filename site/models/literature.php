@@ -168,7 +168,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\ItemModel
         $query = $db->getQuery(true);
 
         $query
-          ->select('CONCAT(`#__pubdb_periodical_3418585`.`issn`, \',\', `#__pubdb_periodical_3418585`.`name`) AS `fk_value, id`')
+          ->select('CONCAT(`#__pubdb_periodical_3418585`.`issn`, \',\', `#__pubdb_periodical_3418585`.`name`) AS `fk_value`, id')
           ->from($db->quoteName('#__pubdb_periodical', '#__pubdb_periodical_3418585'))
           ->where($db->quoteName('id') . ' = ' . $db->quote($value));
 
@@ -316,7 +316,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\ItemModel
         $query = $db->getQuery(true);
 
         $query
-          ->select('CONCAT(`#__pubdb_person_3418649`.`first_name`, \' \', `#__pubdb_person_3418649`.`last_name`, \' \', `#__pubdb_person_3418649`.`middle_name`) AS `fk_value, id`')
+          ->select('CONCAT(`#__pubdb_person_3418649`.`first_name`, \' \', `#__pubdb_person_3418649`.`last_name`, \' \', `#__pubdb_person_3418649`.`middle_name`) AS `fk_value`, id')
           ->from($db->quoteName('#__pubdb_person', '#__pubdb_person_3418649'))
           ->where($db->quoteName('id') . ' = ' . $db->quote($value));
 

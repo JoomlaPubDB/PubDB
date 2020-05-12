@@ -44,7 +44,7 @@ class PubdbControllerImporter extends JControllerAdmin
       // BIBTEX Import
       case 1:
         $importer = new PubdbBibTexImporter(file_get_contents($dest));
-        $msg = json_encode($importer->startImport());
+        $msg = JText::sprintf( 'COM_PUBDB_IMPORT_MSG', count($importer->startImport()) );
         break;
     }
 

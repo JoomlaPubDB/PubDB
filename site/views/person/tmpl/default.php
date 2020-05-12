@@ -14,35 +14,45 @@ defined('_JEXEC') or die;
 
 <div class="item_fields">
 
-	<table class="table">
-		
+    <table class="table">
 
-		<tr>
-			<th><?php echo JText::_('COM_PUBDB_FORM_LBL_PERSON_FIRST_NAME'); ?></th>
-			<td><?php echo $this->item->first_name; ?></td>
-		</tr>
 
-		<tr>
-			<th><?php echo JText::_('COM_PUBDB_FORM_LBL_PERSON_LAST_NAME'); ?></th>
-			<td><?php echo $this->item->last_name; ?></td>
-		</tr>
+      <?php if (isset($this->item->first_name) && $this->item->first_name !== ''): ?>
+          <tr>
+              <th><?php echo JText::_('COM_PUBDB_FORM_LBL_PERSON_FIRST_NAME'); ?></th>
+              <td><?php echo $this->item->first_name; ?></td>
+          </tr>
+      <?php endif ?>
 
-		<tr>
-			<th><?php echo JText::_('COM_PUBDB_FORM_LBL_PERSON_MIDDLE_NAME'); ?></th>
-			<td><?php echo $this->item->middle_name; ?></td>
-		</tr>
+      <?php if (isset($this->item->last_name) && $this->item->last_name !== ''): ?>
+          <tr>
+              <th><?php echo JText::_('COM_PUBDB_FORM_LBL_PERSON_LAST_NAME'); ?></th>
+              <td><?php echo $this->item->last_name; ?></td>
+          </tr>
+      <?php endif ?>
 
-		<tr>
-			<th><?php echo JText::_('COM_PUBDB_FORM_LBL_PERSON_SEX'); ?></th>
-			<td><?php echo $this->item->sex; ?></td>
-		</tr>
+      <?php if (isset($this->item->middle_name) && $this->item->middle_name !== ''): ?>
+          <tr>
+              <th><?php echo JText::_('COM_PUBDB_FORM_LBL_PERSON_MIDDLE_NAME'); ?></th>
+              <td><?php echo $this->item->middle_name; ?></td>
+          </tr>
+      <?php endif ?>
 
-		<tr>
-			<th><?php echo JText::_('COM_PUBDB_FORM_LBL_PERSON_TITLE'); ?></th>
-			<td><?php echo $this->item->title; ?></td>
-		</tr>
+      <?php if (isset($this->item->sex) && $this->item->sex !== ''): ?>
+          <tr>
+              <th><?php echo JText::_('COM_PUBDB_FORM_LBL_PERSON_SEX'); ?></th>
+              <td><?php echo $this->item->sex; ?></td>
+          </tr>
+      <?php endif ?>
 
-	</table>
+      <?php if (isset($this->item->title) && $this->item->title !== ''): ?>
+          <tr>
+              <th><?php echo JText::_('COM_PUBDB_FORM_LBL_PERSON_TITLE'); ?></th>
+              <td><?php echo $this->item->title; ?></td>
+          </tr>
+      <?php endif ?>
+
+    </table>
 
 </div>
 

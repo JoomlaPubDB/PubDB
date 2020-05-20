@@ -8,11 +8,11 @@
  */
 
 // No direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.controller');
 jimport('joomla.filesystem.file');
 
-require(JPATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'helpers'. DIRECTORY_SEPARATOR ."importer.php");
+require(JPATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . "importer.php");
 
 /**
  * Importer controller class.
@@ -27,27 +27,52 @@ class PubdbControllerImporter extends JControllerAdmin
    * @throws Exception
    */
 
-  public function import() {
+  /**
+   * Importer Task to import files to literature
+   * @throws Exception
+   */
+  public function import()
+  {
     $msgtype = '';
     $jinput = JFactory::getApplication()->input;
-    $post   = $jinput->get('jform', 'array()', 'ARRAY');
-    $importfile = $jinput->files->get('jform', null, 'files', 'array' );
+    $post = $jinput->get('jform', 'array()', 'ARRAY');
+    $importfile = $jinput->files->get('jform', null, 'files', 'array');
     $link = 'index.php?option=com_pubdb&view=importer';
     $filename = JFile::makeSafe($importfile['import_file']['name']);
     $src = $importfile['import_file']['tmp_name'];
-    $dest = JPATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'helpers'. DIRECTORY_SEPARATOR ."uploads" . DIRECTORY_SEPARATOR . $filename;
+    $dest = JPATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . $filename;
     JFile::upload($src, $dest);
 
     $type = $post['type'];
     $msg = "";
-    switch ($type){
+    switch ($type) {
       // BIBTEX Import
       case 1:
         $importer = new PubdbBibTexImporter(file_get_contents($dest));
-        $msg = JText::sprintf( 'COM_PUBDB_IMPORT_MSG', count($importer->startImport()) );
+        $msg = JText::sprintf('COM_PUBDB_IMPORT_MSG', count($importer->startImport()));
         break;
     }
 
+    $this->setRedirect($link, $msg, $msgtype);
+  }
+
+  /**
+   * Export Task to export literatures to file download
+   * @throws Exception
+   */
+  public function export()
+  {
+    $msgtype = '';
+    $jinput = JFactory::getApplication()->input;
+    $post = $jinput->get('jform', 'array()', 'ARRAY');
+    $link = 'index.php?option=com_pubdb&view=importer&format=raw';
+    $type = $post['type_export'];
+    $msg = "";
+    $exporter = new PubdbBibTexExporter(array());
+    $fileString = $exporter->startExport();
+    $this->set('Export', $fileString);
+    $session = JFactory::getSession();
+    $session->set('Export', $fileString, 'PubDB');
     $this->setRedirect($link, $msg, $msgtype);
   }
 }

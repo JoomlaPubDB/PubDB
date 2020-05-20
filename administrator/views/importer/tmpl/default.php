@@ -40,6 +40,24 @@ JHtml::_('formbehavior.chosen', 'select');
           </div>
         </fieldset>
       </div>
+      <div class="row-fluid">
+        <fieldset class="form-horizontal">
+          <legend><?php echo JText::_( 'COM_PUBDB_TITLE_EXPORTER' ); ?></legend>
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('type_export'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('type_export'); ?></div>
+              </div>
+              <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('export_file'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('export_file'); ?></div>
+              </div>
+              <button class="btn btn-primary" type="submit" onclick="document.getElementById('task').value = 'importer.export';this.form.submit()" /><i class="icon-upload icon-white"></i> <?php echo JText::_('COM_PUBDB_EXPORT'); ?></button>
+            </div>
+          </div>
+        </fieldset>
+      </div>
     </div>
     <?php echo JHTML::_( 'form.token' ); ?>
     <input type="hidden" name="option" value="com_pubdb" />

@@ -49,6 +49,7 @@ $document->addStyleSheet('https://cdn.datatables.net/searchpanes/1.0.1/css/searc
 //print_r($this->state);
 $stateArr = (array) $this->state;
 $filter = $stateArr['parameters.menu']['frontend_filter'];
+
 $arrFilterMapping = array(
   'publisher_name' => 1,
   'authors' => 2,
@@ -57,12 +58,17 @@ $arrFilterMapping = array(
   'series_title_name' => 5,
   'ref_type' => 6
 );
-
 $targets = array();
-foreach ($filter as $key => $v){
-  $targets[] = $arrFilterMapping[$v];
-}
 $default = array(1,2,3,4,5,6);
+
+if(!empty($filter)){
+  foreach ($filter as $key => $v){
+    $targets[] = $arrFilterMapping[$v];
+  }
+}else{
+  $targets = $default;
+}
+
 $remove = array_diff($default, $targets);
 ?>
 <table id="example" class="display">

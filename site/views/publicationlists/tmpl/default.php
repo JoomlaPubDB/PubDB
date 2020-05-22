@@ -63,7 +63,7 @@ foreach ($filter as $key => $v){
   $targets[] = $arrFilterMapping[$v];
 }
 $default = array(1,2,3,4,5,6);
-$targets = array_diff($default, $targets);
+$remove = array_diff($default, $targets);
 ?>
 <table id="example" class="display">
   <thead>
@@ -84,7 +84,6 @@ $targets = array_diff($default, $targets);
 
 <script>
   let data = <?php echo json_encode($this->items)?>;
-  console.log('test');
   jQuery(document).ready(function() {
       //init data table with citation  style column
       jQuery('#example').DataTable({
@@ -113,10 +112,16 @@ $targets = array_diff($default, $targets);
         },
         columnDefs:[
           {
+            targets: [<?php echo implode(',', $targets);?>],
             searchPanes:{
-              show: false,
-            },
-            targets: [ <?php echo implode(',', $targets); ?>],
+              show: true
+            }
+          },
+          {
+            targets: [<?php echo implode(',', $remove);?>],
+            searchPanes:{
+              show: false
+            }
           },
           {
             targets: [0],
@@ -124,9 +129,9 @@ $targets = array_diff($default, $targets);
             searchable: true,
           },
           {
-            targets: [1, 2 , 3 ,4 ,5 ,6],
+            targets: [1,2,3,4,5,6],
             visible: false,
-            searchable: false
+            searchable: true
           }
 
         ]

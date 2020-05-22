@@ -1,4 +1,5 @@
-SET GLOBAL sort_buffer_size=524288;
+-- if you get problems with the sort_buffer_size you should increas like nest statement
+-- SET GLOBAL sort_buffer_size=524288;
 
 CREATE TABLE IF NOT EXISTS `#__pubdb_literature` (
                                                      `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -289,6 +290,7 @@ CREATE OR REPLACE VIEW `#__pubdb_publication_list` AS
 SELECT
     l.id,
     l.title,
+    l.state,
     l.subtitle,
     l.published_on,
     l.access_date,

@@ -46,70 +46,94 @@ $document->addScript('https://cdn.datatables.net/select/1.3.1/js/dataTables.sele
 $document->addStyleSheet('https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css');
 
 $document->addStyleSheet('https://cdn.datatables.net/searchpanes/1.0.1/css/searchPanes.dataTables.min.css');
+//print_r($this->state);
+$stateArr = (array) $this->state;
+$filter = $stateArr['parameters.menu']['frontend_filter'];
+$arrFilterMapping = array(
+  'publisher_name' => 1,
+  'authors' => 2,
+  'year' => 3,
+  'keywords' => 4,
+  'series_title_name' => 5,
+  'ref_type' => 6
+);
 
+$targets = array();
+foreach ($filter as $key => $v){
+  $targets[] = $arrFilterMapping[$v];
+}
+$default = array(1,2,3,4,5,6);
+$targets = array_diff($default, $targets);
 ?>
-  <table id="example" class="display">
-    <thead>
-    <tr>
-      <th>Publication List</th>
-      <th>Author</th>
-      <th>Year</th>
-      <th>Reference Type</th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+<table id="example" class="display">
+  <thead>
+  <tr>
+    <th>Publication List</th>
+    <th><?php echo JText::sprintf('COM_PUBDB_FORM_LBL_LITERATURE_PUBLISHERS');?></th>
+    <th><?php echo JText::sprintf('COM_PUBDB_FORM_LBL_LITERATURE_AUTHORS');?></th>
+    <th> <?php echo JText::sprintf('COM_PUBDB_YEAR');?> </th>
+    <th><?php echo JText::sprintf('COM_PUBDB_LITERATURES_KEYWORDS');?></th>
+    <th><?php echo JText::sprintf('COM_PUBDB_TITLE_SERIES_TITLES');?></th>
+    <th><?php echo JText::sprintf('COM_PUBDB_TITLE_REFERENCETYPES');?></th>
+  </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
 
 
-  <script>
-    let data = <?php echo json_encode($this->items)?>;
-    jQuery(document).ready(function() {
-        //init data table with citation  style column
-        jQuery('#example').DataTable({
-          "data": data,
-          "stateSave": true,
-          "columns": [
-            {"data": "formatted_string"},
-            {"data": "authors"},
-            {"data": "year"},
-            {"data": "ref_type"}
-          ],
-          searchPanes:{
-            layout: 'columns-4',
-            viewTotal: true,
-            cascadePanes: true,
-          },
-          dom: 'Pfrtip',
-          language: {
-            searchPanes: {
-              count: '{total} found',
-              countFiltered: '{shown} of {total}'
-            }
-          },
-          columnDefs:[
-            {
-              searchPanes:{
-                show: true,
-              },
-              targets: [1, 2],
+<script>
+  let data = <?php echo json_encode($this->items)?>;
+  console.log('test');
+  jQuery(document).ready(function() {
+      //init data table with citation  style column
+      jQuery('#example').DataTable({
+        "data": data,
+        "stateSave": false,
+        "columns": [
+          {"data": "formatted_string"},
+          {"data": "publisher_name"},
+          {"data": "authors"},
+          {"data": "year"},
+          {"data": "keywords"},
+          {"data": "series_title_name"},
+          {"data": "ref_type"}
+        ],
+        searchPanes:{
+          layout: 'columns-4',
+          viewTotal: true,
+          cascadePanes: true,
+        },
+        dom: 'Pfrtip',
+        language: {
+          searchPanes: {
+            count: '{total} found',
+            countFiltered: '{shown} of {total}'
+          }
+        },
+        columnDefs:[
+          {
+            searchPanes:{
+              show: false,
             },
-            {
-              targets: [0],
-              visible: true,
-              searchable: true,
-            },
-            {
-              targets: [1, 2, 3],
-              visible: false,
-              searchable: true
-            }
+            targets: [ <?php echo implode(',', $targets); ?>],
+          },
+          {
+            targets: [0],
+            visible: true,
+            searchable: true,
+          },
+          {
+            targets: [1, 2 , 3 ,4 ,5 ,6],
+            visible: false,
+            searchable: false
+          }
 
-          ]
-        });
-      }
-    );
-  </script>
+        ]
+      });
+    }
+  );
+</script>
 
 <?php
 

@@ -24,12 +24,12 @@
 	<config>
 		<fields name="params">
 			<fieldset
-					name="content_type"
-					label="MOD_PUBDB_CONTENT_TYPE_TAB_LBL"
+					name="lit_ids"
+					label="MOD_PUBDB_ADDING_LITERATURE_TAB_LBL"
 					description="MOD_PUBDB_CONTENT_TYPE_TAB_DESC">
 				<field
-						name="content_type" type="sql"
-						label="MOD_PUBDB_CONTENT_TYPE_LBL"
+						name="lit_ids" type="sql"
+						label="MOD_PUBDB_ADDING_LITERATURE_TAB_LBL"
 						description="MOD_PUBDB_CONTENT_TYPE_DESC"
 						query="select `id`,`title` from #__pubdb_publication_list"
 						key_field="id"
@@ -43,7 +43,7 @@
 						type="sql"
 						key_field="id"
 						value_field="name"
-						label="COM_PUBDB_TAB_CITATIONSTYLE"
+						label="MOD_PUBDB_FIELD_CITATIONSTYLE"
 						require="true"
 						description="JGLOBAL_SHOW_TITLE_DESC">
 				</field>

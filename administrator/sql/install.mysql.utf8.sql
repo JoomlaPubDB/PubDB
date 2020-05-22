@@ -290,7 +290,6 @@ CREATE OR REPLACE VIEW `#__pubdb_publication_list` AS
 SELECT
     l.id,
     l.title,
-    l.state,
     l.subtitle,
     l.published_on,
     l.access_date,
@@ -391,4 +390,6 @@ left join #__pubdb_series_title as series_title
           on l.series_title_id = series_title.id
 
 left join #__pubdb_publisher as publisher
-          on l.publishers = publisher.id;
+          on l.publishers = publisher.id
+
+WHERE l.state = 1;

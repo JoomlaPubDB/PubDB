@@ -72,4 +72,25 @@
 
     </fieldset>
   </fields>
+
+  <fields name="params">
+    <fieldset
+      name="Layout"
+      label="COM_PUBDB_FIELDSET_LAYOUT_LABEL">
+      <field
+        name="frontend_filter"
+        type="list"
+        multiple="true"
+        label="COM_PUBDB_LAYOUT_SELECTION"
+        require="true"
+        description="JGLOBAL_SHOW_TITLE_DESC">
+        <option value="publisher_name">COM_PUBDB_FORM_LBL_LITERATURE_PUBLISHERS</option>
+        <option value="authors">COM_PUBDB_FORM_LBL_LITERATURE_AUTHORS</option>
+        <option value="year">COM_PUBDB_YEAR</option>
+        <option value="keywords">COM_PUBDB_LITERATURES_KEYWORDS</option>
+        <option value="series_title_name">COM_PUBDB_TITLE_SERIES_TITLES</option>
+        <option value="ref_type">COM_PUBDB_TITLE_REFERENCETYPES</option>
+      </field>
+    </fieldset>
+  </fields>
 </metadata>

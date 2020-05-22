@@ -1,199 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.0" method="upgrade" client="site">
-    <name>MOD_PUBDB_NAME</name>
-    <creationDate>2020-05-06</creationDate>
-    <copyright>2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</copyright>
-    <license>GNU General Public License Version 2 oder neuer; siehe LICENSE.txt</license>
-    <author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
-    <authorEmail></authorEmail>
-    <authorUrl></authorUrl>
-    <version>CVS: 0.0.7</version>
-    <description>MOD_PUBDB_DESCRIPTION</description>
-    
-    <files>
-        <filename module="mod_pubdb">mod_pubdb.php</filename>
-        <filename>helper.php</filename>
-        <filename>index.html</filename>
-        <folder>tmpl</folder>
-    </files>
-    <languages folder="language">
-        
-			<language tag="de-DE">de-DE/de-DE.mod_pubdb.ini</language>
-			<language tag="de-DE">de-DE/de-DE.mod_pubdb.sys.ini</language>
-    </languages>
-    <config>
-        <fields name="params">
-            <fieldset 
-                name="content_type" 
-                label="MOD_PUBDB_CONTENT_TYPE_TAB_LBL"
-                description="MOD_PUBDB_CONTENT_TYPE_TAB_DESC">
-                <field
-                    name="content_type" type="list"
-                    label="MOD_PUBDB_CONTENT_TYPE_LBL"
-                    description="MOD_PUBDB_CONTENT_TYPE_DESC">
-                    <option value="blank">MOD_PUBDB_CUSTOM_CONTENT</option>
-                    <option value="list">MOD_PUBDB_LIST</option>
-                    <option value="item">MOD_PUBDB_ITEM</option>
-                </field>
-            </fieldset>
-            <fieldset 
-                name="blank_content" 
-                label="MOD_PUBDB_CUSTOM_CONTENT_TAB_LBL"
-                description="MOD_PUBDB_CUSTOM_CONTENT_TAB_DESC">
-                <field 
-                    name="html_content" type="editor" filter="safehtml"
-                    label="MOD_PUBDB_HTML_LBL"
-                    description="MOD_PUBDB_HTML_DESC" />
-            </fieldset>
-            <fieldset 
-                name="list_content" 
-                label="MOD_PUBDB_LIST_CONTENT_TAB_LBL"
-                description="MOD_PUBDB_LIST_CONTENT_TAB_DESC">
-                <field
-                    name="table" type="list"
-                    label="MOD_PUBDB_TABLE_LBL"
-                    description="MOD_PUBDB_TABLE_DESC">
-                    
-	<option value="#__pubdb_literature">#__pubdb_literature</option>
-	<option value="#__pubdb_periodical">#__pubdb_periodical</option>
-	<option value="#__pubdb_series_title">#__pubdb_series_title</option>
-	<option value="#__pubdb_person">#__pubdb_person</option>
-	<option value="#__pubdb_publisher">#__pubdb_publisher</option>
-	<option value="#__pubdb_keywords">#__pubdb_keywords</option>
-	<option value="#__pubdb_citation_style">#__pubdb_citation_style</option>
-	<option value="#__pubdb_reference_types">#__pubdb_reference_types</option>
-	<option value="#__pubdb_blocks">#__pubdb_blocks</option>
-                </field>
-                <field 
-                    name="field" type="groupedlist" default=""
-                    label="MOD_PUBDB_FIELD_LBL"
-                    description="MOD_PUBDB_FIELD_DESC">
-                    
-	<group label="#__pubdb_literature">
-		<option value="#__pubdb_literature:id">id</option>
-		<option value="#__pubdb_literature:created_by">created_by</option>
-		<option value="#__pubdb_literature:modified_by">modified_by</option>
-		<option value="#__pubdb_literature:year">year</option>
-		<option value="#__pubdb_literature:month">month</option>
-		<option value="#__pubdb_literature:day">day</option>
-		<option value="#__pubdb_literature:title">title</option>
-		<option value="#__pubdb_literature:subtitle">subtitle</option>
-		<option value="#__pubdb_literature:published_on">published_on</option>
-		<option value="#__pubdb_literature:reference_type">reference_type</option>
-		<option value="#__pubdb_literature:access_date">access_date</option>
-		<option value="#__pubdb_literature:language">language</option>
-		<option value="#__pubdb_literature:doi">doi</option>
-		<option value="#__pubdb_literature:isbn">isbn</option>
-		<option value="#__pubdb_literature:online_address">online_address</option>
-		<option value="#__pubdb_literature:page_count">page_count</option>
-		<option value="#__pubdb_literature:page_range">page_range</option>
-		<option value="#__pubdb_literature:periodical_id">periodical_id</option>
-		<option value="#__pubdb_literature:place_of_publication">place_of_publication</option>
-		<option value="#__pubdb_literature:pub_med_id">pub_med_id</option>
-		<option value="#__pubdb_literature:series_title_id">series_title_id</option>
-		<option value="#__pubdb_literature:eisbn">eisbn</option>
-		<option value="#__pubdb_literature:volume">volume</option>
-		<option value="#__pubdb_literature:authors">authors</option>
-		<option value="#__pubdb_literature:translators">translators</option>
-		<option value="#__pubdb_literature:others_involved">others_involved</option>
-		<option value="#__pubdb_literature:publishers">publishers</option>
-		<option value="#__pubdb_literature:keywords">keywords</option>
-	</group>
-	<group label="#__pubdb_periodical">
-		<option value="#__pubdb_periodical:id">id</option>
-		<option value="#__pubdb_periodical:created_by">created_by</option>
-		<option value="#__pubdb_periodical:modified_by">modified_by</option>
-		<option value="#__pubdb_periodical:issn">issn</option>
-		<option value="#__pubdb_periodical:name">name</option>
-		<option value="#__pubdb_periodical:eissn">eissn</option>
-	</group>
-	<group label="#__pubdb_series_title">
-		<option value="#__pubdb_series_title:id">id</option>
-		<option value="#__pubdb_series_title:created_by">created_by</option>
-		<option value="#__pubdb_series_title:modified_by">modified_by</option>
-		<option value="#__pubdb_series_title:name">name</option>
-		<option value="#__pubdb_series_title:series_title_editor">series_title_editor</option>
-	</group>
-	<group label="#__pubdb_person">
-		<option value="#__pubdb_person:id">id</option>
-		<option value="#__pubdb_person:created_by">created_by</option>
-		<option value="#__pubdb_person:modified_by">modified_by</option>
-		<option value="#__pubdb_person:first_name_initial">first_name_initial</option>
-		<option value="#__pubdb_person:first_name">first_name</option>
-		<option value="#__pubdb_person:last_name">last_name</option>
-		<option value="#__pubdb_person:middle_name">middle_name</option>
-		<option value="#__pubdb_person:sex">sex</option>
-		<option value="#__pubdb_person:title">title</option>
-	</group>
-	<group label="#__pubdb_publisher">
-		<option value="#__pubdb_publisher:id">id</option>
-		<option value="#__pubdb_publisher:created_by">created_by</option>
-		<option value="#__pubdb_publisher:modified_by">modified_by</option>
-		<option value="#__pubdb_publisher:name">name</option>
-	</group>
-	<group label="#__pubdb_keywords">
-		<option value="#__pubdb_keywords:id">id</option>
-		<option value="#__pubdb_keywords:created_by">created_by</option>
-		<option value="#__pubdb_keywords:modified_by">modified_by</option>
-		<option value="#__pubdb_keywords:name">name</option>
-	</group>
-	<group label="#__pubdb_citation_style">
-		<option value="#__pubdb_citation_style:id">id</option>
-		<option value="#__pubdb_citation_style:created_by">created_by</option>
-		<option value="#__pubdb_citation_style:modified_by">modified_by</option>
-		<option value="#__pubdb_citation_style:name">name</option>
-		<option value="#__pubdb_citation_style:string">string</option>
-	</group>
-	<group label="#__pubdb_reference_types">
-		<option value="#__pubdb_reference_types:id">id</option>
-		<option value="#__pubdb_reference_types:created_by">created_by</option>
-		<option value="#__pubdb_reference_types:modified_by">modified_by</option>
-		<option value="#__pubdb_reference_types:name">name</option>
-		<option value="#__pubdb_reference_types:lable">lable</option>
-	</group>
-	<group label="#__pubdb_blocks">
-		<option value="#__pubdb_blocks:id">id</option>
-		<option value="#__pubdb_blocks:created_by">created_by</option>
-		<option value="#__pubdb_blocks:modified_by">modified_by</option>
-		<option value="#__pubdb_blocks:name">name</option>
-		<option value="#__pubdb_blocks:lable">lable</option>
-		<option value="#__pubdb_blocks:category">category</option>
-	</group>
-                </field>
-                <field 
-                    name="offset" type="text" default="0" filter="uint" class="input-small"
-                    label="MOD_PUBDB_OFFSET_LBL"
-                    description="MOD_PUBDB_OFFSET_DESC" />
-                <field 
-                    name="limit" type="text" default="10" filter="uint" class="input-small"
-                    label="MOD_PUBDB_LIMIT_LBL"
-                    description="MOD_PUBDB_LIMIT_DESC" />
-            </fieldset>
-            <fieldset 
-                name="item_content" 
-                label="MOD_PUBDB_ITEM_CONTENT_TAB"
-                description="MOD_PUBDB_ITEM_CONTENT_TAB_DESC">
-                <field
-                    name="item_table" type="list"
-                    label="MOD_PUBDB_TABLE_LBL"
-                    description="MOD_PUBDB_TABLE_DESC">
-                    
-	<option value="#__pubdb_literature">#__pubdb_literature</option>
-	<option value="#__pubdb_periodical">#__pubdb_periodical</option>
-	<option value="#__pubdb_series_title">#__pubdb_series_title</option>
-	<option value="#__pubdb_person">#__pubdb_person</option>
-	<option value="#__pubdb_publisher">#__pubdb_publisher</option>
-	<option value="#__pubdb_keywords">#__pubdb_keywords</option>
-	<option value="#__pubdb_citation_style">#__pubdb_citation_style</option>
-	<option value="#__pubdb_reference_types">#__pubdb_reference_types</option>
-	<option value="#__pubdb_blocks">#__pubdb_blocks</option>
-                </field>
-                <field 
-                    name="item_id" type="text" filter="uint" class="input-small"
-                    label="MOD_PUBDB_ITEM_ID_LBL"
-                    description="MOD_PUBDB_ITEM_ID_DESC"
-                />
-            </fieldset>
-        </fields>
-    </config>
+	<name>MOD_PUBDB_NAME</name>
+	<creationDate>2020-05-06</creationDate>
+	<copyright>2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</copyright>
+	<license>GNU General Public License Version 2 oder neuer; siehe LICENSE.txt</license>
+	<author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
+	<authorEmail></authorEmail>
+	<authorUrl></authorUrl>
+	<version>CVS: 0.0.7</version>
+	<description>MOD_PUBDB_DESCRIPTION</description>
+
+	<files>
+		<filename module="mod_pubdb">mod_pubdb.php</filename>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>
+		<folder>tmpl</folder>
+	</files>
+	<languages folder="language">
+
+		<language tag="de-DE">de-DE/de-DE.mod_pubdb.ini</language>
+		<language tag="de-DE">de-DE/de-DE.mod_pubdb.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset
+					name="content_type"
+					label="MOD_PUBDB_CONTENT_TYPE_TAB_LBL"
+					description="MOD_PUBDB_CONTENT_TYPE_TAB_DESC">
+				<field
+						name="content_type" type="sql"
+						label="MOD_PUBDB_CONTENT_TYPE_LBL"
+						description="MOD_PUBDB_CONTENT_TYPE_DESC"
+						query="select `id`,`title` from #__pubdb_publication_list"
+						key_field="id"
+						value_field="title"
+						multiple="true"
+				>
+				</field>
+				<field
+						name="citation_style_id"
+						query="SELECT DISTINCT `id`,`name` FROM #__pubdb_citation_style ORDER BY `id`"
+						type="sql"
+						key_field="id"
+						value_field="name"
+						label="COM_PUBDB_TAB_CITATIONSTYLE"
+						require="true"
+						description="JGLOBAL_SHOW_TITLE_DESC">
+				</field>
+			</fieldset>
+		</fields>
+	</config>
 </extension>

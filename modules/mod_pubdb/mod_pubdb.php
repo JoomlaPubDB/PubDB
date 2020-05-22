@@ -25,4 +25,4 @@ $doc->addStyleSheet(URI::base() . 'media/mod_pubdb/css/style.css');
 /* */
 $doc->addScript(URI::base() . 'media/mod_pubdb/js/script.js');
 
-require ModuleHelper::getLayoutPath('mod_pubdb', $params->get('content_type', 'blank'));
+require ModuleHelper::getLayoutPath('mod_pubdb', 'list');

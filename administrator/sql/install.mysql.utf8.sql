@@ -1,3 +1,6 @@
+-- if you get problems with the sort_buffer_size you should increas like nest statement
+-- SET GLOBAL sort_buffer_size=524288;
+
 CREATE TABLE IF NOT EXISTS `#__pubdb_literature` (
                                                      `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 
@@ -387,4 +390,6 @@ left join #__pubdb_series_title as series_title
           on l.series_title_id = series_title.id
 
 left join #__pubdb_publisher as publisher
-          on l.publishers = publisher.id;
+          on l.publishers = publisher.id
+
+WHERE l.state = 1;

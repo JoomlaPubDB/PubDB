@@ -183,6 +183,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 					}
 				}
 				?>
+                <?php echo $this->form->renderField('person_subform'); ?>
 				<?php echo $this->form->renderField('translators'); ?>
 				<?php
 				foreach((array)$this->item->translators as $value)

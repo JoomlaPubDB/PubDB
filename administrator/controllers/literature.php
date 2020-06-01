@@ -87,9 +87,9 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $db_in = JFactory::getDbo();
       $query_in = $db_in->getQuery(true);
       $query_in->insert('#__pubdb_person');
-      $query_in->columns($db->quoteName(array('first_name', 'last_name', 'first_name_initial', 'middle_name', 'title', 'sex')));
+      $query_in->columns($db->quoteName(array('first_name', 'last_name', 'first_name_initial', 'middle_name', 'title', 'sex', 'created_by', 'modified_by')));
       $query_in->values(implode(',', array($db->quote($first_name), $db->quote($last_name), $db->quote($first_name_initial),
-        $db->quote($author['middle_name']), $db->quote($author['title']), $db->quote($author['sex'])
+        $db->quote($author['middle_name']), $db->quote($author['title']), $db->quote($author['sex']), JFactory::getUser()->id, JFactory::getUser()->id
       )));
       $db_in->setQuery($query_in);
       $db_in->execute();

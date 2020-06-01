@@ -44,10 +44,10 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
   {
     $model = $this->getModel();
     $data = $this->input->post->get('jform', array(), 'array');
-    if (isset($data['person_subform'])) {
+    if (isset($data['author_subform'])) {
       $arrAuthors = array();
-      foreach ($data['person_subform'] as $author) {
-        $arrAuthors[] = (int)$this->checkForNewAuthor($author);
+      foreach ($data['author_subform'] as $author) {
+        $arrAuthors[] = (int)$this->checkForNewPerson($author);
       }
       $authors = isset($data['authors']) ? $data['authors'] : array();
       $arr_merged = array_unique(array_merge($arrAuthors, $authors));
@@ -55,16 +55,60 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['authors'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
+    if (isset($data['translator_subform'])) {
+      $arrTranslators = array();
+      foreach ($data['translator_subform'] as $translator) {
+        $arrTranslators[] = (int)$this->checkForNewPerson($translator);
+      }
+      $translators = isset($data['translators']) ? $data['translators'] : array();
+      $arr_merged = array_unique(array_merge($arrTranslators, $translators));
+
+      $data['translators'] = $arr_merged;
+      $this->input->post->set('jform', $data);
+    }
+    if (isset($data['other_subform'])) {
+      $arrOthersInvolved = array();
+      foreach ($data['other_subform'] as $otherInvolved) {
+        $arrOthersInvolved[] = (int)$this->checkForNewPerson($otherInvolved);
+      }
+      $othersInvolved = isset($data['others_involved']) ? $data['others_involved'] : array();
+      $arr_merged = array_unique(array_merge($arrOthersInvolved, $othersInvolved));
+
+      $data['others_involved'] = $arr_merged;
+      $this->input->post->set('jform', $data);
+    }
+    if (isset($data['publisher_subform'])) {
+      $arrPublishers = array();
+      foreach ($data['publisher_subform'] as $publisher) {
+        $arrPublishers[] = (int)$this->checkForNewPublisher($publisher);
+      }
+      $publishers = isset($data['publishers']) ? $data['publishers'] : array();
+      $arr_merged = array_unique(array_merge($arrPublishers, $publishers));
+
+      $data['publishers'] = $arr_merged;
+      $this->input->post->set('jform', $data);
+    }
+    if (isset($data['keyword_subform'])) {
+      $arrKeywords = array();
+      foreach ($data['keyword_subform'] as $keyword) {
+        $arrKeywords[] = (int)$this->checkForNewKeyword($keyword);
+      }
+      $keywords = isset($data['keywords']) ? $data['keywords'] : array();
+      $arr_merged = array_unique(array_merge($arrKeywords, $keywords));
+
+      $data['keywords'] = $arr_merged;
+      $this->input->post->set('jform', $data);
+    }
     return parent::save($key, $urlVar);
   }
 
   /**
-   * Check if new Author already exists and insert new one. Return person id in both cases.
+   * Check if new Person already exists and insert new one. Return person id in both cases.
    * @param $author
    * @return mixed
    * @since 0.0.7
    */
-  private function checkForNewAuthor($author)
+  private function checkForNewPerson($author)
   {
     $db = JFactory::getDbo();
     $first_name = $author['first_name'];
@@ -87,9 +131,75 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $db_in = JFactory::getDbo();
       $query_in = $db_in->getQuery(true);
       $query_in->insert('#__pubdb_person');
-      $query_in->columns($db->quoteName(array('first_name', 'last_name', 'first_name_initial', 'middle_name', 'title', 'sex', 'created_by', 'modified_by')));
+      $query_in->columns($db->quoteName(array('first_name', 'last_name', 'first_name_initial', 'middle_name', 'title', 'sex')));
       $query_in->values(implode(',', array($db->quote($first_name), $db->quote($last_name), $db->quote($first_name_initial),
-        $db->quote($author['middle_name']), $db->quote($author['title']), $db->quote($author['sex']), JFactory::getUser()->id, JFactory::getUser()->id
+        $db->quote($author['middle_name']), $db->quote($author['title']), $db->quote($author['sex'])
+      )));
+      $db_in->setQuery($query_in);
+      $db_in->execute();
+      return $db_in->insertid();
+    } else {
+      return $id;
+    }
+  }
+
+  /**
+   * Check if new Publisher already exists and insert new one. Return person id in both cases.
+   * @param $publisher
+   * @return mixed
+   * @since 0.0.7
+   */
+  private function checkForNewPublisher($publisher)
+  {
+    $db = JFactory::getDbo();
+    $name = $publisher['name'];
+
+    $query = $db->getQuery(true);
+    $query->select($db->quoteName('id'));
+    $query->from('#__pubdb_publisher');
+    $query->where($db->quoteName('name') . '=' . $db->quote($name));
+    $db->setQuery($query);
+    $id = $db->loadResult();
+
+    if ($id == null) {
+      $db_in = JFactory::getDbo();
+      $query_in = $db_in->getQuery(true);
+      $query_in->insert('#__pubdb_publisher');
+      $query_in->columns($db->quoteName(array('name', 'created_by', 'modified_by')));
+      $query_in->values(implode(',', array($db->quote($name), JFactory::getUser()->id, JFactory::getUser()->id
+      )));
+      $db_in->setQuery($query_in);
+      $db_in->execute();
+      return $db_in->insertid();
+    } else {
+      return $id;
+    }
+  }
+
+  /**
+   * Check if new Keyword already exists and insert new one. Return person id in both cases.
+   * @param $keyword
+   * @return mixed
+   * @since 0.0.7
+   */
+  private function checkForNewKeyword($keyword)
+  {
+    $db = JFactory::getDbo();
+    $name = $keyword['name'];
+
+    $query = $db->getQuery(true);
+    $query->select($db->quoteName('id'));
+    $query->from('#__pubdb_keywords');
+    $query->where($db->quoteName('name') . '=' . $db->quote($name));
+    $db->setQuery($query);
+    $id = $db->loadResult();
+
+    if ($id == null) {
+      $db_in = JFactory::getDbo();
+      $query_in = $db_in->getQuery(true);
+      $query_in->insert('#__pubdb_keywords');
+      $query_in->columns($db->quoteName(array('name', 'created_by', 'modified_by')));
+      $query_in->values(implode(',', array($db->quote($name), JFactory::getUser()->id, JFactory::getUser()->id
       )));
       $db_in->setQuery($query_in);
       $db_in->execute();

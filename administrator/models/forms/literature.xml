@@ -34,26 +34,16 @@
     <field name="eisbn" maxlength="13" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_LITERATURE_EISBN" description="COM_PUBDB_FORM_DESC_LITERATURE_EISBN" hint="COM_PUBDB_FORM_LBL_LITERATURE_EISBN" showon="reference_type:1,3,4,5"/>
     <field name="volume" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_LITERATURE_VOLUME" description="COM_PUBDB_FORM_DESC_LITERATURE_VOLUME" hint="COM_PUBDB_FORM_LBL_LITERATURE_VOLUME" showon="reference_type:1,4,5,12"/>
     <field name="authors" type="foreignkey" label="COM_PUBDB_FORM_LBL_LITERATURE_AUTHORS" description="COM_PUBDB_FORM_DESC_LITERATURE_AUTHORS" class="inputbox" input_type="list" table="#__pubdb_person" key_field="id" value_multiple="1" value_field_multiple="first_name,last_name,middle_name" value_field="fk_value" separator=" " ordering="1" multiple="multiple" default="0"/>
-    <!--
-    <field name="author_list" type="repeatable" icon="list" description="COM_PUBDB_AUTHOR_LIST_DESCRIPTION" label="COM_PUBDB_AUTHOR_LIST_LABEL">
-      <fieldset hidden="true" name="author_list_modal" repeat="true">
-        <field name="first_name" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_PERSON_FIRST_NAME" description="COM_PUBDB_FORM_DESC_PERSON_FIRST_NAME" hint="COM_PUBDB_FORM_LBL_PERSON_FIRST_NAME"/>
-        <field name="last_name" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_PERSON_LAST_NAME" description="COM_PUBDB_FORM_DESC_PERSON_LAST_NAME" hint="COM_PUBDB_FORM_LBL_PERSON_LAST_NAME"/>
-        <field name="middle_name" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_PERSON_MIDDLE_NAME" description="COM_PUBDB_FORM_DESC_PERSON_MIDDLE_NAME" hint="COM_PUBDB_FORM_LBL_PERSON_MIDDLE_NAME"/>
-        <field name="sex" type="radio" label="COM_PUBDB_FORM_LBL_PERSON_SEX" description="COM_PUBDB_FORM_DESC_PERSON_SEX" hint="COM_PUBDB_FORM_LBL_PERSON_SEX">
-          <option value="1">COM_PUBDB_PEOPLE_SEX_OPTION_1</option>
-          <option value="2">COM_PUBDB_PEOPLE_SEX_OPTION_2</option>
-          <option value="3">COM_PUBDB_PEOPLE_SEX_OPTION_3</option>
-        </field>
-      </fieldset>
-    </field>
-    -->
     <field name="person_subform" type="subform" formsource="administrator/components/com_pubdb/models/forms/person_subform.xml" multiple="true" label="COM_PUBDB_AUTHOR_LIST_LABEL" description="COM_PUBDB_AUTHOR_LIST_DESCRIPTION" />
-
     <field name="translators" type="foreignkey" label="COM_PUBDB_FORM_LBL_LITERATURE_TRANSLATORS" description="COM_PUBDB_FORM_DESC_LITERATURE_TRANSLATORS" class="inputbox" input_type="list" table="#__pubdb_person" key_field="id" value_multiple="1" value_field_multiple="first_name,last_name,middle_name" value_field="fk_value" separator=" " ordering="1" multiple="multiple" default="0"/>
     <field name="others_involved" type="foreignkey" label="COM_PUBDB_FORM_LBL_LITERATURE_OTHERS_INVOLVED" description="COM_PUBDB_FORM_DESC_LITERATURE_OTHERS_INVOLVED" class="inputbox" input_type="list" table="#__pubdb_person" key_field="id" value_multiple="1" value_field_multiple="first_name,last_name,middle_name" value_field="fk_value" separator=" " ordering="1" multiple="multiple" default="0"/>
     <field name="publishers" type="foreignkey" label="COM_PUBDB_FORM_LBL_LITERATURE_PUBLISHERS" description="COM_PUBDB_FORM_DESC_LITERATURE_PUBLISHERS" class="inputbox" input_type="list" table="#__pubdb_publisher" key_field="id" value_field="name" multiple="multiple" default="0"/>
     <field name="keywords" type="foreignkey" label="COM_PUBDB_FORM_LBL_LITERATURE_KEYWORDS" description="COM_PUBDB_FORM_DESC_LITERATURE_KEYWORDS" class="inputbox" input_type="list" table="#__pubdb_keywords" key_field="id" value_field="name" ordering="1" multiple="multiple" default="0"/>
     <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
+    <field name="author_subform" type="subform" formsource="administrator/components/com_pubdb/models/forms/person_subform.xml" multiple="true" buttons= "add,remove" layout="joomla.form.field.subform.repeatable-table" label="COM_PUBDB_TAB_LITERATURE_AUTHOR" description="COM_PUBDB_TAB_LITERATURE_AUTHOR" />
+    <field name="translator_subform" type="subform" formsource="administrator/components/com_pubdb/models/forms/person_subform.xml" multiple="true" buttons= "add,remove" layout="joomla.form.field.subform.repeatable-table" label="COM_PUBDB_TAB_LITERATURE_TRANSLATOR" description="COM_PUBDB_TAB_LITERATURE_TRANSLATOR" />
+    <field name="other_subform" type="subform" formsource="administrator/components/com_pubdb/models/forms/person_subform.xml" multiple="true" buttons= "add,remove" layout="joomla.form.field.subform.repeatable-table" label="COM_PUBDB_TAB_LITERATURE_OTHERS" description="COM_PUBDB_TAB_LITERATURE_OTHERS" />
+    <field name="publisher_subform" type="subform" formsource="administrator/components/com_pubdb/models/forms/publisher_subform.xml" multiple="true" buttons= "add,remove" layout="joomla.form.field.subform.repeatable-table" label="COM_PUBDB_TAB_LITERATURE_PUBLISHER" description="COM_PUBDB_TAB_LITERATURE_PUBLISHER" />
+    <field name="keyword_subform" type="subform" formsource="administrator/components/com_pubdb/models/forms/keyword_subform.xml" multiple="true" buttons= "add,remove" layout="joomla.form.field.subform.repeatable-table" label="COM_PUBDB_TAB_LITERATURE_KEYWORD" description="COM_PUBDB_TAB_LITERATURE_KEYWORD" />
   </fieldset>
 </form>

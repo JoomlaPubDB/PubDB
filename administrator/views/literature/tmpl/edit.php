@@ -171,9 +171,6 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 				<?php echo $this->form->renderField('eisbn'); ?>
 				<?php echo $this->form->renderField('volume'); ?>
 				<?php echo $this->form->renderField('authors'); ?>
-                <button onclick="Joomla.submitbutton('person.add');" class="btn btn-small button-new btn-success">
-                    <span class="icon-new icon-white" aria-hidden="true"></span>
-                    Neuer Autor</button>
 				<?php
 				foreach((array)$this->item->authors as $value)
 				{
@@ -183,7 +180,6 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 					}
 				}
 				?>
-                <?php echo $this->form->renderField('person_subform'); ?>
 				<?php echo $this->form->renderField('translators'); ?>
 				<?php
 				foreach((array)$this->item->translators as $value)
@@ -234,6 +230,31 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 		</div>
 	</div>
 	<?php echo JHtml::_('bootstrap.endTab'); ?>
+
+  <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'authors', JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR', true)); ?>
+    <legend><?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR'); ?></legend>
+  <?php echo $this->form->renderField('author_subform'); ?>
+  <?php echo JHtml::_('bootstrap.endTab'); ?>
+
+  <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'translators', JText::_('COM_PUBDB_TAB_LITERATURE_TRANSLATOR', true)); ?>
+    <legend><?php echo JText::_('COM_PUBDB_TAB_LITERATURE_TRANSLATOR'); ?></legend>
+  <?php echo $this->form->renderField('translator_subform'); ?>
+  <?php echo JHtml::_('bootstrap.endTab'); ?>
+
+  <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'others', JText::_('COM_PUBDB_TAB_LITERATURE_OTHERS', true)); ?>
+    <legend><?php echo JText::_('COM_PUBDB_TAB_LITERATURE_OTHERS'); ?></legend>
+  <?php echo $this->form->renderField('other_subform'); ?>
+  <?php echo JHtml::_('bootstrap.endTab'); ?>
+
+  <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publisher', JText::_('COM_PUBDB_TAB_LITERATURE_PUBLISHER', true)); ?>
+    <legend><?php echo JText::_('COM_PUBDB_TAB_LITERATURE_PUBLISHER'); ?></legend>
+  <?php echo $this->form->renderField('publisher_subform'); ?>
+  <?php echo JHtml::_('bootstrap.endTab'); ?>
+
+  <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'keyword', JText::_('COM_PUBDB_TAB_LITERATURE_KEYWORD', true)); ?>
+    <legend><?php echo JText::_('COM_PUBDB_TAB_LITERATURE_KEYWORD'); ?></legend>
+  <?php echo $this->form->renderField('keyword_subform'); ?>
+  <?php echo JHtml::_('bootstrap.endTab'); ?>
 
 	
 	<?php echo JHtml::_('bootstrap.endTabSet'); ?>

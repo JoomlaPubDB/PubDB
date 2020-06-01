@@ -99,11 +99,11 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['keywords'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
-    if (isset($data['periodical_subform'])) {
+    if (isset($data['periodical_subform']) && trim($data['periodical_subform']['issn']) != '' && trim($data['periodical_subform']['name']) != '') {
       $data['periodical_id'] = (int)$this->checkForNewPeriodical($data['periodical_subform']);
       $this->input->post->set('jform', $data);
     }
-    if (isset($data['series_title_subform'])) {
+    if (isset($data['series_title_subform']) && trim($data['series_title_subform']['name']) != '') {
       $data['series_title_id'] = (int)$this->checkForNewSeriesTitle($data['series_title_subform']);
       $this->input->post->set('jform', $data);
     }

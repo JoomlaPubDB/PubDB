@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+  <fieldset>
+    <field name="issn" maxlength="9" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_PERIODICAL_ISSN" description="COM_PUBDB_FORM_DESC_PERIODICAL_ISSN" hint="COM_PUBDB_FORM_LBL_PERIODICAL_ISSN"/>
+    <field name="name" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_PERIODICAL_NAME" description="COM_PUBDB_FORM_DESC_PERIODICAL_NAME" hint="COM_PUBDB_FORM_LBL_PERIODICAL_NAME"/>
+    <field name="eissn" maxlength="9" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_PERIODICAL_EISSN" description="COM_PUBDB_FORM_DESC_PERIODICAL_EISSN" hint="COM_PUBDB_FORM_LBL_PERIODICAL_EISSN"/>
+  </fieldset>
+</form>

@@ -256,6 +256,16 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
   <?php echo $this->form->renderField('keyword_subform'); ?>
   <?php echo JHtml::_('bootstrap.endTab'); ?>
 
+  <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'periodical', JText::_('COM_PUBDB_TAB_LITERATURE_PERIODICAL', true)); ?>
+    <legend><?php echo JText::_('COM_PUBDB_TAB_LITERATURE_PERIODICAL'); ?></legend>
+  <?php echo $this->form->renderField('periodical_subform'); ?>
+  <?php echo JHtml::_('bootstrap.endTab'); ?>
+
+  <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'series_title', JText::_('COM_PUBDB_TAB_LITERATURE_SERIES_TITLE', true)); ?>
+    <legend><?php echo JText::_('COM_PUBDB_TAB_LITERATURE_SERIES_TITLE'); ?></legend>
+  <?php echo $this->form->renderField('series_title_subform'); ?>
+  <?php echo JHtml::_('bootstrap.endTab'); ?>
+
 	
 	<?php echo JHtml::_('bootstrap.endTabSet'); ?>
 

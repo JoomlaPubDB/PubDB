@@ -99,6 +99,14 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['keywords'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
+    if (isset($data['periodical_subform'])) {
+      $data['periodical_id'] = (int)$this->checkForNewPeriodical($data['periodical_subform']);
+      $this->input->post->set('jform', $data);
+    }
+    if (isset($data['series_title_subform'])) {
+      $data['series_title_id'] = (int)$this->checkForNewSeriesTitle($data['series_title_subform']);
+      $this->input->post->set('jform', $data);
+    }
     return parent::save($key, $urlVar);
   }
 
@@ -131,9 +139,9 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $db_in = JFactory::getDbo();
       $query_in = $db_in->getQuery(true);
       $query_in->insert('#__pubdb_person');
-      $query_in->columns($db->quoteName(array('first_name', 'last_name', 'first_name_initial', 'middle_name', 'title', 'sex')));
+      $query_in->columns($db->quoteName(array('first_name', 'last_name', 'first_name_initial', 'middle_name', 'title', 'sex', 'created_by', 'modified_by')));
       $query_in->values(implode(',', array($db->quote($first_name), $db->quote($last_name), $db->quote($first_name_initial),
-        $db->quote($author['middle_name']), $db->quote($author['title']), $db->quote($author['sex'])
+        $db->quote($author['middle_name']), $db->quote($author['title']), $db->quote($author['sex']), JFactory::getUser()->id, JFactory::getUser()->id
       )));
       $db_in->setQuery($query_in);
       $db_in->execute();
@@ -144,7 +152,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
   }
 
   /**
-   * Check if new Publisher already exists and insert new one. Return person id in both cases.
+   * Check if new Publisher already exists and insert new one. Return publisher id in both cases.
    * @param $publisher
    * @return mixed
    * @since 0.0.7
@@ -177,7 +185,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
   }
 
   /**
-   * Check if new Keyword already exists and insert new one. Return person id in both cases.
+   * Check if new Keyword already exists and insert new one. Return keyword id in both cases.
    * @param $keyword
    * @return mixed
    * @since 0.0.7
@@ -200,6 +208,78 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $query_in->insert('#__pubdb_keywords');
       $query_in->columns($db->quoteName(array('name', 'created_by', 'modified_by')));
       $query_in->values(implode(',', array($db->quote($name), JFactory::getUser()->id, JFactory::getUser()->id
+      )));
+      $db_in->setQuery($query_in);
+      $db_in->execute();
+      return $db_in->insertid();
+    } else {
+      return $id;
+    }
+  }
+
+  /**
+   * Check if new Periodical already exists and insert new one. Return periodical id in both cases.
+   * @param $periodical
+   * @return mixed
+   * @since 0.0.7
+   */
+  private function checkForNewPeriodical($periodical)
+  {
+    $db = JFactory::getDbo();
+    $issn = $periodical['issn'];
+    $eissn = $periodical['eissn'];
+    $name = $periodical['name'];
+
+    $query = $db->getQuery(true);
+    $query->select($db->quoteName('id'));
+    $query->from('#__pubdb_periodical');
+    $query->where($db->quoteName('issn') . '=' . $db->quote($issn));
+    $query->where($db->quoteName('name') . '=' . $db->quote($name), 'AND');
+    $db->setQuery($query);
+    $id = $db->loadResult();
+
+    if ($id == null) {
+      $db_in = JFactory::getDbo();
+      $query_in = $db_in->getQuery(true);
+      $query_in->insert('#__pubdb_periodical');
+      $query_in->columns($db->quoteName(array('name', 'issn', 'eissn', 'created_by', 'modified_by')));
+      $query_in->values(implode(',', array($db->quote($name), $db->quote($issn), $db->quote($eissn),
+        JFactory::getUser()->id, JFactory::getUser()->id
+      )));
+      $db_in->setQuery($query_in);
+      $db_in->execute();
+      return $db_in->insertid();
+    } else {
+      return $id;
+    }
+  }
+
+  /**
+   * Check if new Series Title already exists and insert new one. Return series title id in both cases.
+   * @param $seriesTitle
+   * @return mixed
+   * @since 0.0.7
+   */
+  private function checkForNewSeriesTitle($seriesTitle)
+  {
+    $db = JFactory::getDbo();
+    $seriesTitleEditor = $seriesTitle['series_title_editor'];
+    $name = $seriesTitle['name'];
+
+    $query = $db->getQuery(true);
+    $query->select($db->quoteName('id'));
+    $query->from('#__pubdb_series_title');
+    $query->where($db->quoteName('name') . '=' . $db->quote($name));
+    $db->setQuery($query);
+    $id = $db->loadResult();
+
+    if ($id == null) {
+      $db_in = JFactory::getDbo();
+      $query_in = $db_in->getQuery(true);
+      $query_in->insert('#__pubdb_series_title');
+      $query_in->columns($db->quoteName(array('name', 'series_title_editor', 'created_by', 'modified_by')));
+      $query_in->values(implode(',', array($db->quote($name), $db->quote($seriesTitleEditor),
+        JFactory::getUser()->id, JFactory::getUser()->id
       )));
       $db_in->setQuery($query_in);
       $db_in->execute();

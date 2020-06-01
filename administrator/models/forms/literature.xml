@@ -45,5 +45,7 @@
     <field name="other_subform" type="subform" formsource="administrator/components/com_pubdb/models/forms/person_subform.xml" multiple="true" buttons= "add,remove" layout="joomla.form.field.subform.repeatable-table" label="COM_PUBDB_TAB_LITERATURE_OTHERS" description="COM_PUBDB_TAB_LITERATURE_OTHERS" />
     <field name="publisher_subform" type="subform" formsource="administrator/components/com_pubdb/models/forms/publisher_subform.xml" multiple="true" buttons= "add,remove" layout="joomla.form.field.subform.repeatable-table" label="COM_PUBDB_TAB_LITERATURE_PUBLISHER" description="COM_PUBDB_TAB_LITERATURE_PUBLISHER" />
     <field name="keyword_subform" type="subform" formsource="administrator/components/com_pubdb/models/forms/keyword_subform.xml" multiple="true" buttons= "add,remove" layout="joomla.form.field.subform.repeatable-table" label="COM_PUBDB_TAB_LITERATURE_KEYWORD" description="COM_PUBDB_TAB_LITERATURE_KEYWORD" />
+    <field name="periodical_subform" type="subform" formsource="administrator/components/com_pubdb/models/forms/periodical_subform.xml" multiple="false" layout="joomla.form.field.subform.repeatable-table" label="COM_PUBDB_TAB_LITERATURE_PERIODICAL" description="COM_PUBDB_TAB_LITERATURE_PERIODICAL" />
+    <field name="series_title_subform" type="subform" formsource="administrator/components/com_pubdb/models/forms/series_title_subform.xml" multiple="false" layout="joomla.form.field.subform.repeatable-table" label="COM_PUBDB_TAB_LITERATURE_SERIES_TITLE" description="COM_PUBDB_TAB_LITERATURE_SERIES_TITLE" />
   </fieldset>
 </form>

@@ -121,19 +121,21 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
   protected function getListQuery()
   {
     // Create a new query object.
-
-    $db    = $this->getDbo();
+    $db = $this->getDbo();
     $query = $db->getQuery(true);
     // Create select statement
     $query->select('*');
     $query->from($db->quoteName('#__pubdb_publication_list'));
-    $query->setLimit(1);
     $db->setQuery($query);
     $params = $this->state->get('parameters.menu');
     $preFilter = $this->getResultFromParams($params);
     //get id's as comma separated list
-    $filteredIds = implode(',', $preFilter);
-    $filterQuery = $this->getResultsFromFilters($this->state);
+    if (count($preFilter) > 0) {
+      $filteredIds = implode(',', $preFilter);
+      $query->where($db->quoteName('id') . ' IN (' . $filteredIds . ')');
+    } else {
+      $query->where($db->quoteName('id') . ' = 0');
+    }
     return $query;
   }
 
@@ -141,6 +143,7 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
    * Query database with Back End menu settings to get a pre filtering
    * @param $menu_item
    * @return mixed
+   * @since v0.0.7
    */
 
   private function getResultFromParams($menu_item){
@@ -148,7 +151,6 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
     $query = $db->getQuery(true);
     $query->select($db->quoteName('id'));
     $query->from($db->quoteName('#__pubdb_publication_list'));
-    $query->setLimit(1);
     //extract menu params
     foreach( (array) $menu_item as $param_list) {
       //loop to get params from menu item
@@ -158,7 +160,7 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
         // arrays need different function for sql statements
         $key_field = explode('-', $key);
         if (is_array($filter)) {
-          $query->where($db->quoteName($key_field[1]) . ' IN (' . implode(',', $filter) . ')', 'AND');
+          $query->where('FIND_IN_SET(' . implode(',', $filter) . ', ' . $db->quoteName($key_field[1]) . ') > 0', 'AND');
         } else {
           $query->where($db->quoteName($key_field[1]) . ' = ' . $filter, 'AND');
         }
@@ -168,21 +170,7 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
 
     $db->setQuery($query);
 
-    return $db->loadColumn();
-  }
-
-  private function getResultsFromFilters($state){
-    $arrFilter = array();
-
-    // go through all fields and keep only relevant ones
-    foreach ( (array) $state as $filter_field => $value){
-      //ignore non filter fields
-      if (strpos($filter_field, 'filter') !== 0) continue;
-      //ignore empty values
-      //if (trim($value) == "") continue;
-      $arrFilter[$filter_field] = $value;
-    }
-
+    return $db->loadAssocList('id', 'id');
   }
 
   /**

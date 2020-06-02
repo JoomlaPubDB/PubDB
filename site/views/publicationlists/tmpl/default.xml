@@ -70,6 +70,18 @@
         description="JGLOBAL_SHOW_TITLE_DESC">
       </field>
 
+      <field
+        name="pubdb-publisher_id"
+        query="SELECT DISTINCT `id`,`name` FROM #__pubdb_publisher ORDER BY `id`"
+        type="sql"
+        key_field="id"
+        value_field="name"
+        label="COM_PUBDB_TITLE_PUBLISHER"
+        require="true"
+        multiple="multiple"
+        description="JGLOBAL_SHOW_TITLE_DESC">
+      </field>
+
     </fieldset>
   </fields>
 

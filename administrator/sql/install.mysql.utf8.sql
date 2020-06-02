@@ -365,13 +365,16 @@ SELECT
 
     keywords.name as keywords,
 
+    periodical.id as periodical_id,
     periodical.name as periodical_name,
     periodical.issn as periodical_issn,
     periodical.eissn as periodical_eissn,
 
+    series_title.id as series_title_id,
     series_title.name as series_title_name,
     series_title.series_title_editor as series_title_editor,
 
+    publisher.id as publisher_id,
     publisher.name as publisher_name
 
 FROM

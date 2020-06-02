@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+  <fieldset>
+    <field name="name" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_PUBLISHER_NAME" description="COM_PUBDB_FORM_DESC_PUBLISHER_NAME" hint="COM_PUBDB_FORM_LBL_PUBLISHER_NAME"/>
+  </fieldset>
+</form>

@@ -191,7 +191,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\ItemModel
       if (!empty($textValue)) {
         $tmp = "";
         foreach ($textValue as $val)
-          $tmp .= " <a href=" . JRoute::_(JUri::root() . 'index.php?view=periodical&id=' . (int)$val->id) . ">" . trim($val->fk_value) . "</a>,";
+          $tmp .= " <a href=" . JRoute::_('index.php?option=com_pubdb&view=periodical&id=' . (int)$val->id) . ">" . trim($val->fk_value) . "</a>,";
         $tmp = rtrim($tmp, ", ");
 
         $this->_item->periodical_id = $tmp;
@@ -228,7 +228,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\ItemModel
       if (!empty($textValue)) {
         $tmp = "";
         foreach ($textValue as $val)
-          $tmp .= " <a href=" . JRoute::_(JUri::root() . 'index.php?view=series_title&id=' . (int)$val->id) . ">" . trim($val->name) . "</a>,";
+          $tmp .= " <a href=" . JRoute::_('index.php?option=com_pubdb&view=series_title&id=' . (int)$val->id) . ">" . trim($val->name) . "</a>,";
         $tmp = rtrim($tmp, ", ");
 
         $this->_item->series_title_id = $tmp;
@@ -265,7 +265,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\ItemModel
       if (!empty($textValue)) {
         $tmp = "";
         foreach ($textValue as $val)
-          $tmp .= " <a href=" . JRoute::_(JUri::root() . 'index.php?view=person&id=' . (int)$val->id) . ">" . trim($val->fk_value) . "</a>,";
+          $tmp .= " <a href=" . JRoute::_('index.php?option=com_pubdb&view=person&id=' . (int)$val->id) . ">" . trim($val->fk_value) . "</a>,";
         $tmp = rtrim($tmp, ", ");
 
         $this->_item->authors = $tmp;
@@ -302,7 +302,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\ItemModel
       if (!empty($textValue)) {
         $tmp = "";
         foreach ($textValue as $val)
-          $tmp .= " <a href=" . JRoute::_(JUri::root() . 'index.php?view=person&id=' . (int)$val->id) . ">" . trim($val->fk_value) . "</a>,";
+          $tmp .= " <a href=" . JRoute::_('index.php?option=com_pubdb&view=person&id=' . (int)$val->id) . ">" . trim($val->fk_value) . "</a>,";
         $tmp = rtrim($tmp, ", ");
 
         $this->_item->translators = $tmp;
@@ -339,7 +339,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\ItemModel
       if (!empty($textValue)) {
         $tmp = "";
         foreach ($textValue as $val)
-          $tmp .= " <a href=" . JRoute::_(JUri::root() . 'index.php?view=person&id=' . (int)$val->id) . ">" . trim($val->fk_value) . "</a>,";
+          $tmp .= " <a href=" . JRoute::_('index.php?option=com_pubdb&view=person&id=' . (int)$val->id) . ">" . trim($val->fk_value) . "</a>,";
         $tmp = rtrim($tmp, ", ");
 
         $this->_item->others_involved = $tmp;
@@ -376,7 +376,7 @@ class PubdbModelLiterature extends \Joomla\CMS\MVC\Model\ItemModel
       if (!empty($textValue)) {
         $tmp = "";
         foreach ($textValue as $val)
-          $tmp .= " <a href=" . JRoute::_(JUri::root() . 'index.php?view=publisher&id=' . (int)$val->id) . ">" . trim($val->name) . "</a>,";
+          $tmp .= " <a href=" . JRoute::_('index.php?option=com_pubdb&view=publisher&id=' . (int)$val->id) . ">" . trim($val->name) . "</a>,";
         $tmp = rtrim($tmp, ", ");
 
         $this->_item->publishers = $tmp;

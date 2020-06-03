@@ -47,7 +47,7 @@
       </field>
 
       <field
-        name="pubdb-periodicals_id"
+        name="pubdb-periodical_id"
         query="SELECT DISTINCT `id`,`name` FROM #__pubdb_periodical ORDER BY `id`"
         type="sql"
         key_field="id"
@@ -59,7 +59,7 @@
       </field>
 
       <field
-        name="pubdb-series_titles"
+        name="pubdb-series_title_id"
         query="SELECT DISTINCT `id`,`name` FROM #__pubdb_series_title ORDER BY `id`"
         type="sql"
         key_field="id"

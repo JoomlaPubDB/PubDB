@@ -421,9 +421,6 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                                     if (!valid) {
                                         jQuery(this).remove();
                                         document.getElementById("jform_string").value = "";
-                                    } else {
-                                        //jQuery(".cloned").css("top", "auto").css("left", "auto");
-                                        return;
                                     }
                                 },
                             });

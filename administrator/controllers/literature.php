@@ -44,7 +44,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
   {
     $model = $this->getModel();
     $data = $this->input->post->get('jform', array(), 'array');
-    if (isset($data['author_subform'])) {
+    if (isset($data['author_subform']) && trim($data['author_subform']['first_name']) != '' && trim($data['author_subform']['last_name']) != '') {
       $arrAuthors = array();
       foreach ($data['author_subform'] as $author) {
         $arrAuthors[] = (int)$this->checkForNewPerson($author);
@@ -55,7 +55,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['authors'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
-    if (isset($data['translator_subform'])) {
+    if (isset($data['translator_subform']) && trim($data['translator_subform']['first_name']) != '' && trim($data['translator_subform']['last_name']) != '') {
       $arrTranslators = array();
       foreach ($data['translator_subform'] as $translator) {
         $arrTranslators[] = (int)$this->checkForNewPerson($translator);
@@ -66,7 +66,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['translators'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
-    if (isset($data['other_subform'])) {
+    if (isset($data['other_subform']) && trim($data['other_subform']['first_name']) != '' && trim($data['other_subform']['last_name']) != '') {
       $arrOthersInvolved = array();
       foreach ($data['other_subform'] as $otherInvolved) {
         $arrOthersInvolved[] = (int)$this->checkForNewPerson($otherInvolved);
@@ -77,7 +77,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['others_involved'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
-    if (isset($data['publisher_subform'])) {
+    if (isset($data['publisher_subform']) && trim($data['keyword_subform']['name'])) {
       $arrPublishers = array();
       foreach ($data['publisher_subform'] as $publisher) {
         $arrPublishers[] = (int)$this->checkForNewPublisher($publisher);
@@ -88,7 +88,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['publishers'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
-    if (isset($data['keyword_subform'])) {
+    if (isset($data['keyword_subform']) && trim($data['keyword_subform']['name'])) {
       $arrKeywords = array();
       foreach ($data['keyword_subform'] as $keyword) {
         $arrKeywords[] = (int)$this->checkForNewKeyword($keyword);

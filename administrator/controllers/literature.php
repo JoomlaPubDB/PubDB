@@ -44,7 +44,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
   {
     $model = $this->getModel();
     $data = $this->input->post->get('jform', array(), 'array');
-    if (isset($data['author_subform']) && trim($data['author_subform']['first_name']) != '' && trim($data['author_subform']['last_name']) != '') {
+    if (isset($data['author_subform']) && trim($data['author_subform']['author_subform0']['first_name']) != '' && trim($data['author_subform']['author_subform0']['last_name']) != '') {
       $arrAuthors = array();
       foreach ($data['author_subform'] as $author) {
         $arrAuthors[] = (int)$this->checkForNewPerson($author);
@@ -55,7 +55,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['authors'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
-    if (isset($data['translator_subform']) && trim($data['translator_subform']['first_name']) != '' && trim($data['translator_subform']['last_name']) != '') {
+    if (isset($data['translator_subform']) && trim($data['translator_subform']['translator_subform0']['first_name']) != '' && trim($data['translator_subform']['translator_subform0']['last_name']) != '') {
       $arrTranslators = array();
       foreach ($data['translator_subform'] as $translator) {
         $arrTranslators[] = (int)$this->checkForNewPerson($translator);
@@ -66,7 +66,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['translators'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
-    if (isset($data['other_subform']) && trim($data['other_subform']['first_name']) != '' && trim($data['other_subform']['last_name']) != '') {
+    if (isset($data['other_subform']) && trim($data['other_subform']['other_subform0']['first_name']) != '' && trim($data['other_subform']['other_subform0']['last_name']) != '') {
       $arrOthersInvolved = array();
       foreach ($data['other_subform'] as $otherInvolved) {
         $arrOthersInvolved[] = (int)$this->checkForNewPerson($otherInvolved);
@@ -77,7 +77,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['others_involved'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
-    if (isset($data['publisher_subform']) && trim($data['keyword_subform']['name'])) {
+    if (isset($data['publisher_subform']) && trim($data['publisher_subform']['publisher_subform0']['name'])) {
       $arrPublishers = array();
       foreach ($data['publisher_subform'] as $publisher) {
         $arrPublishers[] = (int)$this->checkForNewPublisher($publisher);
@@ -88,7 +88,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['publishers'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
-    if (isset($data['keyword_subform']) && trim($data['keyword_subform']['name'])) {
+    if (isset($data['keyword_subform']) && trim($data['keyword_subform']['keyword_subform0']['name'])) {
       $arrKeywords = array();
       foreach ($data['keyword_subform'] as $keyword) {
         $arrKeywords[] = (int)$this->checkForNewKeyword($keyword);
@@ -99,11 +99,11 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['keywords'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
-    if (isset($data['periodical_subform']) && trim($data['periodical_subform']['issn']) != '' && trim($data['periodical_subform']['name']) != '') {
+    if (isset($data['periodical_subform']) && trim($data['periodical_subform']['periodical_subform0']['issn']) != '' && trim($data['periodical_subform']['periodical_subform0']['name']) != '') {
       $data['periodical_id'] = (int)$this->checkForNewPeriodical($data['periodical_subform']);
       $this->input->post->set('jform', $data);
     }
-    if (isset($data['series_title_subform']) && trim($data['series_title_subform']['name']) != '') {
+    if (isset($data['series_title_subform']) && trim($data['series_title_subform']['series_title_subform0']['name']) != '') {
       $data['series_title_id'] = (int)$this->checkForNewSeriesTitle($data['series_title_subform']);
       $this->input->post->set('jform', $data);
     }

@@ -44,8 +44,8 @@ $query = $db->getQuery(true);
 $query
   ->select($db->quoteName(array('id', 'name')))
   ->from($db->quoteName('#__pubdb_blocks'))
-  ->where($db->quoteName('category') . '= 3')/*->where($db->quoteName('id') . '> 4')*/
-;
+  ->where($db->quoteName('category') . '= 3')
+  ->where($db->quoteName('id') . '> 4');
 $db->setQuery($query);
 $authorBlocks = $db->loadAssocList('id', 'name');
 
@@ -528,6 +528,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
             });
             let textField = document.getElementById("jform_string");
             textField.value = JSON.stringify(dict);
+            textField.innerText = JSON.stringify(dict);
         }
     }
 
@@ -768,7 +769,6 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                       <div class="controls"><?php echo $this->form->getInput('version_note'); ?></div>
                   </div>
               <?php endif; ?>
-                <button onclick="submitClicked()" style="align-self: center; margin-top: 40px;">Submit</button>
         </div>
     </div>
   <?php echo JHtml::_('bootstrap.endTab'); ?>
@@ -790,18 +790,22 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                       <ol style="list-style-type: none;" class="containers fixAuthorList"></ol>
                   </div>
                   <div class="clonedAuthorArea" id="clonedAuthorArea_<?php echo $type['id']; ?>">
+                    <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_FIRST'); ?>
                       <div class="partAuthor1" id="partAuthor1_<?php echo $type['id']; ?>">
                           <ol style="list-style-type: none;" class="containers"
                               id="orderedAuthorList1_<?php echo $type['id']; ?>"></ol>
                       </div>
+                    <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_SECOND'); ?>
                       <div class="partAuthor2" id="partAuthor2_<?php echo $type['id']; ?>">
                           <ol style="list-style-type: none;" class="containers"
                               id="orderedAuthorList2_<?php echo $type['id']; ?>"></ol>
                       </div>
+                    <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_THIRD'); ?>
                       <div class="partAuthor3" id="partAuthor3_<?php echo $type['id']; ?>">
                           <ol style="list-style-type: none;" class="containers"
                               id="orderedAuthorList3_<?php echo $type['id']; ?>"></ol>
                       </div>
+                    <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_SEPARATOR'); ?>
                       <div class="partAuthor4" id="partAuthor4_<?php echo $type['id']; ?>">
                           <ol style="list-style-type: none;" class="containers"
                               id="orderedAuthorList4_<?php echo $type['id']; ?>"></ol>
@@ -812,7 +816,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                   <ol style="list-style-type: none;" class="specialContainer fixSpecialList"></ol>
               </div>
           </div>
-          <button onclick="submitClicked()" style="align-self: center; margin-top: 40px;">Submit</button>
+          <button onclick="submitClicked(); return false;" style="align-self: center; margin-top: 40px;">Submit</button>
       </div>
     <?php echo JHtml::_('bootstrap.endTab'); ?>
   <?php endforeach; ?>

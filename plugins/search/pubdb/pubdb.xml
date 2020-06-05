@@ -7,15 +7,15 @@
     <license>GNU General Public License Version 2 oder neuer; siehe LICENSE.txt</license>
     <authorEmail></authorEmail>
     <authorUrl></authorUrl>
-    <version>CVS: 0.0.5</version>
+    <version>CVS: 0.0.8</version>
     <description>PLG_SEARCH_COM_PUBDB_XML_DESCRIPTION</description>
     <files>
         <filename plugin="pubdb">pubdb.php</filename>
         <filename>index.html</filename>
     </files>
     <languages folder="languages">
-        
-			<language tag="de-DE">de-DE/de-DE.plg_search_pubdb.ini</language>
+
+    <language tag="de-DE">de-DE/de-DE.plg_search_pubdb.ini</language>
 			<language tag="de-DE">de-DE/de-DE.plg_search_pubdb.sys.ini</language>
     </languages>
     <config>

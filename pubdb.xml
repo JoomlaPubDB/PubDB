@@ -7,21 +7,21 @@
     <author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
     <authorEmail></authorEmail>
     <authorUrl></authorUrl>
-    <version>CVS: 0.0.5</version>
+    <version>CVS: 0.0.7</version>
     <description>COM_PUBDB_XML_DESCRIPTION</description>
-    
+
     <scriptfile>script.php</scriptfile>
-    
+
     <install> <!-- Runs on install -->
         <sql>
-            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+          <file driver="mysql" charset="utf8">sql/0.0.7.sql</file>
         </sql>
     </install>
-    <update> <!-- Runs on update -->
-        <sql>
-            <file driver="mysql" charset="utf8">sql/update.mysql.utf8.sql</file>
-        </sql>
-    </update>
+  <update> <!-- Runs on update -->
+    <schemas>
+      <schemapath type="mysql">sql/updates/mysql</schemapath>
+    </schemas>
+  </update>
     <uninstall> <!-- Runs on uninstall -->
         <sql>
             <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
@@ -43,14 +43,14 @@
         <folder>css</folder>
     </media>
     <languages folder="site/languages">
-        
-			<language tag="de-DE">de-DE/de-DE.com_pubdb.ini</language>
+
+    <language tag="de-DE">de-DE/de-DE.com_pubdb.ini</language>
     </languages>
     <administration>
         <menu>COM_PUBDB</menu>
         <submenu>
-            
-			<menu link="option=com_pubdb&amp;view=literatures" view="literatures" alt="Pubdb/Literatures">COM_PUBDB_TITLE_LITERATURES</menu>
+
+        <menu link="option=com_pubdb&amp;view=literatures" view="literatures" alt="Pubdb/Literatures">COM_PUBDB_TITLE_LITERATURES</menu>
 
 			<menu link="option=com_pubdb&amp;view=periodicals" view="periodicals" alt="Pubdb/Periodicals">COM_PUBDB_TITLE_PERIODICALS</menu>
 
@@ -86,8 +86,8 @@
             <folder>views</folder>
         </files>
         <languages folder="administrator/languages">
-            
-			<language tag="de-DE">de-DE/de-DE.com_pubdb.ini</language>
+
+        <language tag="de-DE">de-DE/de-DE.com_pubdb.ini</language>
 			<language tag="de-DE">de-DE/de-DE.com_pubdb.sys.ini</language>
         </languages>
     </administration>

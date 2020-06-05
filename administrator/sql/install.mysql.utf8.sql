@@ -361,7 +361,7 @@ SELECT
     l.month,
     l.day,
     type.name as ref_type,
-
+    type.id as ref_type_id,
 
     keywords.name as keywords,
 

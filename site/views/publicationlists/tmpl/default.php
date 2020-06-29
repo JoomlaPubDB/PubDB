@@ -36,18 +36,18 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/list.css');
 //$document->addScript('https://code.jquery.com/jquery-3.5.0.js"');
 
 //add Datatable.JS Scripts
-$document->addScript('https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js');
+$document->addScript(Uri::root() . 'media/com_pubdb/js/jquery.dataTables.js');
 $document->addScriptDeclaration('jQuery.noConflict();');
 
-$document->addScript('https://nightly.datatables.net/searchpanes/js/dataTables.searchPanes.js');
-$document->addScript('https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js');
+$document->addScript(Uri::root() . 'media/com_pubdb/js/dataTables.searchPanes.js');
+$document->addScript(Uri::root() . 'media/com_pubdb/js/dataTables.select.min.js');
 
 //add Datatable.JS CSS
-$document->addStyleSheet('https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css');
+$document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/jquery.dataTables.css');
 
-$document->addStyleSheet('https://cdn.datatables.net/searchpanes/1.0.1/css/searchPanes.dataTables.min.css');
+$document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/searchPanes.dataTables.min.css');
 //print_r($this->state);
-$stateArr = (array) $this->state;
+$stateArr = (array)$this->state;
 $filter = $stateArr['parameters.menu']['frontend_filter'];
 $filter_active = isset($stateArr['parameters.menu']['frontend_filter_active']) ? True : False;
 

@@ -9,8 +9,7 @@
   <fields name="params">
     <fieldset
       name="basic"
-      label="COM_PUBDB_FIELDSET_ITEM_ID_SELECT_LABEL">
-
+      label="COM_PUBDB_PUBLICATION_LIST_SETTINGS">
       <field
         name="citation_style_id"
         query="SELECT DISTINCT `id`,`name` FROM #__pubdb_citation_style ORDER BY `id`"

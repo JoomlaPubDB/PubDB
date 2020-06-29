@@ -41,6 +41,7 @@
     <media destination="com_pubdb" folder="media">
         <folder>js</folder>
         <folder>css</folder>
+        <folder>images</folder>
     </media>
     <languages folder="site/languages">
 

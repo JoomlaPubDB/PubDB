@@ -98,6 +98,13 @@
       </field>
 
       <field
+        name="frontend_paging"
+        type="checkbox"
+        label="COM_PUBDB_FRONTEND_FILTER_PAGING"
+        description="COM_PUBDB_FRONTEND_FILTER_PAGING_DESC">
+      </field>
+
+      <field
         name="frontend_filter"
         type="list"
         multiple="true"

@@ -50,6 +50,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/searchPanes.dataTabl
 $stateArr = (array)$this->state;
 $filter = $stateArr['parameters.menu']['frontend_filter'];
 $filter_active = isset($stateArr['parameters.menu']['frontend_filter_active']) ? True : False;
+$filter_paging = isset($stateArr['parameters.menu']['frontend_paging']) ? 'true' : 'false';
 
 if ($filter_active) {
   $targets = array();
@@ -146,21 +147,22 @@ if ($filter_active) {
 
 <script>
   let data = <?php echo json_encode($this->items)?>;
-  jQuery(document).ready(function() {
-      //init data table with citation  style column
-      jQuery('#example').DataTable({
-        "data": data,
-        "stateSave": false,
-        "columns": [
-          {"data": "formatted_string"},
-          {"data": "publisher_name"},
-          {"data": "authors"},
-          {"data": "year"},
-          {"data": "keywords"},
-          {"data": "series_title_name"},
-          {"data": "ref_type"}
-        ],
-        <?php echo $filter_json ?>
+  jQuery(document).ready(function () {
+    //init data table with citation  style column
+    jQuery('#example').DataTable({
+      "data": data,
+      "stateSave": false,
+      "paging": <?php echo $filter_paging ?>,
+      "columns": [
+        {"data": "formatted_string"},
+        {"data": "publisher_name"},
+        {"data": "authors"},
+        {"data": "year"},
+        {"data": "keywords"},
+        {"data": "series_title_name"},
+        {"data": "ref_type"}
+      ],
+      <?php echo $filter_json ?>
       });
     }
   );

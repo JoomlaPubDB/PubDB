@@ -20,15 +20,15 @@ HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('formbehavior.chosen', 'select');
 
-$user       = Factory::getUser();
-$userId     = $user->get('id');
-$listOrder  = $this->state->get('list.ordering');
-$listDirn   = $this->state->get('list.direction');
-$canCreate  = $user->authorise('core.create', 'com_pubdb') && file_exists(JPATH_COMPONENT . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'forms' . DIRECTORY_SEPARATOR . 'literatureform.xml');
-$canEdit    = $user->authorise('core.edit', 'com_pubdb') && file_exists(JPATH_COMPONENT . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'forms' . DIRECTORY_SEPARATOR . 'literatureform.xml');
+$user = Factory::getUser();
+$userId = $user->get('id');
+$listOrder = $this->state->get('list.ordering');
+$listDirn = $this->state->get('list.direction');
+$canCreate = $user->authorise('core.create', 'com_pubdb') && file_exists(JPATH_COMPONENT . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'forms' . DIRECTORY_SEPARATOR . 'literatureform.xml');
+$canEdit = $user->authorise('core.edit', 'com_pubdb') && file_exists(JPATH_COMPONENT . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'forms' . DIRECTORY_SEPARATOR . 'literatureform.xml');
 $canCheckin = $user->authorise('core.manage', 'com_pubdb');
-$canChange  = $user->authorise('core.edit.state', 'com_pubdb');
-$canDelete  = $user->authorise('core.delete', 'com_pubdb');
+$canChange = $user->authorise('core.edit.state', 'com_pubdb');
+$canDelete = $user->authorise('core.delete', 'com_pubdb');
 
 // Import CSS
 $document = Factory::getDocument();
@@ -37,6 +37,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/list.css');
 
 //add Datatable.JS Scripts
 $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery.dataTables.js');
+
 $document->addScriptDeclaration('jQuery.noConflict();');
 
 $document->addScript(Uri::root() . 'media/com_pubdb/js/dataTables.searchPanes.js');
@@ -44,37 +45,59 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/dataTables.select.min.js'
 
 //add Datatable.JS CSS
 $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/jquery.dataTables.css');
-
 $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/searchPanes.dataTables.min.css');
-//print_r($this->state);
+
 $stateArr = (array)$this->state;
 $filter = $stateArr['parameters.menu']['frontend_filter'];
 $filter_active = isset($stateArr['parameters.menu']['frontend_filter_active']) ? True : False;
 $filter_paging = isset($stateArr['parameters.menu']['frontend_paging']) ? 'true' : 'false';
+$group_by = $stateArr['parameters.menu']['pubdb_group_by'];
 
-if ($filter_active) {
-  $targets = array();
-  $default = array(1, 2, 3, 4, 5, 6);
-  $arrFilterMapping = array(
-    'publisher_name' => 1,
-    'authors' => 2,
-    'year' => 3,
-    'keywords' => 4,
-    'series_title_name' => 5,
-    'ref_type' => 6
-  );
+/**
+ * Multidimensional sort function to sort by column value from array
+ * @param $arr input array to sort
+ * @param $col col key to sort by
+ * @param int $dir sort order
+ */
 
-  if (!empty($filter)) {
-    foreach ($filter as $key => $v) {
-      $targets[] = $arrFilterMapping[$v];
-    }
-  } else {
-    $targets = $default;
+function array_sort_by_column(&$arr, $col, $dir = SORT_ASC)
+{
+  $sort_col = array();
+  foreach ($arr as $key => $row) {
+    $sort_col[$key] = $row[$col];
   }
 
-  $remove = array_diff($default, $targets);
+  array_multisort($sort_col, $dir, $arr);
+}
 
-  $filter_json = "searchPanes:{
+
+//ignore datatables if grouping
+if ($group_by == '0') {
+
+  if ($filter_active) {
+    $targets = array();
+    $default = array(1, 2, 3, 4, 5, 6);
+    $arrFilterMapping = array(
+      'publisher_name' => 1,
+      'authors' => 2,
+      'year' => 3,
+      'keywords' => 4,
+      'series_title_name' => 5,
+      'ref_type' => 6
+    );
+
+    if (!empty($filter)) {
+      foreach ($filter as $key => $v) {
+        $targets[] = $arrFilterMapping[$v];
+      }
+    } else {
+      $targets = $default;
+    }
+
+    $remove = array_diff($default, $targets);
+
+    $filter_json = "
+  searchPanes:{
           layout: 'columns-4',
           viewTotal: true,
           cascadePanes: true,
@@ -112,8 +135,8 @@ if ($filter_active) {
           }
 
         ]";
-} else {
-  $filter_json = "columnDefs:[
+  } else {
+    $filter_json = "columnDefs:[
           {
             targets: [0],
             visible: true,
@@ -126,108 +149,73 @@ if ($filter_active) {
           }
 
         ]";
-}
-?>
-<table id="example" class="display">
-  <thead>
-  <tr>
-    <th>Publication List</th>
-    <th><?php echo JText::sprintf('COM_PUBDB_FORM_LBL_LITERATURE_PUBLISHERS');?></th>
-    <th><?php echo JText::sprintf('COM_PUBDB_FORM_LBL_LITERATURE_AUTHORS');?></th>
-    <th> <?php echo JText::sprintf('COM_PUBDB_YEAR');?> </th>
-    <th><?php echo JText::sprintf('COM_PUBDB_LITERATURES_KEYWORDS');?></th>
-    <th><?php echo JText::sprintf('COM_PUBDB_TITLE_SERIES_TITLES');?></th>
-    <th><?php echo JText::sprintf('COM_PUBDB_TITLE_REFERENCETYPES');?></th>
-  </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
+  }
+  ?>
+  <table id="example" class="display">
+    <thead>
+    <tr>
+      <th>Publication List</th>
+      <th><?php echo JText::sprintf('COM_PUBDB_FORM_LBL_LITERATURE_PUBLISHERS'); ?></th>
+      <th><?php echo JText::sprintf('COM_PUBDB_FORM_LBL_LITERATURE_AUTHORS'); ?></th>
+      <th> <?php echo JText::sprintf('COM_PUBDB_YEAR'); ?> </th>
+      <th><?php echo JText::sprintf('COM_PUBDB_LITERATURES_KEYWORDS'); ?></th>
+      <th><?php echo JText::sprintf('COM_PUBDB_TITLE_SERIES_TITLES'); ?></th>
+      <th><?php echo JText::sprintf('COM_PUBDB_TITLE_REFERENCETYPES'); ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <script>
+    let data = <?php echo json_encode($this->items)?>;
+    jQuery(document).ready(function () {
+        //init data table with citation  style column
+        jQuery('#example').DataTable({
+          "data": data,
+          "stateSave": false,
+          "paging": <?php echo $filter_paging ?>,
+          "columns": [
+            {"data": "formatted_string"},
+            {"data": "publisher_name"},
+            {"data": "authors"},
+            {"data": "year"},
+            {"data": "keywords"},
+            {"data": "series_title_name"},
+            {"data": "ref_type"}
+          ],
+          <?php echo $filter_json ?>
+        });
+      }
+    );
+  </script>
+<?php } else {
 
+  $order = (int)$stateArr['parameters.menu']['pubdb_group_by_order'];
+  array_sort_by_column($this->items, $group_by, $order);
 
-<script>
-  let data = <?php echo json_encode($this->items)?>;
-  jQuery(document).ready(function () {
-    //init data table with citation  style column
-    jQuery('#example').DataTable({
-      "data": data,
-      "stateSave": false,
-      "paging": <?php echo $filter_paging ?>,
-      "columns": [
-        {"data": "formatted_string"},
-        {"data": "publisher_name"},
-        {"data": "authors"},
-        {"data": "year"},
-        {"data": "keywords"},
-        {"data": "series_title_name"},
-        {"data": "ref_type"}
-      ],
-      <?php echo $filter_json ?>
-      });
-    }
-  );
-</script>
-
-<?php
-
-if (false) {
-
+  $output = "";
 
   ?>
-
-  <form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post"
-        name="adminForm" id="adminForm">
-
-    <?php echo JLayoutHelper::render('default_filter', array('view' => $this), dirname(__FILE__)); ?>
-    <div class="table-responsive">
-      <table class="table table-striped" id="literatureList">
-        <thead>
-        <tr>
-          <th width="5%">
-            Publikation
-          </th>
-        </tr>
-        </thead>
-        <tfoot>
-        <tr>
-          <td colspan="<?php echo isset($this->items[0]) ? count(get_object_vars($this->items[0])) : 10; ?>">
-          </td>
-        </tr>
-        </tfoot>
-        <tbody>
-        <?php foreach ($this->items as $i => $item) : ?>
-          <tr><td><?php print( $item); ?></td></tr>
-        <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
-    <?php if ($canCreate) : ?>
-      <a href="<?php echo Route::_('index.php?option=com_pubdb&task=literatureform.edit&id=0', false, 0); ?>"
-         class="btn btn-success btn-small"><i
-          class="icon-plus"></i>
-        <?php echo Text::_('COM_PUBDB_ADD_ITEM'); ?></a>
-    <?php endif; ?>
-
-    <input type="hidden" name="task" value=""/>
-    <input type="hidden" name="boxchecked" value="0"/>
-    <input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>"/>
-    <input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>"/>
-    <?php echo HTMLHelper::_('form.token'); ?>
-  </form>
-
-  <?php if($canDelete) : ?>
-    <script type="text/javascript">
-
-      jQuery(document).ready(function () {
-        jQuery('.delete-button').click(deleteItem);
-      });
-
-      function deleteItem() {
-
-        if (!confirm("<?php echo Text::_('COM_PUBDB_DELETE_MESSAGE'); ?>")) {
-          return false;
-        }
+  <table id="grouped_table" class="display">
+    <thead>
+    <tr>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    $current_group = $this->items[0][$group_by];
+    $output .= "<tr><th align='left'><h2>" . $current_group . "</h2></th></tr>";
+    foreach ($this->items as $item) {
+      if ($current_group != $item[$group_by]) {
+        $current_group = $item[$group_by];
+        $output .= "<tr><th align='left'><h2>" . $current_group . "</h2></th></tr>";
       }
-    </script>
-  <?php endif; ?>
-<?php } ?>
+      $output .= "<tr><td>" . $item['formatted_string'] . "</td></tr>";
+    }
+    print $output;
+    ?>
+    </tbody>
+  </table>
+  <?php
+};

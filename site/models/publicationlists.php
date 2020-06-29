@@ -160,7 +160,7 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
         // arrays need different function for sql statements
         $key_field = explode('-', $key);
         if (is_array($filter)) {
-          $query->where('FIND_IN_SET(' . implode(',', $filter) . ', ' . $db->quoteName($key_field[1]) . ') > 0', 'AND');
+          $query->where($db->quoteName($key_field[1]) . ' IN (' . implode(',', $filter) . ')', 'AND');
         } else {
           $query->where($db->quoteName($key_field[1]) . ' = ' . $filter, 'AND');
         }

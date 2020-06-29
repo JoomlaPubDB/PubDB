@@ -10,6 +10,7 @@
     <fieldset
       name="basic"
       label="COM_PUBDB_PUBLICATION_LIST_SETTINGS">
+
       <field
         name="citation_style_id"
         query="SELECT DISTINCT `id`,`name` FROM #__pubdb_citation_style ORDER BY `id`"
@@ -19,6 +20,27 @@
         label="COM_PUBDB_TAB_CITATIONSTYLE"
         require="true"
         description="JGLOBAL_SHOW_TITLE_DESC">
+      </field>
+
+      <field
+        name="pubdb_group_by"
+        type="list"
+        multiple="false"
+        label="COM_PUBDB_GROUP_BY"
+      >
+        <option value="0">COM_PUBDB_PUBLICATION_LIST_NO_GROUP</option>
+        <option value="ref_type">COM_PUBDB_LITERATURES_REFERENCE_TYPE</option>
+        <option value="year">COM_PUBDB_LITERATURES_YEAR</option>
+      </field>
+
+      <field
+        name="pubdb_group_by_order"
+        type="list"
+        multiple="false"
+        label="COM_PUBDB_GROUP_BY_ORDER"
+      >
+        <option value="4">COM_PUBDB_GROUP_BY_ORDER_ASC</option>
+        <option value="3">COM_PUBDB_GROUP_BY_ORDER_DESC</option>
       </field>
 
       <field

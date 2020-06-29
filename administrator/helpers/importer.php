@@ -156,6 +156,9 @@ class PubdbBibTexImporter
       $db_in = JFactory::getDbo();
       $cols = array();
       $vals = array();
+      // set state to published
+      $literature['state'] = 1;
+
       //workaround ...
       foreach ($literature as $col => $val) {
         $cols[] = $col;
@@ -229,8 +232,8 @@ class PubdbBibTexImporter
       $db_in = JFactory::getDbo();
       $query_in = $db_in->getQuery(true);
       $query_in->insert('#__pubdb_person');
-      $query_in->columns($db->quoteName(array('first_name', 'last_name', 'first_name_initial')));
-      $query_in->values(implode(',', array($db->quote($first_name), $db->quote($last_name), $db->quote($first_name_initial))));
+      $query_in->columns($db->quoteName(array('state', 'first_name', 'last_name', 'first_name_initial')));
+      $query_in->values(implode(',', array(1, $db->quote($first_name), $db->quote($last_name), $db->quote($first_name_initial))));
       $db_in->setQuery($query_in);
       $db_in->execute();
       return $db_in->insertid();
@@ -319,8 +322,8 @@ class PubdbBibTexImporter
     if ($id == null) {
       $insert = $db->getQuery(true);
       $insert->insert('#__pubdb_periodical');
-      $insert->columns($db->quoteName(array('name', 'issn', 'eissn')));
-      $insert->values(implode(',', array($db->quote($name), $db->quote($issn), $db->quote($eissn))));
+      $insert->columns($db->quoteName(array('state', 'name', 'issn', 'eissn')));
+      $insert->values(implode(',', array($db->quote(1), $db->quote($name), $db->quote($issn), $db->quote($eissn))));
       $db->setQuery($insert);
       $db->execute();
       return $db->insertid();

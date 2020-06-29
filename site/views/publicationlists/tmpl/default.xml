@@ -89,6 +89,14 @@
     <fieldset
       name="Layout"
       label="COM_PUBDB_FIELDSET_LAYOUT_LABEL">
+
+      <field
+        name="frontend_filter_active"
+        type="checkbox"
+        label="COM_PUBDB_FRONTEND_FILTER_ACTIVE"
+        description="COM_PUBDB_FRONTEND_FILTER_ACTIVE_DESC">
+      </field>
+
       <field
         name="frontend_filter"
         type="list"

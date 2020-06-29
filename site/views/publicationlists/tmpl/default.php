@@ -49,27 +49,83 @@ $document->addStyleSheet('https://cdn.datatables.net/searchpanes/1.0.1/css/searc
 //print_r($this->state);
 $stateArr = (array) $this->state;
 $filter = $stateArr['parameters.menu']['frontend_filter'];
+$filter_active = isset($stateArr['parameters.menu']['frontend_filter_active']) ? True : False;
 
-$arrFilterMapping = array(
-  'publisher_name' => 1,
-  'authors' => 2,
-  'year' => 3,
-  'keywords' => 4,
-  'series_title_name' => 5,
-  'ref_type' => 6
-);
-$targets = array();
-$default = array(1,2,3,4,5,6);
+if ($filter_active) {
+  $targets = array();
+  $default = array(1, 2, 3, 4, 5, 6);
+  $arrFilterMapping = array(
+    'publisher_name' => 1,
+    'authors' => 2,
+    'year' => 3,
+    'keywords' => 4,
+    'series_title_name' => 5,
+    'ref_type' => 6
+  );
 
-if(!empty($filter)){
-  foreach ($filter as $key => $v){
-    $targets[] = $arrFilterMapping[$v];
+  if (!empty($filter)) {
+    foreach ($filter as $key => $v) {
+      $targets[] = $arrFilterMapping[$v];
+    }
+  } else {
+    $targets = $default;
   }
-}else{
-  $targets = $default;
-}
 
-$remove = array_diff($default, $targets);
+  $remove = array_diff($default, $targets);
+
+  $filter_json = "searchPanes:{
+          layout: 'columns-4',
+          viewTotal: true,
+          cascadePanes: true,
+          orderable: false
+        },
+        dom: 'Pfrtip',
+        language: {
+          searchPanes: {
+            count: '{total} found',
+            countFiltered: '{shown} of {total}'
+          }
+        },
+        columnDefs:[
+          {
+            targets: [" . implode(',', $targets) . "],
+            searchPanes:{
+              show: true
+            }
+          },
+          {
+            targets: [" . implode(',', $remove) . "],
+            searchPanes:{
+              show: false
+            }
+          },
+          {
+            targets: [0],
+            visible: true,
+            searchable: true,
+          },
+          {
+            targets: [1,2,3,4,5,6],
+            visible: false,
+            searchable: true
+          }
+
+        ]";
+} else {
+  $filter_json = "columnDefs:[
+          {
+            targets: [0],
+            visible: true,
+            searchable: true,
+          },
+          {
+            targets: [1,2,3,4,5,6],
+            visible: false,
+            searchable: true
+          }
+
+        ]";
+}
 ?>
 <table id="example" class="display">
   <thead>
@@ -104,43 +160,7 @@ $remove = array_diff($default, $targets);
           {"data": "series_title_name"},
           {"data": "ref_type"}
         ],
-        searchPanes:{
-          layout: 'columns-4',
-          viewTotal: true,
-          cascadePanes: true,
-        },
-        dom: 'Pfrtip',
-        language: {
-          searchPanes: {
-            count: '{total} found',
-            countFiltered: '{shown} of {total}'
-          }
-        },
-        columnDefs:[
-          {
-            targets: [<?php echo implode(',', $targets);?>],
-            searchPanes:{
-              show: true
-            }
-          },
-          {
-            targets: [<?php echo implode(',', $remove);?>],
-            searchPanes:{
-              show: false
-            }
-          },
-          {
-            targets: [0],
-            visible: true,
-            searchable: true,
-          },
-          {
-            targets: [1,2,3,4,5,6],
-            visible: false,
-            searchable: true
-          }
-
-        ]
+        <?php echo $filter_json ?>
       });
     }
   );
@@ -148,7 +168,7 @@ $remove = array_diff($default, $targets);
 
 <?php
 
-if (false){
+if (false) {
 
 
   ?>

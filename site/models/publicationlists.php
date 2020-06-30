@@ -190,6 +190,7 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
       $tmpItem = (array) $items[$i];
       $tmpItem['formatted_string'] = " <a href=" . JRoute::_('index.php?option=com_pubdb&view=literature&id=' . (int)$items[$i]->id) . ">" . $formattedStrings[$i] . "</a>";
       $tmpItem['authors'] = $this->getAuthorsFromItem($tmpItem);
+      $tmpItem['keywords'] = explode(',', $tmpItem['keywords']);
       $arrReturn[] = $tmpItem;
     }
     return $arrReturn;

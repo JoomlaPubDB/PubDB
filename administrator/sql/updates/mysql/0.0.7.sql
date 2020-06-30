@@ -76,7 +76,10 @@ SELECT
     type.name as ref_type,
     type.id as ref_type_id,
 
-    keywords.name as keywords,
+    (
+        SELECT GROUP_CONCAT(name SEPARATOR ", ") FROM #__pubdb_keywords as k WHERE FIND_IN_SET(k.id, l.keywords) > 0 ORDER BY keywords.id
+    )
+                   as "keywords",
 
     periodical.id as periodical_id,
     periodical.name as periodical_name,

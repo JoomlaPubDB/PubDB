@@ -186,13 +186,16 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
     $formattedStrings = PubdbLiteraturesCitation::mapList($pattern, $items);
     $arrReturn = array();
     // build json object
+    $export_ids = array();
     for ($i = 0 ; $i < count($items); $i ++){
       $tmpItem = (array) $items[$i];
       $tmpItem['formatted_string'] = " <a href=" . JRoute::_('index.php?option=com_pubdb&view=literature&id=' . (int)$items[$i]->id) . ">" . $formattedStrings[$i] . "</a>";
       $tmpItem['authors'] = $this->getAuthorsFromItem($tmpItem);
       $tmpItem['keywords'] = explode(',', $tmpItem['keywords']);
       $arrReturn[] = $tmpItem;
+      $export_ids[] = (int)$items[$i]->id;
     }
+    $this->state->set('export_ids', $export_ids);
     return $arrReturn;
   }
 

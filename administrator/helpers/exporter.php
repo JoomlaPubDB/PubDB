@@ -139,7 +139,7 @@ class PubdbBibTexExporter
       $item['citekey'] = "";
 
       foreach ($item as $field => $value) {
-        if ($value == "") continue;
+        if ($value == "" || $field == "") continue;
         $itemBlock .= $field . " = " . $value . ',' . PHP_EOL;
       }
 

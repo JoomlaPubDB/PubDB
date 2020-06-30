@@ -249,3 +249,19 @@ if ($group_by == '0' || !isset($group_by)) {
   </table>
   <?php
 };
+if (isset($stateArr['parameters.menu']['allow_export'])) {
+  ?>
+  <form action="<?php echo JRoute::_('index.php?option=com_pubdb&view=publicationlists'); ?>" method="post"
+        name="adminForm" id="adminForm" class="form-validate" enctype="multipart/form-data">
+    <button class="btn btn-primary pull-right" type="submit"
+            onclick="document.getElementById('task').value = 'publicationlists.export';this.form.submit()"/>
+    <i class="icon-upload icon-white"></i>
+    <?php echo JText::_('COM_PUBDB_EXPORT'); ?></button>
+    <?php echo JHTML::_('form.token'); ?>
+    <input type="hidden" name="option" value="com_pubdb"/>
+    <input type="hidden" name="task" id="task" value="importer.import"/>
+    <input type="hidden" name="export_id" value="<?php echo implode(',', $this->state->get('export_ids')); ?>">
+    <input type="hidden" name="controller" value="publicationlists"/>
+  </form>
+  <?php
+}

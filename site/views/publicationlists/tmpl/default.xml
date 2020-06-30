@@ -113,6 +113,13 @@
       label="COM_PUBDB_FIELDSET_LAYOUT_LABEL">
 
       <field
+        name="allow_export"
+        type="checkbox"
+        label="COM_PUBDB_FRONTEND_EXPORT_ALLOWED"
+        description="COM_PUBDB_FRONTEND_EXPORT_ALLOWED_DESC">
+      </field>
+
+      <field
         name="frontend_filter_active"
         type="checkbox"
         label="COM_PUBDB_FRONTEND_FILTER_ACTIVE"

@@ -72,7 +72,7 @@ function array_sort_by_column(&$arr, $col, $dir = SORT_ASC)
 
 
 //ignore datatables if grouping
-if ($group_by == '0') {
+if ($group_by == '0' || !isset($group_by)) {
 
   if ($filter_active) {
     $targets = array();
@@ -102,13 +102,6 @@ if ($group_by == '0') {
           viewTotal: true,
           cascadePanes: true,
           orderable: false
-        },
-        dom: 'Pfrtip',
-        language: {
-          searchPanes: {
-            count: '{total} found',
-            countFiltered: '{shown} of {total}'
-          }
         },
         columnDefs:[
           {
@@ -171,6 +164,21 @@ if ($group_by == '0') {
     jQuery(document).ready(function () {
         //init data table with citation  style column
         jQuery('#example').DataTable({
+          language: {
+            sSearch: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_SSEARCH'); ?>",
+            sInfo: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_SINFO'); ?>",
+            searchPanes: {
+              title: {
+                _: "<?php echo "%d " . JText::sprintf('COM_PUBDB_FILTER_PANE_TITLE_MULTI')?>",
+                0: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_TITLE_NONE'); ?>",
+                1: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_TITLE_ONE'); ?>",
+              },
+              count: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_COUNT'); ?>",
+              countFiltered: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_COUNT_FILTERED'); ?>",
+              clearMessage: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_CLEAR_MSG'); ?>",
+            }
+          },
+          dom: 'Pfrtip',
           "data": data,
           "stateSave": false,
           "paging": <?php echo $filter_paging ?>,
@@ -185,19 +193,21 @@ if ($group_by == '0') {
           ],
           <?php echo $filter_json ?>
         });
-      jQuery('.dtsp-searchPane').hide();
-      let btn = document.createElement('button');
-      btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_SHOW')?>";
-      btn.setAttribute('class', 'dtsp-clearAll');
-      let container = document.getElementsByClassName('dtsp-titleRow')[0];
-      let btn_ref = document.getElementsByClassName('dtsp-clearAll')[0];
-      container.insertBefore(btn, btn_ref);
-      let hide = false;
-      btn.addEventListener('click', function () {
-        if (hide) {
-          jQuery('.dtsp-searchPane').hide();
-          hide = !hide;
-          btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_SHOW')?>";
+
+        // add show / hide button to filter pane
+        jQuery('.dtsp-searchPane').hide();
+        let btn = document.createElement('button');
+        btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_SHOW')?>";
+        btn.setAttribute('class', 'dtsp-clearAll');
+        let container = document.getElementsByClassName('dtsp-titleRow')[0];
+        let btn_ref = document.getElementsByClassName('dtsp-clearAll')[0];
+        container.insertBefore(btn, btn_ref);
+        let hide = false;
+        btn.addEventListener('click', function () {
+          if (hide) {
+            jQuery('.dtsp-searchPane').hide();
+            hide = !hide;
+            btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_SHOW')?>";
           } else {
             jQuery('.dtsp-searchPane').show();
             hide = !hide;

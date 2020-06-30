@@ -180,31 +180,33 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
         height: 100px;
         border-color: grey;
         margin-left: 10px;
-        border-width: 1px;
-        border-radius: 10px;
-        border-style: dotted;
-        flex: 0.2;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+      border-width: 1px;
+      border-radius: 10px;
+      border-style: dotted;
+      flex: 0.2;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
 </style>
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<?php
+$document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
+?>
 <script type="text/javascript">
-    js = jQuery.noConflict();
+  js = jQuery.noConflict();
 
-    Joomla.submitbutton = function (task) {
-        if (task === 'citationstyle.cancel') {
-            Joomla.submitform(task, document.getElementById('citationstyle-form'));
-        } else {
+  Joomla.submitbutton = function (task) {
+    submitClicked();
+    if (task === 'citationstyle.cancel') {
+      Joomla.submitform(task, document.getElementById('citationstyle-form'));
+    } else {
 
-            if (task !== 'citationstyle.cancel' && document.formvalidator.isValid(document.id('citationstyle-form'))) {
+      if (task !== 'citationstyle.cancel' && document.formvalidator.isValid(document.id('citationstyle-form'))) {
 
-                Joomla.submitform(task, document.getElementById('citationstyle-form'));
-            } else {
-                alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
+        Joomla.submitform(task, document.getElementById('citationstyle-form'));
+      } else {
+        alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
             }
         }
     }
@@ -816,7 +818,6 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
                   <ol style="list-style-type: none;" class="specialContainer fixSpecialList"></ol>
               </div>
           </div>
-          <button onclick="submitClicked(); return false;" style="align-self: center; margin-top: 40px;">Submit</button>
       </div>
     <?php echo JHtml::_('bootstrap.endTab'); ?>
   <?php endforeach; ?>

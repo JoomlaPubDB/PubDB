@@ -255,7 +255,7 @@ if (isset($stateArr['parameters.menu']['allow_export'])) {
         name="adminForm" id="adminForm" class="form-validate" enctype="multipart/form-data">
     <button class="btn btn-primary pull-right" type="submit"
             onclick="document.getElementById('task').value = 'publicationlists.export';this.form.submit()"/>
-    <i class="icon-upload icon-white"></i>
+    <i class="icon-download icon-white"></i>
     <?php echo JText::_('COM_PUBDB_EXPORT'); ?></button>
     <?php echo JHTML::_('form.token'); ?>
     <input type="hidden" name="option" value="com_pubdb"/>

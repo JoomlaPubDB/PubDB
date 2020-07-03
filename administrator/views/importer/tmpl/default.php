@@ -53,15 +53,17 @@ JHtml::_('formbehavior.chosen', 'select');
                 <div class="control-label"><?php echo $this->form->getLabel('export_file'); ?></div>
                 <div class="controls"><?php echo $this->form->getInput('export_file'); ?></div>
               </div>
-              <button class="btn btn-primary" type="submit" onclick="document.getElementById('task').value = 'importer.export';this.form.submit()" /><i class="icon-upload icon-white"></i> <?php echo JText::_('COM_PUBDB_EXPORT'); ?></button>
+              <button class="btn btn-primary" type="submit"
+                      onclick="document.getElementById('task').value = 'importer.export';this.form.submit()"/>
+              <i class="icon-download icon-white"></i> <?php echo JText::_('COM_PUBDB_EXPORT'); ?></button>
             </div>
           </div>
         </fieldset>
       </div>
     </div>
-    <?php echo JHTML::_( 'form.token' ); ?>
-    <input type="hidden" name="option" value="com_pubdb" />
-    <input type="hidden" name="task" id="task" value="importer.import" />
-    <input type="hidden" name="controller" value="importer" />
+    <?php echo JHTML::_('form.token'); ?>
+    <input type="hidden" name="option" value="com_pubdb"/>
+    <input type="hidden" name="task" id="task" value="importer.import"/>
+    <input type="hidden" name="controller" value="importer"/>
 </form>
 <div class="clearfix"></div>

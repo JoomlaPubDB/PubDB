@@ -249,10 +249,66 @@ if ($group_by == '0' || !isset($group_by)) {
   </table>
   <?php
 };
-if (isset($stateArr['parameters.menu']['allow_export'])) {
+if (isset($stateArr['parameters.menu']['allow_citation_change'])) {
+  ?>
+  <form class="form-inline">
+    <div class="form-group">
+      <label for="citation_selection">
+        <?php echo JText::_('COM_PUBDB_VIEW_PUBLICATION_LIST_CHOOSE_CITATION_STYLE'); ?>
+      </label>
+      <select class="form-control" style="width:auto;" id="citation_selection" onchange="reloadPage(event);">
+        <?php
+        $current_style = isset($_GET['citation_style']) ? $_GET['citation_style'] : $stateArr['parameters.menu']['citation_style_id'];
+        foreach ($this->citation_styles as $style) {
+          if ($current_style == $style['id']) {
+            echo '<option selected value="' . $style['id'] . '">' . $style['name'] . '</option>';
+          } else {
+            echo '<option value="' . $style['id'] . '">' . $style['name'] . '</option>';
+          }
+        }
+        ?>
+      </select>
+    </div>
+  </form>
+  <script>
+    function reloadPage(evt) {
+      location.href = URL_add_parameter(location.href, 'citation_style', evt.target.value);
+    }
+
+    function URL_add_parameter(url, param, value) {
+      var hash = {};
+      var parser = document.createElement('a');
+
+      parser.href = url;
+
+      var parameters = parser.search.split(/\?|&/);
+
+      for (var i = 0; i < parameters.length; i++) {
+        if (!parameters[i])
+          continue;
+
+        var ary = parameters[i].split('=');
+        hash[ary[0]] = ary[1];
+      }
+
+      hash[param] = value;
+
+      var list = [];
+      Object.keys(hash).forEach(function (key) {
+        list.push(key + '=' + hash[key]);
+      });
+
+      parser.search = '?' + list.join('&');
+      return parser.href;
+    }
+
+  </script>
+  <?php
+}
+if (isset($stateArr['parameters.menu']['allow_citation_change'])) {
   ?>
   <form action="<?php echo JRoute::_('index.php?option=com_pubdb&view=publicationlists'); ?>" method="post"
-        name="adminForm" id="adminForm" class="form-validate" enctype="multipart/form-data">
+        name="adminForm" id="adminForm" class="form-validate form-inline" enctype="multipart/form-data">
     <button class="btn btn-primary pull-right" type="submit"
             onclick="document.getElementById('task').value = 'publicationlists.export';this.form.submit()"/>
     <i class="icon-download icon-white"></i>

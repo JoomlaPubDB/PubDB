@@ -113,6 +113,13 @@
       label="COM_PUBDB_FIELDSET_LAYOUT_LABEL">
 
       <field
+        name="allow_citation_change"
+        type="checkbox"
+        label="COM_PUBDB_FRONTEND_CITATION_CHANGE_ALLOWED"
+        description="COM_PUBDB_FRONTEND_CITATION_CHANGE_ALLOWED_DESC">
+      </field>
+
+      <field
         name="allow_export"
         type="checkbox"
         label="COM_PUBDB_FRONTEND_EXPORT_ALLOWED"

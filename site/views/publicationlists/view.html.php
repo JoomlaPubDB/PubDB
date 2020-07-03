@@ -51,7 +51,7 @@ class PubdbViewPublicationlists extends \Joomla\CMS\MVC\View\HtmlView
     $this->params = $app->getParams('com_pubdb');
     $this->filterForm = $this->get('FilterForm');
     $this->activeFilters = $this->get('ActiveFilters');
-
+    $this->citation_styles = $this->getCitationStyles();
 
     // Check for errors.
     if (count($errors = $this->get('Errors')))
@@ -126,12 +126,28 @@ class PubdbViewPublicationlists extends \Joomla\CMS\MVC\View\HtmlView
   /**
    * Check if state is set
    *
-   * @param   mixed  $state  State
+   * @param mixed $state State
    *
    * @return bool
    */
   public function getState($state)
   {
     return isset($this->state->{$state}) ? $this->state->{$state} : false;
+  }
+
+  /**
+   * Get list of all citation styles available
+   * @return mixed array with citation style id and name
+   */
+  public function getCitationStyles()
+  {
+    $db = JFactory::getDbo();
+    $query = $db->getQuery(true);
+    $query
+      ->select($db->quoteName(array('id', 'name')))
+      ->from('#__pubdb_citation_style')
+      ->where($db->quoteName('state') . ' = 1');
+    $db->setQuery($query);
+    return $db->loadAssocList();
   }
 }

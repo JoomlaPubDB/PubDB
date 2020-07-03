@@ -5,7 +5,6 @@
            label="COM_PUBDB_FIELD_IMPORTER_TYPE_LABEL" description="COM_PUBDB_FIELD_IMPORTER_TYPE_LABEL"
            class="inputbox" filter="intval" size="1" default="1">
       <option value="1">COM_PUBDB_BIBTEX</option>
-      <option value="2">COM_PUBDB_CSV</option>
     </field>
 
     <field name="import_file"

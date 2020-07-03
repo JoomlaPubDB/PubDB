@@ -180,7 +180,7 @@ if ($group_by == '0' || !isset($group_by)) {
               clearMessage: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_CLEAR_MSG'); ?>",
             }
           },
-          dom: 'Pfrtip',
+          <?php if ($filter_active) echo "dom: 'Pfrtip',"; ?>
           "data": data,
           "stateSave": false,
           "paging": <?php echo $filter_paging ?>,

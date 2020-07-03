@@ -258,18 +258,29 @@ if ($group_by == '0' || !isset($group_by)) {
     </tr>
     </thead>
     <tbody>
-    <?php
-    $current_group = $this->items[0][$group_by];
-    $output .= "<tr><th align='left'><h2>" . $current_group . "</h2></th></tr>";
-    foreach ($grouped_items as $item) {
-      if ($current_group != $item[$group_by]) {
-        $current_group = $item[$group_by];
-        $output .= "<tr><th align='left'><h2>" . $current_group . "</h2></th></tr>";
-      }
-      $output .= "<tr><td>" . $item['formatted_string'] . "</td></tr>";
-    }
-    print $output;
-    ?>
+    <tr>
+      <td>
+        <ul>
+          <?php
+          $current_group = $this->items[0][$group_by];
+          $tmpArray = array();
+          foreach ($grouped_items as $item) {
+            $tmpArray[$item[$group_by]][] = $item;
+          }
+
+          foreach ($tmpArray as $key => $list) {
+            $output .= "<li><h2>" . $key . "</h2></li>";
+            $output .= "<ul>";
+            foreach ($list as $item) {
+              $output .= "<li>" . $item['formatted_string'] . "</li>";
+            }
+            $output .= "</ul>";
+          }
+          print $output;
+          ?>
+        </ul>
+      </td>
+    </tr>
     </tbody>
   </table>
   <?php

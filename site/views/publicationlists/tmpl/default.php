@@ -197,25 +197,28 @@ if ($group_by == '0' || !isset($group_by)) {
         });
 
         // add show / hide button to filter pane
-        jQuery('.dtsp-searchPane').hide();
-        let btn = document.createElement('button');
-        btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_SHOW')?>";
-        btn.setAttribute('class', 'dtsp-clearAll');
-        let container = document.getElementsByClassName('dtsp-titleRow')[0];
-        let btn_ref = document.getElementsByClassName('dtsp-clearAll')[0];
-        container.insertBefore(btn, btn_ref);
-        let hide = false;
-        btn.addEventListener('click', function () {
-          if (hide) {
-            jQuery('.dtsp-searchPane').hide();
-            hide = !hide;
-            btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_SHOW')?>";
-          } else {
-            jQuery('.dtsp-searchPane').show();
-            hide = !hide;
-            btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_HIDE')?>";
-          }
-        });
+        if (document.getElementsByClassName('dtsp-clearAll')[0]) {
+
+          jQuery('.dtsp-searchPane').hide();
+          let btn = document.createElement('button');
+          btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_SHOW')?>";
+          btn.setAttribute('class', 'dtsp-clearAll');
+          let container = document.getElementsByClassName('dtsp-titleRow')[0];
+          let btn_ref = document.getElementsByClassName('dtsp-clearAll')[0];
+          container.insertBefore(btn, btn_ref);
+          let hide = false;
+          btn.addEventListener('click', function () {
+            if (hide) {
+              jQuery('.dtsp-searchPane').hide();
+              hide = !hide;
+              btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_SHOW')?>";
+            } else {
+              jQuery('.dtsp-searchPane').show();
+              hide = !hide;
+              btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_HIDE')?>";
+            }
+          });
+        }
 
       }
     );

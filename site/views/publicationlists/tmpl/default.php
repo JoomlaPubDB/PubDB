@@ -60,7 +60,7 @@ $group_by = $stateArr['parameters.menu']['pubdb_group_by'];
  * @param int $dir sort order
  */
 
-function array_sort_by_column(&$arr, $col, $dir = SORT_ASC)
+function array_sort_by_column($arr, $col, $dir = SORT_ASC)
 {
   $sort_col = array();
   foreach ($arr as $key => $row) {
@@ -68,6 +68,8 @@ function array_sort_by_column(&$arr, $col, $dir = SORT_ASC)
   }
 
   array_multisort($sort_col, $dir, $arr);
+
+  return $arr;
 }
 
 
@@ -221,9 +223,32 @@ if ($group_by == '0' || !isset($group_by)) {
 <?php } else {
 
   $order = (int)$stateArr['parameters.menu']['pubdb_group_by_order'];
-  array_sort_by_column($this->items, $group_by, $order);
+  $grouped_items = array_sort_by_column($this->items, $group_by, $order);
 
-  $output = "";
+  if (isset($stateArr['parameters.menu']['pubdb_group_by_order'])) {
+    $current_group = $grouped_items[0][$group_by];
+    $sorting = explode('_', $stateArr['parameters.menu']['pubdb_group_by_order_in_group']);
+    $field = $sorting[0];
+    $dir = (int)$sorting[1];
+    $arrSorted = array();
+    $tmpArray = array();
+
+    foreach ($grouped_items as $item) {
+      if ($current_group != $item[$group_by]) {
+        $current_group = $item[$group_by];
+        $tmpArray[$current_group][$item['id']] = $item;
+      }
+      $tmpArray[$current_group][$item['id']] = $item;
+    }
+
+    foreach ($tmpArray as $groupedItems) {
+      $sorted = array_sort_by_column($groupedItems, $field, $dir);
+      $arrSorted = array_merge($arrSorted, $sorted);
+    }
+
+    $grouped_items = $arrSorted;
+
+  }
 
   ?>
   <table id="grouped_table" class="display">
@@ -236,7 +261,7 @@ if ($group_by == '0' || !isset($group_by)) {
     <?php
     $current_group = $this->items[0][$group_by];
     $output .= "<tr><th align='left'><h2>" . $current_group . "</h2></th></tr>";
-    foreach ($this->items as $item) {
+    foreach ($grouped_items as $item) {
       if ($current_group != $item[$group_by]) {
         $current_group = $item[$group_by];
         $output .= "<tr><th align='left'><h2>" . $current_group . "</h2></th></tr>";
@@ -251,6 +276,7 @@ if ($group_by == '0' || !isset($group_by)) {
 };
 if (isset($stateArr['parameters.menu']['allow_citation_change'])) {
   ?>
+  <br>
   <form class="form-inline">
     <div class="form-group">
       <label for="citation_selection">
@@ -305,7 +331,7 @@ if (isset($stateArr['parameters.menu']['allow_citation_change'])) {
   </script>
   <?php
 }
-if (isset($stateArr['parameters.menu']['allow_citation_change'])) {
+if (isset($stateArr['parameters.menu']['allow_export'])) {
   ?>
   <form action="<?php echo JRoute::_('index.php?option=com_pubdb&view=publicationlists'); ?>" method="post"
         name="adminForm" id="adminForm" class="form-validate form-inline" enctype="multipart/form-data">

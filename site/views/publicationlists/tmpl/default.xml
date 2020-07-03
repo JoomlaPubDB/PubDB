@@ -45,6 +45,19 @@
       </field>
 
       <field
+        name="pubdb_group_by_order_in_group"
+        type="list"
+        multiple="false"
+        label="COM_PUBDB_GROUP_BY_ORDER_IN_GROUP"
+      >
+        <option value="year_4">COM_PUBDB_GROUP_BY_ORDER_YEAR_ASC</option>
+        <option value="year_3">COM_PUBDB_GROUP_BY_ORDER_YEAR_DESC</option>
+        <option value="title_4">COM_PUBDB_GROUP_BY_ORDER_TITLE_ASC</option>
+        <option value="title_3">COM_PUBDB_GROUP_BY_ORDER_TITLE_DESC</option>
+      </field>
+
+
+      <field
         name="pubdb-id"
         query="SELECT DISTINCT `id`,`title` FROM #__pubdb_literature ORDER BY `id`"
         type="sql"

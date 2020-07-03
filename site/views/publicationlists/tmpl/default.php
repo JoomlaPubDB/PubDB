@@ -23,7 +23,7 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 $user = Factory::getUser();
 $userId = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
-$listDirn = $this->state->get('list.direction');
+$listDir = $this->state->get('list.direction');
 $canCreate = $user->authorise('core.create', 'com_pubdb') && file_exists(JPATH_COMPONENT . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'forms' . DIRECTORY_SEPARATOR . 'literatureform.xml');
 $canEdit = $user->authorise('core.edit', 'com_pubdb') && file_exists(JPATH_COMPONENT . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'forms' . DIRECTORY_SEPARATOR . 'literatureform.xml');
 $canCheckin = $user->authorise('core.manage', 'com_pubdb');

@@ -19,10 +19,4 @@ JLoader::register('ModPubdbHelper', dirname(__FILE__) . '/helper.php');
 
 $doc = Factory::getDocument();
 
-/* */
-$doc->addStyleSheet(URI::base() . 'media/mod_pubdb/css/style.css');
-
-/* */
-$doc->addScript(URI::base() . 'media/mod_pubdb/js/script.js');
-
 require ModuleHelper::getLayoutPath('mod_pubdb', 'list');

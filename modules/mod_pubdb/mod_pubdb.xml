@@ -1,53 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.0" method="upgrade" client="site">
-	<name>MOD_PUBDB_NAME</name>
-	<creationDate>2020-05-06</creationDate>
-	<copyright>2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</copyright>
-	<license>GNU General Public License Version 2 oder neuer; siehe LICENSE.txt</license>
-	<author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
-	<authorEmail></authorEmail>
-	<authorUrl></authorUrl>
-	<version>CVS: 0.0.7</version>
-	<description>MOD_PUBDB_DESCRIPTION</description>
+  <name>MOD_PUBDB_NAME</name>
+  <creationDate>2020-05-06</creationDate>
+  <copyright>2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</copyright>
+  <license>GNU General Public License Version 2 oder neuer; siehe LICENSE.txt</license>
+  <author>Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke</author>
+  <authorEmail></authorEmail>
+  <authorUrl></authorUrl>
+  <version>CVS: 0.0.7</version>
+  <description>MOD_PUBDB_DESCRIPTION</description>
 
-	<files>
-		<filename module="mod_pubdb">mod_pubdb.php</filename>
-		<filename>helper.php</filename>
-		<filename>index.html</filename>
-		<folder>tmpl</folder>
-	</files>
-	<languages folder="language">
+  <files>
+    <filename module="mod_pubdb">mod_pubdb.php</filename>
+    <filename>helper.php</filename>
+    <filename>index.html</filename>
+    <folder>tmpl</folder>
+  </files>
+  <languages folder="language">
 
-		<language tag="de-DE">de-DE/de-DE.mod_pubdb.ini</language>
-		<language tag="de-DE">de-DE/de-DE.mod_pubdb.sys.ini</language>
-	</languages>
-	<config>
-		<fields name="params">
-			<fieldset
-					name="lit_ids"
-					label="MOD_PUBDB_ADDING_LITERATURE_TAB_LBL"
-					description="MOD_PUBDB_CONTENT_TYPE_TAB_DESC">
-				<field
-						name="lit_ids" type="sql"
-						label="MOD_PUBDB_ADDING_LITERATURE_TAB_LBL"
-						description="MOD_PUBDB_CONTENT_TYPE_DESC"
-						query="select `id`,`title` from #__pubdb_publication_list"
-						key_field="id"
-						value_field="title"
-						multiple="true"
-				>
-				</field>
-				<field
-						name="citation_style_id"
-						query="SELECT DISTINCT `id`,`name` FROM #__pubdb_citation_style ORDER BY `id`"
-						type="sql"
-						key_field="id"
-						value_field="name"
-						label="MOD_PUBDB_FIELD_CITATIONSTYLE"
-						require="true"
-						description="JGLOBAL_SHOW_TITLE_DESC">
-				</field>
-			</fieldset>
-		</fields>
-	</config>
+    <language tag="de-DE">de-DE/de-DE.mod_pubdb.ini</language>
+    <language tag="de-DE">de-DE/de-DE.mod_pubdb.sys.ini</language>
+  </languages>
+  <config>
+    <fields name="params">
+      <fieldset
+        name="basic"
+        label="COM_PUBDB_PUBLICATION_LIST_SETTINGS"
+        description="COM_PUBDB_PUBLICATION_LIST_DESC"
+      >
+        <field
+          name="citation_style_id"
+          query="SELECT DISTINCT `id`,`name` FROM #__pubdb_citation_style ORDER BY `id`"
+          type="sql"
+          key_field="id"
+          value_field="name"
+          label="COM_PUBDB_TAB_CITATIONSTYLE"
+          require="true"
+          description="JGLOBAL_SHOW_TITLE_DESC">
+        </field>
+
+        <field
+          name="pubdb_group_by"
+          type="list"
+          multiple="false"
+          label="COM_PUBDB_GROUP_BY"
+        >
+          <option value="0">COM_PUBDB_PUBLICATION_LIST_NO_GROUP</option>
+          <option value="ref_type">COM_PUBDB_LITERATURES_REFERENCE_TYPE</option>
+          <option value="year">COM_PUBDB_LITERATURES_YEAR</option>
+        </field>
+
+        <field
+          name="pubdb_group_by_order"
+          type="list"
+          multiple="false"
+          label="COM_PUBDB_GROUP_BY_ORDER"
+        >
+          <option value="4">COM_PUBDB_GROUP_BY_ORDER_ASC</option>
+          <option value="3">COM_PUBDB_GROUP_BY_ORDER_DESC</option>
+        </field>
+
+        <field
+          name="pubdb_group_by_order_in_group"
+          type="list"
+          multiple="false"
+          label="COM_PUBDB_GROUP_BY_ORDER_IN_GROUP"
+        >
+          <option value="year_4">COM_PUBDB_GROUP_BY_ORDER_YEAR_ASC</option>
+          <option value="year_3">COM_PUBDB_GROUP_BY_ORDER_YEAR_DESC</option>
+          <option value="title_4">COM_PUBDB_GROUP_BY_ORDER_TITLE_ASC</option>
+          <option value="title_3">COM_PUBDB_GROUP_BY_ORDER_TITLE_DESC</option>
+        </field>
+
+
+        <field
+          name="pubdb-id"
+          query="SELECT DISTINCT `id`,`title` FROM #__pubdb_literature ORDER BY `id`"
+          type="sql"
+          key_field="id"
+          value_field="title"
+          label="COM_PUBDB_TITLE_LITERATURES"
+          require="true"
+          multiple="multiple"
+          description="JGLOBAL_SHOW_TITLE_DESC">
+        </field>
+
+        <field
+          name="pubdb-authors"
+          query="SELECT DISTINCT `id`, concat (`last_name`,', ', `first_name`) as name FROM #__pubdb_person ORDER BY `id`"
+          type="sql"
+          key_field="id"
+          value_field="name"
+          label="COM_PUBDB_LITERATURES_AUTHORS"
+          require="true"
+          multiple="multiple"
+          description="JGLOBAL_SHOW_TITLE_DESC">
+        </field>
+
+        <field
+          name="pubdb-periodical_id"
+          query="SELECT DISTINCT `id`,`name` FROM #__pubdb_periodical ORDER BY `id`"
+          type="sql"
+          key_field="id"
+          value_field="name"
+          label="COM_PUBDB_TITLE_PERIODICAL"
+          require="true"
+          multiple="multiple"
+          description="JGLOBAL_SHOW_TITLE_DESC">
+        </field>
+
+        <field
+          name="pubdb-series_title_id"
+          query="SELECT DISTINCT `id`,`name` FROM #__pubdb_series_title ORDER BY `id`"
+          type="sql"
+          key_field="id"
+          value_field="name"
+          label="COM_PUBDB_TITLE_SERIES_TITLE"
+          require="true"
+          multiple="multiple"
+          description="JGLOBAL_SHOW_TITLE_DESC">
+        </field>
+
+        <field
+          name="pubdb-publisher_id"
+          query="SELECT DISTINCT `id`,`name` FROM #__pubdb_publisher ORDER BY `id`"
+          type="sql"
+          key_field="id"
+          value_field="name"
+          label="COM_PUBDB_TITLE_PUBLISHER"
+          require="true"
+          multiple="multiple"
+          description="JGLOBAL_SHOW_TITLE_DESC">
+        </field>
+
+      </fieldset>
+    </fields>
+
+    <fields name="params">
+      <fieldset
+        name="Layout"
+        label="COM_PUBDB_FIELDSET_LAYOUT_LABEL">
+
+        <field
+          name="allow_citation_change"
+          type="checkbox"
+          label="COM_PUBDB_FRONTEND_CITATION_CHANGE_ALLOWED"
+          description="COM_PUBDB_FRONTEND_CITATION_CHANGE_ALLOWED_DESC">
+        </field>
+
+        <field
+          name="allow_export"
+          type="checkbox"
+          label="COM_PUBDB_FRONTEND_EXPORT_ALLOWED"
+          description="COM_PUBDB_FRONTEND_EXPORT_ALLOWED_DESC">
+        </field>
+
+        <field
+          name="frontend_filter_active"
+          type="checkbox"
+          label="COM_PUBDB_FRONTEND_FILTER_ACTIVE"
+          description="COM_PUBDB_FRONTEND_FILTER_ACTIVE_DESC">
+        </field>
+
+        <field
+          name="frontend_paging"
+          type="checkbox"
+          label="COM_PUBDB_FRONTEND_FILTER_PAGING"
+          description="COM_PUBDB_FRONTEND_FILTER_PAGING_DESC">
+        </field>
+
+        <field
+          name="frontend_filter"
+          type="list"
+          multiple="true"
+          label="COM_PUBDB_LAYOUT_SELECTION"
+          require="true"
+          description="JGLOBAL_SHOW_TITLE_DESC">
+          <option value="publisher_name">COM_PUBDB_FORM_LBL_LITERATURE_PUBLISHERS</option>
+          <option value="authors">COM_PUBDB_FORM_LBL_LITERATURE_AUTHORS</option>
+          <option value="year">COM_PUBDB_YEAR</option>
+          <option value="keywords">COM_PUBDB_LITERATURES_KEYWORDS</option>
+          <option value="series_title_name">COM_PUBDB_TITLE_SERIES_TITLES</option>
+          <option value="ref_type">COM_PUBDB_TITLE_REFERENCETYPES</option>
+        </field>
+      </fieldset>
+    </fields>
+  </config>
 </extension>

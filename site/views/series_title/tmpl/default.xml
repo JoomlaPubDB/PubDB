@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-    <layout title="COM_PUBDB_TITLE_ITEM_VIEW_SERIES_TITLE" option="View">
-        <message>
-                        <![CDATA[COM_PUBDB_TITLE_ITEM_VIEW_SERIES_TITLE_DESC]]>
-        </message>
-    </layout>
     <fields name="params">
-        <fieldset 
-            name="basic"
-            label="COM_PUBDB_FIELDSET_ITEM_ID_SELECT_LABEL">
-            <field
-                name="item_id"
-                query="SELECT `id` FROM #__pubdb_series_title ORDER BY `id`"
-                type="sql"
-                key_field="id" 
-                value_field="id"
-                label="COM_PUBDB_ITEM_ID_SELECT_LABEL"
-                require="true"
+        <fieldset
+          name="basic"
+          label="COM_PUBDB_FIELDSET_ITEM_ID_SELECT_LABEL">
+          <field
+            name="item_id"
+            query="SELECT `id` FROM #__pubdb_series_title ORDER BY `id`"
+            type="sql"
+            key_field="id"
+            value_field="id"
+            label="COM_PUBDB_ITEM_ID_SELECT_LABEL"
+            require="true"
                 description="JGLOBAL_SHOW_TITLE_DESC">
             </field>
         </fieldset>

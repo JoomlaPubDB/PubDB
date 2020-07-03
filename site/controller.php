@@ -34,9 +34,9 @@ class PubdbController extends \Joomla\CMS\MVC\Controller\BaseController
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
-        $app  = Factory::getApplication();
-        $view = $app->input->getCmd('view', 'literatures');
-		$app->input->set('view', $view);
+        $app = Factory::getApplication();
+    $view = $app->input->getCmd('view', 'publicationlists');
+    $app->input->set('view', $view);
 
 		parent::display($cachable, $urlparams);
 

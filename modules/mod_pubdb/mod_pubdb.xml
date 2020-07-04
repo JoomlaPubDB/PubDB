@@ -133,6 +133,17 @@
           description="JGLOBAL_SHOW_TITLE_DESC">
         </field>
 
+        <field
+          name="pubdb-ref_type_id"
+          query="SELECT DISTINCT `id`,`name` FROM #__pubdb_reference_types ORDER BY `id`"
+          type="sql"
+          key_field="id"
+          value_field="name"
+          label="COM_PUBDB_TITLE_REFERENCETYPES"
+          multiple="multiple"
+          description="JGLOBAL_SHOW_TITLE_DESC">
+        </field>
+
       </fieldset>
     </fields>
 

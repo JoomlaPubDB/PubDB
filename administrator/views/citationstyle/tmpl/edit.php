@@ -52,7 +52,9 @@ $authorBlocks = $db->loadAssocList('id', 'name');
 $query = $db->getQuery(true);
 $query
   ->select($db->quoteName(array('id', 'name', 'lable')))
-  ->from($db->quoteName('#__pubdb_reference_types'));
+  ->from($db->quoteName('#__pubdb_reference_types'))
+  ->where('state = 1');
+
 $db->setQuery($query);
 $reference_types = $db->loadAssocList('id');
 $reference_type_ids = array_keys($reference_types);

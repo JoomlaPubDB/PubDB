@@ -68,48 +68,49 @@ $sortFields = $this->getSortFields();
 					<?php endif; ?>
 					<th width="1%" class="hidden-phone">
 						<input type="checkbox" name="checkall-toggle" value=""
-							   title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)"/>
-					</th>
-					<?php if (isset($this->items[0]->state)): ?>
-						<th width="1%" class="nowrap center">
-								<?php echo JHtml::_('searchtools.sort', 'JSTATUS', 'a.`state`', $listDirn, $listOrder); ?>
-</th>
-					<?php endif; ?>
+                   title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)"/>
+          </th>
+          <?php if (isset($this->items[0]->state)): ?>
+            <th width="1%" class="nowrap center">
+              <?php echo JHtml::_('searchtools.sort', 'JSTATUS', 'a.`state`', $listDirn, $listOrder); ?>
+            </th>
+          <?php endif; ?>
 
-									<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_ID', 'a.`id`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_TITLE', 'a.`title`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_SUBTITLE', 'a.`subtitle`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_REFERENCE_TYPE', 'a.`reference_type`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_ACCESS_DATE', 'a.`access_date`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_LANGUAGE', 'a.`language`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_DOI', 'a.`doi`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_ISBN', 'a.`isbn`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_AUTHORS', 'a.`authors`', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_PUBDB_LITERATURES_KEYWORDS', 'a.`keywords`', $listDirn, $listOrder); ?>
-				</th>
-
-					
-				</tr>
-				</thead>
+          <th class='left'>
+            <?php echo JHtml::_('searchtools.sort', 'COM_PUBDB_LITERATURES_ID', 'a.`id`', $listDirn, $listOrder); ?>
+          </th>
+          <th class='left'>
+            <?php echo JHtml::_('searchtools.sort', 'COM_PUBDB_LITERATURES_TITLE', 'a.`title`', $listDirn, $listOrder); ?>
+          </th>
+          <th class='left'>
+            <?php echo JHtml::_('searchtools.sort', 'COM_PUBDB_LITERATURES_SUBTITLE', 'a.`subtitle`', $listDirn, $listOrder); ?>
+          </th>
+          <th class='left'>
+            <?php echo JHtml::_('searchtools.sort', 'COM_PUBDB_LITERATURES_REFERENCE_TYPE', 'a.`reference_type`', $listDirn, $listOrder); ?>
+          </th>
+          <th class='left'>
+            <?php echo JHtml::_('searchtools.sort', 'COM_PUBDB_LITERATURES_YEAR', 'a.`year`', $listDirn, $listOrder); ?>
+          </th>
+          <th class='left'>
+            <?php echo JHtml::_('searchtools.sort', 'COM_PUBDB_LITERATURES_ACCESS_DATE', 'a.`access_date`', $listDirn, $listOrder); ?>
+          </th>
+          <th class='left'>
+            <?php echo JHtml::_('searchtools.sort', 'COM_PUBDB_LITERATURES_LANGUAGE', 'a.`language`', $listDirn, $listOrder); ?>
+          </th>
+          <th class='left'>
+            <?php echo JHtml::_('searchtools.sort', 'COM_PUBDB_LITERATURES_DOI', 'a.`doi`', $listDirn, $listOrder); ?>
+          </th>
+          <th class='left'>
+            <?php echo JHtml::_('searchtools.sort', 'COM_PUBDB_LITERATURES_ISBN', 'a.`isbn`', $listDirn, $listOrder); ?>
+          </th>
+          <th class='left'>
+            <?php echo JHtml::_('searchtools.sort', 'COM_PUBDB_LITERATURES_AUTHORS', 'a.`authors`', $listDirn, $listOrder); ?>
+          </th>
+          <th class='left'>
+            <?php echo JHtml::_('searchtools.sort', 'COM_PUBDB_LITERATURES_KEYWORDS', 'a.`keywords`', $listDirn, $listOrder); ?>
+          </th>
+        </tr>
+        </thead>
 				<tfoot>
 				<tr>
 					<td colspan="<?php echo isset($this->items[0]) ? count(get_object_vars($this->items[0])) : 10; ?>">
@@ -159,48 +160,62 @@ $sortFields = $this->getSortFields();
 </td>
 						<?php endif; ?>
 
-										<td>
+            <td>
 
-					<?php echo $item->id; ?>
-				</td>				<td>
-				<?php if (isset($item->checked_out) && $item->checked_out && ($canEdit || $canChange)) : ?>
-					<?php echo JHtml::_('jgrid.checkedout', $i, $item->uEditor, $item->checked_out_time, 'literatures.', $canCheckin); ?>
-				<?php endif; ?>
-				<?php if ($canEdit) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_pubdb&task=literature.edit&id='.(int) $item->id); ?>">
-					<?php echo $this->escape($item->title); ?></a>
-				<?php else : ?>
-					<?php echo $this->escape($item->title); ?>
-				<?php endif; ?>
+              <?php echo $item->id; ?>
+            </td>
+            <td>
+              <?php if (isset($item->checked_out) && $item->checked_out && ($canEdit || $canChange)) : ?>
+                <?php echo JHtml::_('jgrid.checkedout', $i, $item->uEditor, $item->checked_out_time, 'literatures.', $canCheckin); ?>
+              <?php endif; ?>
+              <?php if ($canEdit) : ?>
+                <a
+                  href="<?php echo JRoute::_('index.php?option=com_pubdb&task=literature.edit&id=' . (int)$item->id); ?>">
+                  <?php echo $this->escape($item->title); ?></a>
+              <?php else : ?>
+                <?php echo $this->escape($item->title); ?>
+              <?php endif; ?>
 
-				</td>				<td>
+            </td>
+            <td>
 
-					<?php echo $item->subtitle; ?>
-				</td>				<td>
+              <?php echo $item->subtitle; ?>
+            </td>
+            <td>
 
-					<?php echo $item->reference_type; ?>
-				</td>				<td>
+              <?php echo JText::sprintf('COM_PUBDB_REF_TYPE_' . strtoupper($item->reference_type)); ?>
+            </td>
+            <td>
 
-					<?php echo $item->access_date; ?>
-				</td>				<td>
+              <?php echo $item->year; ?>
+            </td>
+            <td>
 
-					<?php echo $item->language; ?>
-				</td>				<td>
+              <?php echo $item->access_date; ?>
+            </td>
+            <td>
 
-					<?php echo $item->doi; ?>
-				</td>				<td>
+              <?php echo $item->language; ?>
+            </td>
+            <td>
 
-					<?php echo $item->isbn; ?>
-				</td>				<td>
+              <?php echo $item->doi; ?>
+            </td>
+            <td>
 
-					<?php echo $item->authors; ?>
-				</td>				<td>
+              <?php echo $item->isbn; ?>
+            </td>
+            <td>
 
-					<?php echo $item->keywords; ?>
-				</td>
+              <?php echo $item->authors; ?>
+            </td>
+            <td>
 
-					</tr>
-				<?php endforeach; ?>
+              <?php echo $item->keywords; ?>
+            </td>
+
+          </tr>
+        <?php endforeach; ?>
 				</tbody>
 			</table>
 

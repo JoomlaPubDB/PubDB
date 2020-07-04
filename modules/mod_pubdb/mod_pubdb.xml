@@ -159,14 +159,9 @@
           name="frontend_filter_active"
           type="checkbox"
           label="COM_PUBDB_FRONTEND_FILTER_ACTIVE"
-          description="COM_PUBDB_FRONTEND_FILTER_ACTIVE_DESC">
-        </field>
-
-        <field
-          name="frontend_paging"
-          type="checkbox"
-          label="COM_PUBDB_FRONTEND_FILTER_PAGING"
-          description="COM_PUBDB_FRONTEND_FILTER_PAGING_DESC">
+          description="COM_PUBDB_FRONTEND_FILTER_ACTIVE_DESC"
+          showon="pubdb_group_by:0"
+        >
         </field>
 
         <field
@@ -175,13 +170,24 @@
           multiple="true"
           label="COM_PUBDB_LAYOUT_SELECTION"
           require="true"
-          description="JGLOBAL_SHOW_TITLE_DESC">
-          <option value="publisher_name">COM_PUBDB_FORM_LBL_LITERATURE_PUBLISHERS</option>
+          description="JGLOBAL_SHOW_TITLE_DESC"
+          showon="pubdb_group_by:0">
+
           <option value="authors">COM_PUBDB_FORM_LBL_LITERATURE_AUTHORS</option>
-          <option value="year">COM_PUBDB_YEAR</option>
-          <option value="keywords">COM_PUBDB_LITERATURES_KEYWORDS</option>
           <option value="series_title_name">COM_PUBDB_TITLE_SERIES_TITLES</option>
+          <option value="year">COM_PUBDB_YEAR</option>
           <option value="ref_type">COM_PUBDB_TITLE_REFERENCETYPES</option>
+          <option value="keywords">COM_PUBDB_LITERATURES_KEYWORDS</option>
+          <option value="publisher_name">COM_PUBDB_FORM_LBL_LITERATURE_PUBLISHERS</option>
+        </field>
+
+        <field
+          name="frontend_paging"
+          type="checkbox"
+          label="COM_PUBDB_FRONTEND_FILTER_PAGING"
+          description="COM_PUBDB_FRONTEND_FILTER_PAGING_DESC"
+          showon="pubdb_group_by:0"
+        >
         </field>
       </fieldset>
     </fields>

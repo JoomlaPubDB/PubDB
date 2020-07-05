@@ -112,3 +112,27 @@ left join #__pubdb_publisher as publisher
           on l.publishers = publisher.id
 
 WHERE l.state = 1;
+
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (47, ' [', 'COM_PUBDB_OPEN_SQUARE_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (49, '] ', 'COM_PUBDB_CLOSE_SQUARE_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (50, ' (', 'COM_PUBDB_OPEN_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (51, ') ', 'COM_PUBDB_CLOSE_BRACKET', '2');
+
+INSERT INTO `#__pubdb_citation_style`(`name`, `string`) VALUES ('Business & Information Systems Engineering', '{"2":[1,2,5,27,29,3,4,50,10,51,13,7,39,26,6,23],"3":[1,2,5,27,29,3,4,50,10,51,13,7,42,5,16],"10":[1,2,5,27,29,3,4,50,10,51,13,16],"13":[1,2,5,27,29,3,4,50,10,51,13,16],"-1":[1,2,5,27,29,3,4,50,10,51,13,7,42,5,16]}');
+
+#Reference Types
+INSERT INTO `#__pubdb_reference_types` (`id`, `ordering`, `state`, `checked_out`, `checked_out_time`, `created_by`, `modified_by`, `name`, `lable`) VALUES
+(1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Misc', ''),
+(2, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Article', 'An article from a journal, magazine, newspaper, or periodical.'),
+(3, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Book', 'A book where the publisher is clearly identifiable.'),
+(4, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Booklet', 'A printed work that is bound, but does not have a clearly identifiable publisher or supporting institution.'),
+(5, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Conference', 'An article that has been included in conference proceedings.'),
+(6, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Inbook', 'A section, such as a chapter, or a page range within a book.'),
+(7, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Incollection', 'A titled section of a book. Such as a short story within the larger collection of short stories that make up the book.'),
+(8, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Inproceedings', 'A paper that has been published in conference proceedings. The usage of conference and inproceedings is the same.'),
+(9, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Manual', 'A technical manual for a machine software such as would come with a purchase to explain operation to the new owner.'),
+(10, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Masterthesis', 'A thesis written for the Master’s level degree.'),
+(11, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Phdthesis', 'A thesis written for the PhD level degree.'),
+(12, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Proceedings', 'A conference proceeding.'),
+(13, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Techreport', 'An institutionally published report such as a report from a school, a government organization, an organization, or a company. This entry type is also frequently used for white papers and working papers.'),
+(14, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Unpublished', 'A document that has not been officially published such as a paper draft or manuscript in preparation.');

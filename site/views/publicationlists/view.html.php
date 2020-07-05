@@ -33,11 +33,12 @@ class PubdbViewPublicationlists extends \Joomla\CMS\MVC\View\HtmlView
   /**
    * Display the view
    *
-   * @param   string  $tpl  Template name
+   * @param string $tpl Template name
    *
    * @return void
    *
    * @throws Exception
+   * @since v0.0.7
    */
   public function display($tpl = null)
   {
@@ -70,6 +71,7 @@ class PubdbViewPublicationlists extends \Joomla\CMS\MVC\View\HtmlView
    * @return void
    *
    * @throws Exception
+   * @since v0.0.7
    */
   protected function _prepareDocument()
   {
@@ -129,6 +131,7 @@ class PubdbViewPublicationlists extends \Joomla\CMS\MVC\View\HtmlView
    * @param mixed $state State
    *
    * @return bool
+   * @since v0.0.7
    */
   public function getState($state)
   {
@@ -138,6 +141,7 @@ class PubdbViewPublicationlists extends \Joomla\CMS\MVC\View\HtmlView
   /**
    * Get list of all citation styles available
    * @return mixed array with citation style id and name
+   * @since v0.0.7
    */
   public function getCitationStyles()
   {

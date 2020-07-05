@@ -58,6 +58,8 @@ $group_by = $stateArr['parameters.menu']['pubdb_group_by'];
  * @param $arr input array to sort
  * @param $col col key to sort by
  * @param int $dir sort order
+ * @return mixed Array with sorted values
+ * @since v0.0.7
  */
 
 function array_sort_by_column($arr, $col, $dir = SORT_ASC)
@@ -75,7 +77,7 @@ function array_sort_by_column($arr, $col, $dir = SORT_ASC)
 
 //ignore datatables if grouping
 if ($group_by == '0' || !isset($group_by)) {
-
+  //check if filters are active and create json parameter
   if ($filter_active) {
     $targets = array();
     $default = array(1, 2, 3, 4, 5, 6);
@@ -88,6 +90,7 @@ if ($group_by == '0' || !isset($group_by)) {
       'ref_type' => 6
     );
 
+    //build arrays with filter targets
     if (!empty($filter)) {
       foreach ($filter as $key => $v) {
         $targets[] = $arrFilterMapping[$v];
@@ -95,11 +98,11 @@ if ($group_by == '0' || !isset($group_by)) {
     } else {
       $targets = $default;
     }
-
+    // create array with all filters which should not be visible
     $remove = array_diff($default, $targets);
 
     $filter_json = "
-  searchPanes:{
+        searchPanes:{
           layout: 'columns-4',
           viewTotal: true,
           cascadePanes: true,
@@ -225,9 +228,12 @@ if ($group_by == '0' || !isset($group_by)) {
   </script>
 <?php } else {
 
+  //logic for pure list view
+
   $order = (int)$stateArr['parameters.menu']['pubdb_group_by_order'];
   $grouped_items = array_sort_by_column($this->items, $group_by, $order);
 
+  //check if elements in groups should be sorted
   if (isset($stateArr['parameters.menu']['pubdb_group_by_order'])) {
     $current_group = $grouped_items[0][$group_by];
     $sorting = explode('_', $stateArr['parameters.menu']['pubdb_group_by_order_in_group']);
@@ -288,7 +294,8 @@ if ($group_by == '0' || !isset($group_by)) {
     </tbody>
   </table>
   <?php
-};
+}
+// create an citations selection if the administrator allowed it in the back end
 if (isset($stateArr['parameters.menu']['allow_citation_change'])) {
   ?>
   <br>
@@ -312,29 +319,41 @@ if (isset($stateArr['parameters.menu']['allow_citation_change'])) {
     </div>
   </form>
   <script>
+    /**
+     * Eventhandler to reload page if a new citation style is choosen
+     * @param evt
+     */
     function reloadPage(evt) {
       location.href = URL_add_parameter(location.href, 'citation_style', evt.target.value);
     }
 
+    /**
+     * Add or rewrite url parameter
+     * @param url String of the URL
+     * @param param String of the parameter name
+     * @param value value to set param
+     * @returns {string}
+     * @constructor
+     */
     function URL_add_parameter(url, param, value) {
-      var hash = {};
-      var parser = document.createElement('a');
+      const hash = {};
+      const parser = document.createElement('a');
 
       parser.href = url;
 
-      var parameters = parser.search.split(/\?|&/);
+      const parameters = parser.search.split(/\?|&/);
 
-      for (var i = 0; i < parameters.length; i++) {
+      for (let i = 0; i < parameters.length; i++) {
         if (!parameters[i])
           continue;
 
-        var ary = parameters[i].split('=');
+        let ary = parameters[i].split('=');
         hash[ary[0]] = ary[1];
       }
 
       hash[param] = value;
 
-      var list = [];
+      let list = [];
       Object.keys(hash).forEach(function (key) {
         list.push(key + '=' + hash[key]);
       });
@@ -346,6 +365,7 @@ if (isset($stateArr['parameters.menu']['allow_citation_change'])) {
   </script>
   <?php
 }
+// create export button if the setting is activated in the back end administration
 if (isset($stateArr['parameters.menu']['allow_export'])) {
   ?>
   <form action="<?php echo JRoute::_('index.php?option=com_pubdb&view=publicationlists'); ?>" method="post"

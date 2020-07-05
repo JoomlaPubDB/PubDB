@@ -38,8 +38,9 @@ class PubdbControllerPublicationlists extends PubdbController
   }
 
   /**
-   * Export Task to export literatures to file download
+   * Export Task to enable downloading a BibTex file in the publication list site.
    * @throws Exception
+   * @since v0.0.7
    */
   public function export()
   {

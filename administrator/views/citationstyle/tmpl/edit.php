@@ -117,6 +117,11 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
         border-color: black;
         margin-right: 10px;
         padding: 5px;
+        cursor: grab;
+    }
+
+    .block:active, .clonedBlock:active {
+        cursor: grabbing;
     }
 
     .clonedBlock {

@@ -4,13 +4,23 @@ require(JPATH_COMPONENT . '/helpers/vendor/autoload.php');
 
 //use JFactory;
 
-JLoader::register('PubdbBibTexImporter', JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'importer.php');
+JLoader::register('PubdbBibTexImporter', JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'PubdbBibTexImporter.php');
 
 class PubdbBibTexImporter
 {
 
+  /**
+   * PubdbBibTexImporter constructor.
+   * @param $file_string
+   * @throws \RenanBr\BibTexParser\Exception\ParserException
+   * @since 0.0.7
+   */
+
   function __construct($file_string)
   {
+    /**
+     *
+     */
     $this->parser = new \RenanBr\BibTexParser\Parser();
     $this->listener = new \RenanBr\BibTexParser\Listener();
     $this->parser->addListener($this->listener);
@@ -50,8 +60,12 @@ class PubdbBibTexImporter
 
 
   /**
-   *
+   * Start the import process by calling the BibTex parser
+   * After parsing go through the elements list and remove unnecessary fields and format fields.
+   * @return array
+   * @since 0.0.7
    */
+
   public function startImport()
   {
     $this->entries = $this->listener->export();
@@ -72,12 +86,17 @@ class PubdbBibTexImporter
       $formattedEntries[] = $formattedValues;
     }
 
-    // after all values are formatted begin importing
-    //return $this->importLiterature($formattedEntries);
-
     return $this->importLiterature($formattedEntries);
   }
 
+  /**
+   * Go though the literature list and format each.
+   * After chechking all relations call database insert function to insert the literature to the database.
+   * return an array of IDs of the imported literatures
+   * @param $literature_list
+   * @return array
+   * @since 0.0.7
+   */
   private function importLiterature($literature_list)
   {
     $insertedLiteratures = array();
@@ -108,7 +127,11 @@ class PubdbBibTexImporter
 
 
   /**
-   *
+   * Insert the given literature to the database after reformatting all fields.
+   * return the id of the literature
+   * @param $literature
+   * @return mixed
+   * @since 0.0.7
    */
 
   private function insertLiterature($literature)
@@ -183,6 +206,7 @@ class PubdbBibTexImporter
    * Return multiple Ids as comma separated list when there are more then one author
    * @param $authors
    * @return mixed|string
+   * @since v0.0.7
    */
   private function checkRelationAuthor($params)
   {
@@ -211,6 +235,7 @@ class PubdbBibTexImporter
    * @param $first_name
    * @param $last_name
    * @return mixed
+   * @since v0.0.7
    */
   private function getAuthorIdFromDB($first_name, $last_name)
   {
@@ -246,6 +271,7 @@ class PubdbBibTexImporter
    * Check if literature typ exists and return id or misc id as fallback
    * @param $type
    * @return mixed|string
+   * @since v0.0.7
    */
   private function checkRelationType($params)
   {
@@ -268,9 +294,10 @@ class PubdbBibTexImporter
   }
 
   /**
-   * Check if literature typ exists and return id or misc id as fallback
+   * Check if publisher already exists and return id of the exists or create new one and return the new id
    * @param $type
    * @return mixed|string
+   * @since v0.0.7
    */
   private function checkRelationPublisher($params)
   {
@@ -299,9 +326,10 @@ class PubdbBibTexImporter
   }
 
   /**
-   * Check if literature typ exists and return id or misc id as fallback
+   * Check if journal already exists and return id of the exists or create new one and return the new id
    * @param $type
    * @return mixed|string
+   * @since v0.0.7
    */
   private function checkRelationJournal($params)
   {
@@ -333,9 +361,10 @@ class PubdbBibTexImporter
   }
 
   /**
-   * Check if literature typ exists and return id or misc id as fallback
+   * Check if series title already exists and return id of the exists or create new one and return the new id
    * @param $type
    * @return mixed|string
+   * @since v0.0.7
    */
   private function checkRelationSeries($params)
   {
@@ -362,9 +391,15 @@ class PubdbBibTexImporter
     }
   }
 
+
   /**
-   * format author name
+   * Reformat BibTex Author String, explode Author String by "and".
+   * Reformat Author names end remove escaping from BibTex format.
+   * @param $authors
+   * @return string
+   * @since v0.0.7
    */
+
   private function formatAuthor($authors)
   {
     $ret = "";
@@ -382,6 +417,10 @@ class PubdbBibTexImporter
 
   /**
    * remove BibTex standard formatting Brackets from String
+   *
+   * @param $string String with brackets
+   * @return string formatted String
+   * @since v0.0.7
    */
   private function removeBracketsFromString($string)
   {
@@ -391,9 +430,14 @@ class PubdbBibTexImporter
     return $string;
   }
 
+
   /**
-   * trim whitespaces, remove brackets etc...
+   * clean up whitespaces and replace umlauts
+   * @param $string String to format
+   * @return string formatted String
+   * @since v0.0.7
    */
+
   private function cleanUpString($string)
   {
     $string_return = "";

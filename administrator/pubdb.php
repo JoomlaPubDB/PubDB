@@ -24,7 +24,7 @@ if (!Factory::getUser()->authorise('core.manage', 'com_pubdb'))
 jimport('joomla.application.component.controller');
 
 JLoader::registerPrefix('Pubdb', JPATH_COMPONENT_ADMINISTRATOR);
-JLoader::register('PubdbHelper', JPATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'pubdb.php');
+JLoader::register('PubdbHelper', JPATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'PubdbHelper.php');
 
 $controller = BaseController::getInstance('Pubdb');
 $controller->execute(Factory::getApplication()->input->get('task'));

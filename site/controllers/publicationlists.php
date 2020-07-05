@@ -10,7 +10,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-require(JPATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . "exporter.php");
+require(JPATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . "PubdbBibTexExporter.php");
 
 /**
  * Publicationlists list controller class.

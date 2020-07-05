@@ -10,7 +10,7 @@
  */
 defined('_JEXEC') or die;
 
-require (JPATH_ADMINISTRATOR.'/components/com_pubdb/helpers/citations.php');
+require(JPATH_ADMINISTRATOR . '/components/com_pubdb/helpers/PubdbLiteraturesCitation.php');
 
 use \Joomla\CMS\Factory;
 use \Joomla\CMS\Language\Text;

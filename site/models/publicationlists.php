@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 use \Joomla\CMS\Factory;
 use \Joomla\CMS\Language\Text;
 
-require (JPATH_ADMINISTRATOR.'/components/com_pubdb/helpers/citations.php');
+require(JPATH_ADMINISTRATOR . '/components/com_pubdb/helpers/PubdbLiteraturesCitation.php');
 
 jimport('joomla.application.component.modellist');
 

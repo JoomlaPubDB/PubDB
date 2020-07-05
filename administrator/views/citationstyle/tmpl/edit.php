@@ -443,6 +443,13 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
     }
 
 
+    function sortByValue(jsObj) {
+        let sortedArray = [];
+        for (let i in jsObj) sortedArray.push([jsObj[i], i]); // Push each JSON Object entry in array by [value, key]
+        return sortedArray.sort(function (a, b) {return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    }
+
+
     function submitClicked() {
         if (document.getElementById("jform_string").value === "") {
             let dict = {};
@@ -554,34 +561,37 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
 
 
         let ols = document.getElementsByClassName("fixlist");
-        Object.entries(blocks).forEach(([key, value]) => {
+        let block_arr = sortByValue(blocks);
+        for (let i = 0; i < block_arr.length; i++) {
             Array.from(ols).forEach(ol => {
                 let li = document.createElement("li");
-                li.className = "block original " + key;
-                li.innerText = String.from(value);
+                li.className = "block original " + block_arr[i][1];
+                li.innerText = String.from(block_arr[i][0]);
                 ol.appendChild(li);
             });
-        });
+        }
 
         ols = document.getElementsByClassName("fixAuthorList");
-        Object.entries(authorBlocks).forEach(([key, value]) => {
+        block_arr = sortByValue(authorBlocks);
+        for (let i = 0; i < block_arr.length; i++) {
             Array.from(ols).forEach(ol => {
                 let li = document.createElement("li");
-                li.className = "block originalAuthor " + key;
-                li.innerText = String.from(value);
+                li.className = "block originalAuthor " + block_arr[i][1];
+                li.innerText = String.from(block_arr[i][0]);
                 ol.appendChild(li);
             });
-        });
+        }
 
         ols = document.getElementsByClassName("fixSpecialList");
-        Object.entries(specialBlocks).forEach(([key, value]) => {
+        block_arr = sortByValue(specialBlocks);
+        for (let i = 0; i < block_arr.length; i++) {
             Array.from(ols).forEach(ol => {
                 let li = document.createElement("li");
-                li.className = "block originalCharacter " + key;
-                li.innerText = String.from(value);
+                li.className = "block originalCharacter " + block_arr[i][1];
+                li.innerText = String.from(block_arr[i][0]);
                 ol.appendChild(li);
             });
-        });
+        }
 
         loadItems();
 

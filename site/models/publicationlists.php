@@ -141,6 +141,7 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
 
   /**
    * Query database with Back End menu settings to get a pre filtering
+   * Combine all filter settings with AND, the value is a comma separated list use the IN SQL function to query.
    * @param $menu_item
    * @return mixed
    * @since v0.0.7
@@ -174,9 +175,11 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
   }
 
   /**
-   * Method to get an array of data items
-   *
+   * Method to get an array of data items from the database.
+   * After all Items are loaded, call Citation function to create an formatted citation String.
+   * If Datatables are enabled also create an Object with all Items, which can be later encoded to JSON.
    * @return  mixed An array of data on success, false on failure.
+   * @since v0.0.7
    */
   public function getItems()
   {
@@ -186,26 +189,36 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
     $formattedStrings = PubdbLiteraturesCitation::mapList($pattern, $items);
     $arrReturn = array();
     // build json object
+
     $export_ids = array();
-    for ($i = 0 ; $i < count($items); $i ++){
-      $tmpItem = (array) $items[$i];
+    for ($i = 0; $i < count($items); $i++) {
+      $tmpItem = (array)$items[$i];
       $tmpItem['formatted_string'] = " <a href=" . JRoute::_('index.php?option=com_pubdb&view=literature&id=' . (int)$items[$i]->id) . ">" . $formattedStrings[$i] . "</a>";
       $tmpItem['authors'] = $this->getAuthorsFromItem($tmpItem);
       $tmpItem['keywords'] = explode(',', $tmpItem['keywords']);
       $arrReturn[] = $tmpItem;
       $export_ids[] = (int)$items[$i]->id;
     }
+
+    //set state to use in view
     $this->state->set('export_ids', $export_ids);
     return $arrReturn;
   }
 
-
-  private function getAuthorsFromItem($item){
+  /**
+   * Split the last names (comma separated list) of the items to get the amount of authors.
+   * Also split the first names and loop through the list to join the last and fist name of the author to a String.
+   * @param $item item to get names from
+   * @return array array with all author names
+   * @since v0.0.7
+   */
+  private function getAuthorsFromItem($item)
+  {
     $last_names = explode(',', $item['authors_last_name']);
-    $first_names = explode(',' , $item['authors_first_name']);
+    $first_names = explode(',', $item['authors_first_name']);
     $arrAuthors = array();
-    for($i = 0; $i  < count($last_names); $i ++){
-      $arrAuthors[] = $last_names[$i]. " " . $first_names[$i];
+    for ($i = 0; $i < count($last_names); $i++) {
+      $arrAuthors[] = $last_names[$i] . " " . $first_names[$i];
     }
     return $arrAuthors;
   }
@@ -213,9 +226,11 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
   /**
    * Overrides the default function to check Date fields format, identified by
    * "_dateformat" suffix, and erases the field if it's not correct.
-   *
    * @return void
+   * @throws Exception
+   * @since v0.0.7
    */
+
   protected function loadFormData()
   {
     $app              = Factory::getApplication();
@@ -242,10 +257,10 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
 
   /**
    * Checks if a given date is valid and in a specified format (YYYY-MM-DD)
-   *
-   * @param   string  $date  Date to be checked
+   * @param string $date Date to be checked
    *
    * @return bool
+   * @since v0.0.7
    */
   private function isValidDate($date)
   {

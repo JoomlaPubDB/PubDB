@@ -12,8 +12,20 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.view');
 
+/**
+ * Class PubdbViewPublicationlists
+ * Used to enable downloading the publicationlist as BibTex file
+ * @since v0.0.7
+ */
 class PubdbViewPublicationlists extends JViewLegacy
 {
+  /**
+   * Joomla! display function
+   * @param null $tpl
+   * @return mixed|void
+   * @since v0.0.7
+   * @see JViewLegacy
+   */
   function display($tpl = null)
   {
     global $mainframe;

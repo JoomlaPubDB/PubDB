@@ -31,7 +31,9 @@ class PubdbControllerImporter extends JControllerAdmin
   /**
    * Importer Task to import files to literature
    * @throws Exception
+   * @since 0.0.7
    */
+
   public function import()
   {
     $msgtype = '';
@@ -54,20 +56,19 @@ class PubdbControllerImporter extends JControllerAdmin
         break;
     }
 
+    JFile::delete($dest);
     $this->setRedirect($link, $msg, $msgtype);
   }
 
   /**
    * Export Task to export literatures to file download
    * @throws Exception
+   * @since v0.0.7
    */
   public function export()
   {
     $msgtype = '';
-    $jinput = JFactory::getApplication()->input;
-    $post = $jinput->get('jform', 'array()', 'ARRAY');
     $link = 'index.php?option=com_pubdb&view=importer&format=raw';
-    $type = $post['type_export'];
     $msg = "";
     $exporter = new PubdbBibTexExporter(array());
     $fileString = $exporter->startExport();

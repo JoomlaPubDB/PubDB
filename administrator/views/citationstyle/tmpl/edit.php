@@ -204,7 +204,7 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
   js = jQuery.noConflict();
 
   Joomla.submitbutton = function (task) {
-    submitClicked();
+    if (!submitClicked()) alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
     if (task === 'citationstyle.cancel') {
       Joomla.submitform(task, document.getElementById('citationstyle-form'));
     } else {
@@ -542,10 +542,14 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
                     dict[id] = dictArray;
                 }
             });
+
+            if (!dict.hasOwnProperty("-1")) return false;
+
             let textField = document.getElementById("jform_string");
             textField.value = JSON.stringify(dict);
             textField.innerText = JSON.stringify(dict);
         }
+        return true;
     }
 
     jQuery(document).ready(function () {

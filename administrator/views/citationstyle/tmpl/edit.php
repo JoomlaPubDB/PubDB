@@ -792,8 +792,10 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
     </div>
   <?php echo JHtml::_('bootstrap.endTab'); ?>
   <?php foreach ($reference_types as $type): ?>
-    <?php echo JHtml::_('bootstrap.addTab', 'myTab', $type['name'], $type['name']); ?>
-      <legend><?php echo $type['name']; ?></legend>
+    <?php echo JHtml::_('bootstrap.addTab', 'myTab', $type['name'], JText::_($type['name'])); ?>
+      <legend><?php echo JText::_($type['name']); ?></legend>
+      <p><?php echo JText::_($type['lable']) ?></p>
+      <br>
       <input type="hidden" name="type_<?php echo $type['id']; ?>" value=""/>
       <div style="display: flex; flex-direction: column;">
           <div style="display: flex; flex-direction: row;">

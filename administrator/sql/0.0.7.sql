@@ -265,20 +265,20 @@ INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (51, ')
 
 #Reference Types
 INSERT INTO `#__pubdb_reference_types` (`id`, `ordering`, `state`, `checked_out`, `checked_out_time`, `created_by`, `modified_by`, `name`, `lable`) VALUES
-(1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Misc', ''),
-(2, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Article', 'An article from a journal, magazine, newspaper, or periodical.'),
-(3, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Book', 'A book where the publisher is clearly identifiable.'),
-(4, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Booklet', 'A printed work that is bound, but does not have a clearly identifiable publisher or supporting institution.'),
-(5, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Conference', 'An article that has been included in conference proceedings.'),
-(6, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Inbook', 'A section, such as a chapter, or a page range within a book.'),
-(7, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Incollection', 'A titled section of a book. Such as a short story within the larger collection of short stories that make up the book.'),
-(8, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Inproceedings', 'A paper that has been published in conference proceedings. The usage of conference and inproceedings is the same.'),
-(9, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Manual', 'A technical manual for a machine software such as would come with a purchase to explain operation to the new owner.'),
-(10, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Masterthesis', 'A thesis written for the Master’s level degree.'),
-(11, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Phdthesis', 'A thesis written for the PhD level degree.'),
-(12, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Proceedings', 'A conference proceeding.'),
-(13, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Techreport', 'An institutionally published report such as a report from a school, a government organization, an organization, or a company. This entry type is also frequently used for white papers and working papers.'),
-(14, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Unpublished', 'A document that has not been officially published such as a paper draft or manuscript in preparation.');
+(1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_MISC', 'COM_PUBDB_REF_TYPE_MISC_DESC'),
+(2, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_ARTICLE', 'COM_PUBDB_REF_TYPE_ARTICLE_DESC'),
+(3, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_BOOK', 'COM_PUBDB_REF_TYPE_BOOK_DESC'),
+(4, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_BOOKLET', 'COM_PUBDB_REF_TYPE_BOOKLET_DESC'),
+(5, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_CONFERENCE', 'COM_PUBDB_REF_TYPE_CONFERENCE_DESC'),
+(6, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_INBOOK', 'COM_PUBDB_REF_TYPE_INBOOK_DESC'),
+(7, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_INCOLLECTION', 'COM_PUBDB_REF_TYPE_INCOLLECTION_DESC'),
+(8, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_INPROCEEDINGS', 'COM_PUBDB_REF_TYPE_INPROCEEDINGS_DESC'),
+(9, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_MANUAL', 'COM_PUBDB_REF_TYPE_MANUAL_DESC'),
+(10, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_MASTERTHESIS', 'COM_PUBDB_REF_TYPE_MASTERTHESIS_DESC'),
+(11, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_PHDTHESIS', 'COM_PUBDB_REF_TYPE_PHDTHESIS_DESC'),
+(12, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_PROCEEDINGS', 'COM_PUBDB_REF_TYPE_PROCEEDINGS_DESC'),
+(13, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_TECHREPORT', 'COM_PUBDB_REF_TYPE_TECHREPORT_DESC'),
+(14, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_UNPUBLISHED', 'COM_PUBDB_REF_TYPE_UNPUBLISHED_DESC');
 
 #Citation styles
 INSERT INTO `#__pubdb_citation_style`(`name`, `string`) VALUES ('Harvard', '{"-1":[1,2,5,27,5,29,3,9,27,5,29,4,50,10,51,7,13,7,16,6,42,7],"2":[1,2,5,27,5,29,3,9,27,5,29,4,50,10,51,7,13,7,42,5,26,6,8,23],"3":[1,2,5,27,5,29,3,9,27,5,29,4,50,10,51,7,13,7,16,6,42,7]}');

@@ -135,7 +135,7 @@ class PubdbLiteraturesCitation
                   break;
               }
             }
-            if ($j != $repetition_amount - 1) $result .= $delimiter;
+            if ($j < $repetition_amount - 2) $result .= $delimiter;
           }
 
           //Reset

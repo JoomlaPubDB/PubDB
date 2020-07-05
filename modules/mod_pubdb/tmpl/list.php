@@ -144,8 +144,7 @@ if ($group_by == '0' || !isset($group_by)) {
   <table id="example" class="display">
     <thead>
     <tr>
-      <th>Publication List</th>
-      ‚
+      <th><?php echo JText::sprintf('COM_PUBDB_TITLE_LITERATURE'); ?></th>
       <th><?php echo JText::sprintf('COM_PUBDB_TITLE_PUBLISHER'); ?></th>
       <th><?php echo JText::sprintf('COM_PUBDB_LITERATURES_AUTHORS'); ?></th>
       <th> <?php echo JText::sprintf('COM_PUBDB_YEAR'); ?> </th>

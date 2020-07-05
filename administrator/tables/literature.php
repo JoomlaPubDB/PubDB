@@ -23,7 +23,7 @@ use \Joomla\CMS\Table\Table;
  */
 class PubdbTableliterature extends \Joomla\CMS\Table\Table
 {
-	
+
 	/**
 	 * Constructor
 	 *
@@ -50,16 +50,14 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 	 */
 	public function bind($array, $ignore = '')
 	{
-	    $date = Factory::getDate();
+	  $date = Factory::getDate();
 		$task = Factory::getApplication()->input->get('task');
-	    
+
 		$input = JFactory::getApplication()->input;
 		$task = $input->getString('task', '');
 
-        $datetime = new DateTime($array['published_on']);
-        $array['year'] = $datetime->format('Y');
-        $array['month'] = $datetime->format('m');
-        $array['day'] = $datetime->format('d');
+    $datetime = DateTime::createFromFormat("Y-n-j",$array['year'] . "-" . $array['month'] . "-" . $array['day']);
+    $array['published_on'] = $datetime->format('Y-m-d');
 
 		if ($array['id'] == 0 && empty($array['created_by']))
 		{
@@ -284,8 +282,8 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 		{
 			$this->ordering = self::getNextOrder();
 		}
-		
-		
+
+
 
 		return parent::check();
 	}
@@ -426,7 +424,7 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 	{
 		$this->load($pk);
 		$result = parent::delete($pk);
-		
+
 		return $result;
 	}
 }

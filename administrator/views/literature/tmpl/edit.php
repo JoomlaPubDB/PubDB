@@ -29,7 +29,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 <script type="text/javascript">
 	js = jQuery.noConflict();
 	js(document).ready(function () {
-		
+
 	js('input:hidden.reference_type').each(function(){
 		var name = js(this).attr('name');
 		if(name.indexOf('reference_typehidden')){
@@ -93,9 +93,9 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 			Joomla.submitform(task, document.getElementById('literature-form'));
 		}
 		else {
-			
+
 			if (task != 'literature.cancel' && document.formvalidator.isValid(document.id('literature-form'))) {
-				
+
 				Joomla.submitform(task, document.getElementById('literature-form'));
 			}
 			else {
@@ -109,7 +109,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 	action="<?php echo JRoute::_('index.php?option=com_pubdb&layout=edit&id=' . (int) $this->item->id); ?>"
 	method="post" enctype="multipart/form-data" name="adminForm" id="literature-form" class="form-validate form-horizontal">
 
-	
+
 	<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>" />
 	<input type="hidden" name="jform[ordering]" value="<?php echo $this->item->ordering; ?>" />
 	<input type="hidden" name="jform[state]" value="<?php echo $this->item->state; ?>" />
@@ -128,7 +128,9 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 				<legend><?php echo JText::_('COM_PUBDB_FIELDSET_LITERATURE'); ?></legend>
 				<?php echo $this->form->renderField('title'); ?>
 				<?php echo $this->form->renderField('subtitle'); ?>
-				<?php echo $this->form->renderField('published_on'); ?>
+                <?php echo $this->form->renderField('year'); ?>
+                <?php echo $this->form->renderField('month'); ?>
+                <?php echo $this->form->renderField('day'); ?>
 				<?php echo $this->form->renderField('reference_type'); ?>
 				<?php
 				foreach((array)$this->item->reference_type as $value)
@@ -266,7 +268,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
   <?php echo $this->form->renderField('series_title_subform'); ?>
   <?php echo JHtml::_('bootstrap.endTab'); ?>
 
-	
+
 	<?php echo JHtml::_('bootstrap.endTabSet'); ?>
 
 	<input type="hidden" name="task" value=""/>

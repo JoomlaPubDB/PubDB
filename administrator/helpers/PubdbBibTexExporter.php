@@ -18,6 +18,21 @@ JLoader::register('PubdbBibTexExporter', JPATH_ADMINISTRATOR . DIRECTORY_SEPARAT
  */
 class PubdbBibTexExporter
 {
+  /**
+   * @var array array with literature ids to export
+   * @since v0.0.7
+   */
+  private $ids = array();
+  /**
+   * @var array mapping table for umlauts
+   * @since v0.0.7
+   */
+  private $umlautsMapping = array();
+  /**
+   * @var array mapping table for database and BibTex format
+   * @since v0.0.7
+   */
+  private $fieldMapping = array();
 
   function __construct($ids)
   {

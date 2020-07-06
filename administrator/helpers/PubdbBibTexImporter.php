@@ -64,19 +64,24 @@ class PubdbBibTexImporter
       "booktitle" => "title",
       "doi" => "doi",
       "edition" => "volume",
+      "volume" => "volume",
       "eisbn" => "eisbn",
-      "institution" => "publishers", //reference done
       "isbn" => "isbn",
       "journal" => "periodical_id", //reference done
       "month" => "month",
       "pages" => "page_range",
       "publisher" => "publishers", //reference done
+      "institution" => "publishers", //reference done
+      "school" => "publishers",
       "type" => "reference_type", //reference done
       "title" => "title",
       "series" => "series_title_id", //reference done
       "url" => "online_address",
+      "howpublished" => "online_address",
       "urldate" => "access_date",
-      "year" => "year"
+      "year" => "year",
+      "month" => "month",
+      "editor" => "others_involved"
     );
   }
 
@@ -226,7 +231,7 @@ class PubdbBibTexImporter
    * Check if authors already exist and return the the id.
    * If not create new one and return the id of the new inserted author.
    * Return multiple Ids as comma separated list when there are more then one author
-   * @param $authors
+   * @param $params
    * @return mixed|string
    * @since v0.0.7
    */
@@ -240,14 +245,68 @@ class PubdbBibTexImporter
     //check if it is only one author...
     if ($author_amount == 1) {
       $arrAuthorName = explode(',', $authors);
-      return $this->getAuthorIdFromDB($arrAuthorName[1], $arrAuthorName[0]);
+      if (count($arrAuthorName) == 1) {
+        $arrName = explode(' ', $authors);
+        return $this->getAuthorIdFromDB($arrName[0], $arrName[count($arrName) - 1]);
+      } else {
+        return $this->getAuthorIdFromDB($arrAuthorName[1], $arrAuthorName[0]);
+      }
     } else {
       foreach (explode(';', $authors) as $author) {
-        $arrAuthorName = explode(',', $author);
-        $arrAuthorIds[] = $this->getAuthorIdFromDB($arrAuthorName[1], $arrAuthorName[0]);
+        if (count(explode(',', $author)) == 1) {
+          $arrName = explode(' ', $author);
+          $arrName = array_filter($arrName);
+          $arrAuthorIds[] = $this->getAuthorIdFromDB($arrName[0], $arrName[count($arrName) - 1]);
+        } else {
+          $arrName = explode(',', $author);
+          $arrName = array_filter($arrName);
+          $arrAuthorIds[] = $this->getAuthorIdFromDB($arrName[count($arrName) - 1], $arrName[0]);
+        }
       }
-      // return author IDs as comma separated list
       return implode(',', $arrAuthorIds);
+    }
+  }
+
+  /**
+   * Check if person or editor already exist and return the the id.
+   * If not create new one and return the id of the new inserted person.
+   * Return multiple Ids as comma separated list when there are more then one author
+   * @param $params
+   * @return mixed|string
+   * @since v0.0.7
+   */
+  private function checkRelationEditor($params)
+  {
+    $arrPersonIds = array();
+    $field = $params[0];
+    $literature = $params[1];
+    $persons = $literature[$field];
+
+    $editor_amount = count(explode('and', $persons));
+    //check if it is only one person...
+    if ($editor_amount == 1) {
+      $arrPersonName = explode(',', $persons);
+      if (count($arrPersonName) == 1) {
+        $arrName = explode(' ', $persons);
+        return $this->getAuthorIdFromDB($arrPersonName[0], $arrPersonName[count($arrName) - 1]);
+      } else {
+        return $this->getAuthorIdFromDB($arrPersonName[1], $arrPersonName[0]);
+      }
+    } else {
+      foreach (explode(' and ', $persons) as $person) {
+        $arrPersonName = explode(',', $person);
+        if (count($arrPersonName) == 1) {
+          $arrName = explode(' ', $person);
+          $arrName = array_filter($arrName);
+          $arrPersonIds[] = $this->getAuthorIdFromDB($arrName[0], $arrName[count($arrName) - 1]);
+        } else {
+          $arrName = explode(',', $person);
+          $arrName = array_filter($arrName);
+          $arrPersonIds[] = $this->getAuthorIdFromDB($arrName[count($arrName) - 1], $arrName[0]);
+        }
+      }
+      // return person IDs as comma separated list
+      return implode(',', $arrPersonIds);
     }
   }
 
@@ -435,6 +494,32 @@ class PubdbBibTexImporter
       $ret = $this->cleanUpString($authors);
     }
     return $ret;
+  }
+
+  /**
+   * Format BibTex month String to numeric value jan => 1
+   * @param $item
+   * @return mixed
+   */
+  private function formatMonth($item)
+  {
+    $months = array(
+      '1' => 'jan',
+      '2' => 'feb',
+      '3' => 'mar',
+      '4' => 'apr',
+      '5' => 'may',
+      '6' => 'jun',
+      '7' => 'jul',
+      '8' => 'aug',
+      '9' => 'sep',
+      '10' => 'oct',
+      '11' => 'nov',
+      '12' => 'dec'
+    );
+
+    $months = array_flip($months);
+    return $months[$item['month']];
   }
 
   /**

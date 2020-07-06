@@ -103,11 +103,20 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 			}
 		}
 	}
+
+    function validateForm() {
+        const form = document.adminForm;
+        const date = new Date();
+
+        if (new Date(form.jform_year.value + '-' + form.jform_month.value + '-' + form.jform_day.value) > date) return false;
+        return new Date(form.jform_access_date.value) <= date;
+    }
 </script>
 
 <form
 	action="<?php echo JRoute::_('index.php?option=com_pubdb&layout=edit&id=' . (int) $this->item->id); ?>"
-	method="post" enctype="multipart/form-data" name="adminForm" id="literature-form" class="form-validate form-horizontal">
+	method="post" enctype="multipart/form-data" name="adminForm" id="literature-form" class="form-validate form-horizontal"
+    onsubmit="return validateForm()">
 
 
 	<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>" />

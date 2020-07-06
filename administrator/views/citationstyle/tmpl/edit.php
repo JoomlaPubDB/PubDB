@@ -127,6 +127,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
     .clonedBlock {
         margin-right: 3px;
         font-size: 15px;
+        cursor: grab;
     }
 
     .containers {

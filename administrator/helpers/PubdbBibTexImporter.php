@@ -16,6 +16,28 @@ class PubdbBibTexImporter
    * @since 0.0.7
    */
 
+  /**
+   * @var \RenanBr\BibTexParser\Parser() BibTex Parser instance
+   * @since v0.0.7
+   */
+  private $parser = null;
+
+  /**
+   * @var \RenanBr\BibTexParser\Listener() BibTex Listener instance
+   * @since v0.0.7
+   */
+  private $listener = null;
+  /**
+   * @var array mapping table for umlauts
+   * @since v0.0.7
+   */
+  private $umlautsMapping = array();
+  /**
+   * @var array mapping table for database and BibTex format
+   * @since v0.0.7
+   */
+  private $fieldMapping = array();
+
   function __construct($file_string)
   {
     /**

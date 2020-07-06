@@ -130,6 +130,18 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
         cursor: grab;
     }
 
+    li[class~="-3"] {
+        background-color: yellowgreen;
+    }
+
+    .authors {
+        border-color: yellowgreen;
+        border-width: 2px;
+        border-style: solid;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
     .containers {
         display: flex;
         flex-direction: row;
@@ -812,29 +824,31 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
                       <ol style="list-style-type: none;" class="containers"
                           id="orderedList_<?php echo $type['id']; ?>"></ol>
                   </div>
-                  <div class="authorArea" id="authorArea_<?php echo $type['id']; ?>">
-                      <ol style="list-style-type: none;" class="containers fixAuthorList"></ol>
-                  </div>
-                  <div class="clonedAuthorArea" id="clonedAuthorArea_<?php echo $type['id']; ?>">
-                    <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_FIRST'); ?>
-                      <div class="partAuthor1" id="partAuthor1_<?php echo $type['id']; ?>">
-                          <ol style="list-style-type: none;" class="containers"
-                              id="orderedAuthorList1_<?php echo $type['id']; ?>"></ol>
+                  <div class="authors">
+                      <div class="authorArea" id="authorArea_<?php echo $type['id']; ?>">
+                          <ol style="list-style-type: none;" class="containers fixAuthorList"></ol>
                       </div>
-                    <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_SECOND'); ?>
-                      <div class="partAuthor2" id="partAuthor2_<?php echo $type['id']; ?>">
-                          <ol style="list-style-type: none;" class="containers"
-                              id="orderedAuthorList2_<?php echo $type['id']; ?>"></ol>
-                      </div>
-                    <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_THIRD'); ?>
-                      <div class="partAuthor3" id="partAuthor3_<?php echo $type['id']; ?>">
-                          <ol style="list-style-type: none;" class="containers"
-                              id="orderedAuthorList3_<?php echo $type['id']; ?>"></ol>
-                      </div>
-                    <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_SEPARATOR'); ?>
-                      <div class="partAuthor4" id="partAuthor4_<?php echo $type['id']; ?>">
-                          <ol style="list-style-type: none;" class="containers"
-                              id="orderedAuthorList4_<?php echo $type['id']; ?>"></ol>
+                      <div class="clonedAuthorArea" id="clonedAuthorArea_<?php echo $type['id']; ?>">
+                        <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_FIRST'); ?>
+                          <div class="partAuthor1" id="partAuthor1_<?php echo $type['id']; ?>">
+                              <ol style="list-style-type: none;" class="containers"
+                                  id="orderedAuthorList1_<?php echo $type['id']; ?>"></ol>
+                          </div>
+                        <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_SECOND'); ?>*
+                          <div class="partAuthor2" id="partAuthor2_<?php echo $type['id']; ?>">
+                              <ol style="list-style-type: none;" class="containers"
+                                  id="orderedAuthorList2_<?php echo $type['id']; ?>"></ol>
+                          </div>
+                        <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_THIRD'); ?>
+                          <div class="partAuthor3" id="partAuthor3_<?php echo $type['id']; ?>">
+                              <ol style="list-style-type: none;" class="containers"
+                                  id="orderedAuthorList3_<?php echo $type['id']; ?>"></ol>
+                          </div>
+                        <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_SEPARATOR'); ?>*
+                          <div class="partAuthor4" id="partAuthor4_<?php echo $type['id']; ?>">
+                              <ol style="list-style-type: none;" class="containers"
+                                  id="orderedAuthorList4_<?php echo $type['id']; ?>"></ol>
+                          </div>
                       </div>
                   </div>
               </div>

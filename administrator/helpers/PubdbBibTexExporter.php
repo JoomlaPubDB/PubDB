@@ -234,7 +234,11 @@ class PubdbBibTexExporter
         if (method_exists(self::class, 'format' . ucfirst($field))) {
           $formattedValues[$fieldMapping[$field]] = call_user_func(array(__CLASS__, 'format' . ucfirst($field)), $item);
         } else {
-          $formattedValues[$fieldMapping[$field]] = $this->formatBibTexString($value);
+          if ($field == 'ref_type') {
+            $formattedValues[$fieldMapping[$field]] = $value;
+          } else {
+            $formattedValues[$fieldMapping[$field]] = $this->formatBibTexString($value);
+          }
         }
       }
       $formattedValues['citekey'] = $this->getCiteKey($item);
@@ -378,19 +382,17 @@ class PubdbBibTexExporter
   private function formatBibTexString($value)
   {
     $mapping = array_flip($this->umlautsMapping);
-
     //check if whitespaces are in the value
+
     $value = str_replace(',', ', ', $value);
     $value = trim($value);
-    if (preg_match('/\s/', $value) || preg_match('/,/', $value)) {
-      $value = "{" . $value . "}";
-    }
+    $value = "{" . $value . "}";
 
     // replace all special chars in value
     foreach ($mapping as $s => $r) {
       $value = str_replace($s, $r, $value);
     }
-
+    if ($value == "{}") return null;
     return $value;
   }
 }

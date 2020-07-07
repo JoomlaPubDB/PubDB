@@ -553,7 +553,7 @@ class PubdbBibTexImporter
     $string = ltrim($string, ' ');
 
     // check if string start with a bracket to reformat string
-    if (strpos($string, '{') == 0) {
+    if (strpos($string, '{') == 0 && substr($string, -1) == '}') {
       $string_return = $this->removeBracketsFromString($string);
     } else {
       $string_return = $string;

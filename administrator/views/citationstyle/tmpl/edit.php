@@ -238,325 +238,297 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
     let arrayStringAuthor2 = [];
     let arrayStringAuthor3 = [];
     let arrayStringAuthor4 = [];
-    const reference_type_ids = <?php echo json_encode($reference_type_ids); ?>;
+    let citationStyle = {};
+    let reference_type_ids = {};
 
 
-    //Excecuted when the page is loaded. If a citationstlye is available, it loads it's blocks into the views.
+    /**
+     * Excecuted when the page is loaded. If a citationstlye is available, it loads it's blocks into the views.
+     */
     function loadItems() {
-
+        // Checks whether the citation style has blocks to display
         if (document.getElementById("jform_string").value !== "") {
-            let fieldText = JSON.parse(document.getElementById("jform_string").value);
-            fieldText[1] = fieldText[-1];
+            // Maps default citation style (-1) to id 1
+            citationStyle = JSON.parse(document.getElementById("jform_string").value);
+            citationStyle[1] = citationStyle[-1];
 
-            reference_type_ids.forEach(id => {
-                document.getElementById("authorArea_" + id).style.display = "none";
-                document.getElementById("clonedAuthorArea_" + id).style.display = "none";
-                jQuery("#orderedList_" + id).empty();
-                jQuery("#orderedAuthorList1_" + id).empty();
-                jQuery("#orderedAuthorList2_" + id).empty();
-                jQuery("#orderedAuthorList3_" + id).empty();
-
-                if (fieldText.hasOwnProperty(id)) {
-                    let newArray = fieldText[id];
-
-                    // Author logic
-                    if (newArray.includes(1)) {
-                        //Split Array until author starts (1) and add "-3" for author field
-                        let firstIndexToSplit = newArray.indexOf(1);
-                        let first = newArray.slice(0, firstIndexToSplit).concat([-3]);
-                        let rest = newArray.slice(firstIndexToSplit + 1);
-
-                        let secondIndexToSplit = rest.indexOf(2);
-                        let second = rest.slice(0, secondIndexToSplit);
-                        let specialChar = rest.slice(secondIndexToSplit + 1, secondIndexToSplit + 2);
-                        rest = rest.slice(secondIndexToSplit + 2);
-
-                        let thirdIndexToSplit = rest.indexOf(3);
-                        let third = rest.slice(0, thirdIndexToSplit);
-                        rest = rest.slice(thirdIndexToSplit + 1);
-
-                        let fourthIndexToSplit = rest.indexOf(4);
-                        let fourth = rest.slice(0, fourthIndexToSplit);
-                        let last = rest.slice(fourthIndexToSplit + 1);
-
-                        let newResultArray = first.concat(last);
-
-                        document.getElementById("authorArea_" + id).style.display = "flex";
-                        document.getElementById("clonedAuthorArea_" + id).style.display = "flex";
-
-                        newResultArray.forEach(function (item) {
-                            let li = document.createElement("li");
-                            jQuery(li).addClass("" + item);
-                            jQuery(li).addClass("clonedBlock");
-                            if (item in blocks) {
-                                let content = document.createTextNode(blocks[item]);
-                                jQuery(li).addClass("cloned");
-                                li.appendChild(content);
-                            } else {
-                                let content = document.createTextNode(specialBlocks[item]);
-                                jQuery(li).addClass("clonedCharacter");
-                                li.appendChild(content);
-                            }
-                            jQuery(li).draggable({
-                                //connectToSortable: "#orderedlist_",
-                                revert: function (valid) {
-                                    if (!valid) {
-                                        if (jQuery(this).hasClass("-3")) {
-                                            jQuery("#orderedAuthorList1_" + id).empty();
-                                            jQuery("#orderedAuthorList2_" + id).empty();
-                                            jQuery("#orderedAuthorList3_" + id).empty();
-                                            document.getElementById("authorArea_" + id).style.display =
-                                                "none";
-                                            document.getElementById("clonedAuthorArea_" + id).style.display =
-                                                "none";
-                                            jQuery(".-3").addClass("original");
-                                        }
-                                        jQuery(this).remove();
-                                        document.getElementById("jform_string").value = "";
-                                    }
-                                },
-                            });
-                            let ol = document.getElementById("orderedList_" + id);
-                            ol.appendChild(li);
-                            if (item === -3) {
-                                jQuery(".-3").removeClass("original");
-                            }
-                        });
-
-                        second.forEach(function (item) {
-                            let li = document.createElement("li");
-                            jQuery(li).addClass("" + item);
-                            jQuery(li).addClass("clonedBlock");
-                            if (item in authorBlocks) {
-                                let content = document.createTextNode(authorBlocks[item]);
-                                jQuery(li).addClass("clonedAuthor1");
-                                li.appendChild(content);
-                            } else {
-                                let content = document.createTextNode(specialBlocks[item]);
-                                jQuery(li).addClass("clonedCharacter1");
-                                li.appendChild(content);
-                            }
-                            jQuery(li).draggable({
-                                //connectToSortable: "#orderedAuthorList",
-                                revert: function (valid) {
-                                    if (!valid) {
-                                        jQuery(this).remove();
-                                        document.getElementById("jform_string").value = "";
-                                    }
-                                },
-                            });
-                            let ol = document.getElementById("orderedAuthorList1_" + id);
-                            ol.appendChild(li);
-                        });
-
-                        third.forEach(function (item) {
-                            let li = document.createElement("li");
-                            jQuery(li).addClass("" + item);
-                            jQuery(li).addClass("clonedBlock");
-                            if (item in authorBlocks) {
-                                let content = document.createTextNode(authorBlocks[item]);
-                                jQuery(li).addClass("clonedAuthor2");
-                                li.appendChild(content);
-                            } else {
-                                let content = document.createTextNode(specialBlocks[item]);
-                                jQuery(li).addClass("clonedCharacter2");
-                                li.appendChild(content);
-                            }
-                            jQuery(li).draggable({
-                                //connectToSortable: "#orderedAuthorList",
-                                revert: function (valid) {
-                                    if (!valid) {
-                                        jQuery(this).remove();
-                                        document.getElementById("jform_string").value = "";
-                                    }
-                                },
-                            });
-                            let ol = document.getElementById("orderedAuthorList2_" + id);
-                            ol.appendChild(li);
-                        });
-
-                        fourth.forEach(function (item) {
-                            let li = document.createElement("li");
-                            jQuery(li).addClass("" + item);
-                            jQuery(li).addClass("clonedBlock");
-                            if (item in authorBlocks) {
-                                let content = document.createTextNode(authorBlocks[item]);
-                                jQuery(li).addClass("clonedAuthor3");
-                                li.appendChild(content);
-                            } else {
-                                let content = document.createTextNode(specialBlocks[item]);
-                                jQuery(li).addClass("clonedCharacter3");
-                                li.appendChild(content);
-                            }
-                            jQuery(li).draggable({
-                                //connectToSortable: "#orderedAuthorList",
-                                revert: function (valid) {
-                                    if (!valid) {
-                                        jQuery(this).remove();
-                                        document.getElementById("jform_string").value = "";
-                                    }
-                                },
-                            });
-                            let ol = document.getElementById("orderedAuthorList3_" + id);
-                            ol.appendChild(li);
-                        });
-
-                        specialChar.forEach(function (item) {
-                            let li = document.createElement("li");
-                            jQuery(li).addClass("" + item);
-                            jQuery(li).addClass("clonedBlock");
-                            let content = document.createTextNode(specialBlocks[item]);
-                            jQuery(li).addClass("clonedCharacter4");
-                            li.appendChild(content);
-                            jQuery(li).draggable({
-                                //connectToSortable: "#orderedAuthorList",
-                                revert: function (valid) {
-                                    if (!valid) {
-                                        jQuery(this).remove();
-                                        document.getElementById("jform_string").value = "";
-                                    }
-                                },
-                            });
-                            let ol = document.getElementById("orderedAuthorList4_" + id);
-                            ol.appendChild(li);
-                        });
-
-                    } else {
-                        newArray.forEach(function (item) {
-                            let li = document.createElement("li");
-                            jQuery(li).addClass("" + item);
-                            jQuery(li).addClass("clonedBlock");
-                            if (item in blocks) {
-                                let content = document.createTextNode(blocks[item]);
-                                jQuery(li).addClass("cloned");
-                                li.appendChild(content);
-                            } else {
-                                let content = document.createTextNode(specialBlocks[item]);
-                                jQuery(li).addClass("clonedCharacter");
-                                li.appendChild(content);
-                            }
-                            jQuery(li).draggable({
-                                //connectToSortable: "#orderedlist_",
-                                revert: function (valid) {
-                                    if (!valid) {
-                                        jQuery(this).remove();
-                                        document.getElementById("jform_string").value = "";
-                                    }
-                                },
-                            });
-                            let ol = document.getElementById("orderedList_" + id);
-                            ol.appendChild(li);
-                        });
-                    }
-                }
-            });
+            // For each reference type fill its tab
+            reference_type_ids.forEach(id => loadReferenceTypeTab(id));
         }
     }
 
+    function hideAuthorArea(id) {
+        document.getElementById("authorArea_" + id).style.display = "none";
+        document.getElementById("clonedAuthorArea_" + id).style.display = "none";
+    }
 
-    function sortByValue(jsObj) {
-        let sortedArray = [];
-        for (let i in jsObj) sortedArray.push([jsObj[i], i]); // Push each JSON Object entry in array by [value, key]
-        return sortedArray.sort(function (a, b) {return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    function showAuthorArea(id) {
+        document.getElementById("authorArea_" + id).style.display = "flex";
+        document.getElementById("clonedAuthorArea_" + id).style.display = "flex";
+    }
+
+    function emptyAllDropZones(id) {
+        jQuery("#orderedList_" + id).empty();
+        emptyAuthorDropZones(id);
+    }
+
+    function emptyAuthorDropZones(id) {
+        jQuery("#orderedAuthorList1_" + id).empty();
+        jQuery("#orderedAuthorList2_" + id).empty();
+        jQuery("#orderedAuthorList3_" + id).empty();
+    }
+
+    function createLiElement(...classes) {
+        const li = document.createElement("li");
+        classes.forEach(string => li.addClass(string));
+        return li;
+    }
+
+    function makeDraggable(id, li) {
+        jQuery(li).draggable({
+            //connectToSortable: "#orderedlist_",
+
+            // remove block from list and clean up author drop zone
+            revert: function (valid) {
+                if (!valid) {
+                    if (this.hasClass("-3")) {
+                        emptyAuthorDropZones(id);
+                        hideAuthorArea(id);
+                        //ToDo issue #75
+                        jQuery(".-3").addClass("original");
+                    }
+                    this.remove();
+                    document.getElementById("jform_string").value = "";
+                }
+            },
+        });
+    }
+
+    function processNonAuthorBlocks(id, nonAuthorBlock, blockList) {
+        const li = createLiElement("clonedBlock", nonAuthorBlock);
+
+        // db view field or special character block
+        if (nonAuthorBlock in blocks) {
+            li.addClass("cloned");
+            li.appendText(blocks[nonAuthorBlock]);
+        } else {
+            li.addClass("clonedCharacter");
+            li.appendText(specialBlocks[nonAuthorBlock]);
+        }
+
+        // make block draggable
+        makeDraggable(id, li);
+
+        // add block to list
+        blockList.appendChild(li);
+
+        //ToDo issue #75
+        if (nonAuthorBlock === -3) jQuery(".-3").removeClass("original");
+    }
+
+    function processAuthorBlocks(id, blockAuthor, blockListAuthor, classNameAuthor, classNameCharacter) {
+        const li = createLiElement("clonedBlock", blockAuthor);
+
+        // author block or special character block
+        if (blockAuthor in authorBlocks) {
+            li.addClass(classNameAuthor);
+            li.appendText(authorBlocks[blockAuthor]);
+        } else {
+            li.addClass(classNameCharacter);
+            li.appendText(specialBlocks[blockAuthor]);
+        }
+
+        makeDraggable(id, li);
+        blockListAuthor.appendChild(li);
+    }
+
+    function processSpecialCharacterBlocks(id, blockSpecialCharacter, blockListSpecialCharacter) {
+        const li = createLiElement("clonedBlock", blockSpecialCharacter, "clonedCharacter4");
+        li.appendText(specialBlocks[blockSpecialCharacter]);
+
+        makeDraggable(id, li);
+        blockListSpecialCharacter.appendChild(li);
     }
 
 
+    /**
+     * Sorts jsonObject by first value and return sorted array
+     *
+     * @param jsonObject JSON object to be sorted by value
+     * @return sorted array [[value, key], [value, key], ...]
+     */
+    function sortByValue(jsonObject) {
+        let sortedArray = [];
+        for (let jsonEntry in jsonObject)
+            if (jsonObject.hasOwnProperty(jsonEntry))
+                // push each JSON object entry in array by [value, key]
+                sortedArray.push([jsonObject[jsonEntry], jsonEntry]);
+
+        return sortedArray.sort((a, b) => a[0].toLowerCase().localeCompare(b[0].toLowerCase()));
+    }
+
+
+    /**
+     * Loads blocks from reference type into tab
+     *
+     * @param id Reference type id
+     */
+    function loadReferenceTypeTab(id) {
+
+        hideAuthorArea(id);
+        emptyAllDropZones(id);
+
+        // is reference type in citation style defined
+        if (citationStyle.hasOwnProperty(id)) {
+            let referenceTypeInCitationStyle = citationStyle[id];
+
+            // Contains author?
+            if (referenceTypeInCitationStyle.includes(1)) {
+                // splits blocks for author logic
+                // blocks to author
+                let indexFirstAuthor = referenceTypeInCitationStyle.indexOf(1);
+                let blocksToAuthor = referenceTypeInCitationStyle.slice(0, indexFirstAuthor).concat([-3]);
+                let blocksRemaining = referenceTypeInCitationStyle.slice(indexFirstAuthor + 1);
+
+                // first author blocks + delimiter
+                let indexMiddleAuthor = blocksRemaining.indexOf(2);
+                let blocksFirstAuthor = blocksRemaining.slice(0, indexMiddleAuthor);
+                let specialChar = blocksRemaining.slice(indexMiddleAuthor + 1, indexMiddleAuthor + 2);
+                blocksRemaining = blocksRemaining.slice(indexMiddleAuthor + 2);
+
+                // middle author blocks
+                let indexLastAuthor = blocksRemaining.indexOf(3);
+                let blocksMiddleAuthor = blocksRemaining.slice(0, indexLastAuthor);
+                blocksRemaining = blocksRemaining.slice(indexLastAuthor + 1);
+
+                // last author
+                let indexRemainingBlocks = blocksRemaining.indexOf(4);
+                let blocksLastAuthor = blocksRemaining.slice(0, indexRemainingBlocks);
+                let blocksFollowingAuthor = blocksRemaining.slice(indexRemainingBlocks + 1);
+
+                // non author blocks
+                let blocksNonAuthor = blocksToAuthor.concat(blocksFollowingAuthor);
+
+                showAuthorArea(id);
+
+                // process non author blocks
+                const blockListMain = document.getElementById("orderedList_" + id);
+                blocksNonAuthor.forEach(blockNonAuthor =>
+                    processNonAuthorBlocks(id, blockNonAuthor, blockListMain));
+
+                // process first author blocks
+                const blockListFirstAuthor = document.getElementById("orderedAuthorList1_" + id);
+                blocksFirstAuthor.forEach(blockFirstAuthor =>
+                    processAuthorBlocks(id, blockFirstAuthor, blockListFirstAuthor, "clonedAuthor1", "clonedCharacter1"));
+
+                // process middle author blocks
+                const blockListMiddleAuthor = document.getElementById("orderedAuthorList2_" + id);
+                blocksMiddleAuthor.forEach(blockMiddleAuthor =>
+                    processAuthorBlocks(id, blockMiddleAuthor, blockListMiddleAuthor, "clonedAuthor2", "clonedCharacter2"));
+
+                // process last author blocks
+                const blockListLastAuthor = document.getElementById("orderedAuthorList3_" + id);
+                blocksLastAuthor.forEach(blockLastAuthor =>
+                    processAuthorBlocks(id, blockLastAuthor, blockListLastAuthor, "clonedAuthor3", "clonedCharacter3"));
+
+                // process special character blocks
+                const blockListSpecialCharacter = document.getElementById("orderedAuthorList4_" + id);
+                specialChar.forEach(blockSpecialCharacter =>
+                    processSpecialCharacterBlocks(id, blockSpecialCharacter, blockListSpecialCharacter));
+
+            } else {
+                // process non author blocks
+                const blockListMain = document.getElementById("orderedList_" + id);
+                referenceTypeInCitationStyle.forEach(blockNonAuthor =>
+                    processNonAuthorBlocks(id, blockNonAuthor, blockListMain));
+            }
+        }
+    }
+
+    function mapBlockToId(blockListEntry) {
+        for (const block in blocks)
+            if (blockListEntry.hasClass(block))
+                return parseInt(block);
+
+        for (const specialBlock in specialBlocks)
+            if (blockListEntry.hasClass(specialBlock))
+                return parseInt(specialBlock)
+
+        for (const authorBlock in authorBlocks)
+            if (blockListEntry.hasClass(authorBlock))
+                return parseInt(authorBlock)
+    }
+
+    function mapBlocksToIds(blockList) {
+        let tmp = [];
+        Array.from(blockList.getElementsByTagName("li")).forEach(blockListEntry =>
+            tmp.push(mapBlockToId(blockListEntry)));
+        return tmp;
+    }
+
     function submitClicked() {
-        if (document.getElementById("jform_string").value === "") {
+        const submitField = document.getElementById("jform_string");
+
+        if (submitField.value === "") {
             let dict = {};
+            // each reference type
             reference_type_ids.forEach(id => {
-                arrayString = [];
-                let ol = document.getElementById("orderedList_" + id);
-                let items = ol.getElementsByTagName("li");
-                for (let i = 0; i < items.length; ++i) {
-                    for (let y in blocks) {
-                        if (jQuery(items[i]).hasClass(y)) {
-                            arrayString.push(parseInt(y));
-                        }
-                    }
-                    for (let h in specialBlocks) {
-                        if (jQuery(items[i]).hasClass(h)) {
-                            arrayString.push(parseInt(h));
-                        }
-                    }
-                }
-                arrayStringAuthor1 = [];
-                let olAuthor = document.getElementById("partAuthor1_" + id);
-                let authorItems = olAuthor.getElementsByTagName("li");
-                for (let t = 0; t < authorItems.length; ++t) {
-                    for (let z in authorBlocks) {
-                        if (jQuery(authorItems[t]).hasClass(z)) {
-                            arrayStringAuthor1.push(parseInt(z));
-                        }
-                    }
-                    for (let f in specialBlocks) {
-                        if (jQuery(authorItems[t]).hasClass(f)) {
-                            arrayStringAuthor1.push(parseInt(f));
-                        }
-                    }
-                }
-                arrayStringAuthor2 = [];
-                olAuthor = document.getElementById("partAuthor2_" + id);
-                authorItems = olAuthor.getElementsByTagName("li");
-                for (let t = 0; t < authorItems.length; ++t) {
-                    for (let z in authorBlocks) {
-                        if (jQuery(authorItems[t]).hasClass(z)) {
-                            arrayStringAuthor2.push(parseInt(z));
-                        }
-                    }
-                    for (let f in specialBlocks) {
-                        if (jQuery(authorItems[t]).hasClass(f)) {
-                            arrayStringAuthor2.push(parseInt(f));
-                        }
-                    }
-                }
-                arrayStringAuthor3 = [];
-                olAuthor = document.getElementById("partAuthor3_" + id);
-                authorItems = olAuthor.getElementsByTagName("li");
-                for (let t = 0; t < authorItems.length; ++t) {
-                    for (let z in authorBlocks) {
-                        if (jQuery(authorItems[t]).hasClass(z)) {
-                            arrayStringAuthor3.push(parseInt(z));
-                        }
-                    }
-                    for (let f in specialBlocks) {
-                        if (jQuery(authorItems[t]).hasClass(f)) {
-                            arrayStringAuthor3.push(parseInt(f));
-                        }
-                    }
-                }
-                arrayStringAuthor4 = [];
-                olAuthor = document.getElementById("partAuthor4_" + id);
-                authorItems = olAuthor.getElementsByTagName("li");
-                for (let t = 0; t < authorItems.length; ++t) {
-                    for (let f in specialBlocks) {
-                        if (jQuery(authorItems[t]).hasClass(f)) {
-                            arrayStringAuthor4.push(parseInt(f));
-                        }
-                    }
-                }
+                arrayString = mapBlocksToIds(document.getElementById("orderedList_" + id));
 
                 let dictArray;
+                // adds the author, if available
                 if (arrayString.includes(-3)) {
-                    let indexToSplit = arrayString.indexOf(-3);
-                    let first = arrayString.slice(0, indexToSplit);
-                    let last = arrayString.slice(indexToSplit + 1);
-                    let mid = [1].concat(arrayStringAuthor1).concat([2]).concat(arrayStringAuthor4).concat(arrayStringAuthor2).concat([3]).concat(arrayStringAuthor3).concat([4]);
-                    //let txt = '{"-1:"[' + resultArray.toString() + ']}';
-                    dictArray = first.concat(mid).concat(last);
+                    arrayStringAuthor1 = mapBlocksToIds(document.getElementById("partAuthor1_" + id));
+                    arrayStringAuthor2 = mapBlocksToIds(document.getElementById("partAuthor2_" + id));
+                    arrayStringAuthor3 = mapBlocksToIds(document.getElementById("partAuthor3_" + id));
+                    arrayStringAuthor4 = mapBlocksToIds(document.getElementById("partAuthor4_" + id));
+
+                    let indexAuthorPlaceholder = arrayString.indexOf(-3);
+                    let blocksBeforeAuthor = arrayString.slice(0, indexAuthorPlaceholder);
+                    let blocksAfterAuthor = arrayString.slice(indexAuthorPlaceholder + 1);
+                    let blocksAuthor = [1].concat(arrayStringAuthor1).concat([2]).concat(arrayStringAuthor4).concat(arrayStringAuthor2).concat([3]).concat(arrayStringAuthor3).concat([4]);
+
+                    dictArray = blocksBeforeAuthor.concat(blocksAuthor).concat(blocksAfterAuthor);
                 } else {
-                    //let txt = '{"-1:"[' + arrayString.toString() + ']}';
                     dictArray = arrayString;
                 }
+
+                // maps default to -1
                 if (dictArray.length > 0) {
                     if (id === 1) id = -1;
                     dict[id] = dictArray;
                 }
             });
 
-            let textField = document.getElementById("jform_string");
-            textField.value = JSON.stringify(dict);
-            textField.innerText = JSON.stringify(dict);
+            submitField.value = JSON.stringify(dict);
+            submitField.innerText = JSON.stringify(dict);
+        }
+    }
+
+    function createBlocks(list, sortedArray, className) {
+        sortedArray.forEach(sortedArrayEntry => {
+            Array.from(list).forEach(ol => {
+                const li = createLiElement("block", className, sortedArrayEntry[1])
+                li.appendText(String.from(sortedArrayEntry[0]));
+                ol.appendChild(li);
+            });
+        });
+    }
+
+    function drop(id, ui, clonedBlockType, clonedCharacter, listToAddTo, originalBlockType) {
+        if (jQuery(ui.draggable).hasClass(originalBlockType) || jQuery(ui.draggable).hasClass("originalCharacter")) {
+            let element = ui.draggable.clone()[0];
+            jQuery(element).removeClass("block");
+            jQuery(element).addClass("clonedBlock");
+            if (jQuery(ui.draggable).hasClass(originalBlockType)) {
+                jQuery(element).addClass(clonedBlockType);
+                jQuery(element).removeClass(originalBlockType);
+            } else {
+                jQuery(element).addClass(clonedCharacter);
+                jQuery(element).removeClass("originalCharacter");
+            }
+            makeDraggable(id, element);
+            document.getElementById(listToAddTo + "_" + id).append(element);
         }
     }
 
@@ -566,44 +538,13 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
 
         blocks = JSON.parse('<?php echo json_encode($blocks) ?>');
         blocks["-3"] = "Author";
-
         authorBlocks = JSON.parse('<?php echo json_encode($authorBlocks) ?>');
-
         specialBlocks = JSON.parse('<?php echo json_encode($specialBlocks) ?>');
+        reference_type_ids = JSON.parse('<?php echo json_encode($reference_type_ids); ?>');
 
-
-        let ols = document.getElementsByClassName("fixlist");
-        let block_arr = sortByValue(blocks);
-        for (let i = 0; i < block_arr.length; i++) {
-            Array.from(ols).forEach(ol => {
-                let li = document.createElement("li");
-                li.className = "block original " + block_arr[i][1];
-                li.innerText = String.from(block_arr[i][0]);
-                ol.appendChild(li);
-            });
-        }
-
-        ols = document.getElementsByClassName("fixAuthorList");
-        block_arr = sortByValue(authorBlocks);
-        for (let i = 0; i < block_arr.length; i++) {
-            Array.from(ols).forEach(ol => {
-                let li = document.createElement("li");
-                li.className = "block originalAuthor " + block_arr[i][1];
-                li.innerText = String.from(block_arr[i][0]);
-                ol.appendChild(li);
-            });
-        }
-
-        ols = document.getElementsByClassName("fixSpecialList");
-        block_arr = sortByValue(specialBlocks);
-        for (let i = 0; i < block_arr.length; i++) {
-            Array.from(ols).forEach(ol => {
-                let li = document.createElement("li");
-                li.className = "block originalCharacter " + block_arr[i][1];
-                li.innerText = String.from(block_arr[i][0]);
-                ol.appendChild(li);
-            });
-        }
+        createBlocks(document.getElementsByClassName("fixlist"), sortByValue(blocks), "original");
+        createBlocks(document.getElementsByClassName("fixAuthorList"), sortByValue(authorBlocks), "originalAuthor");
+        createBlocks(document.getElementsByClassName("fixSpecialList"), sortByValue(specialBlocks), "originalCharacter");
 
         loadItems();
 
@@ -612,161 +553,35 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
         jQuery(".clonedArea").droppable({
             accept: ".original, .cloned, .originalCharacter, .clonedCharacter",
             drop: function (ev, ui) {
-                if (jQuery(ui.draggable).hasClass("original") || (jQuery(ui.draggable).hasClass("originalCharacter"))) {
-                    document.getElementById("jform_string").value = "";
-                    let id = jQuery(this)[0].id;
-                    let element = ui.draggable.clone();
-                    jQuery(element).addClass("clonedBlock");
-                    jQuery(element).removeClass("block");
-                    if (jQuery(ui.draggable).hasClass("original")) {
-                        jQuery(element).addClass("cloned");
-                        jQuery(element).removeClass("original");
-                    } else {
-                        jQuery(element).addClass("clonedCharacter");
-                        jQuery(element).removeClass("originalCharacter");
-                    }
-                    jQuery(element).draggable({
-                        connectToSortable: "#orderedList_" + id,
-                        revert: function (valid) {
-                            if (!valid) {
-                                if (jQuery(this).hasClass("-3")) {
-                                    jQuery("#orderedAuthorList1_" + id).empty();
-                                    jQuery("#orderedAuthorList2_" + id).empty();
-                                    jQuery("#orderedAuthorList3_" + id).empty();
-                                    document.getElementById("authorArea_" + id).style.display = "none";
-                                    document.getElementById("clonedAuthorArea_" + id).style.display = "none";
-                                    jQuery(".-3").addClass("original");
-                                }
-                                jQuery(this).remove();
-                                document.getElementById("jform_string").value = "";
-                            }
-                        },
-                    });
-                    jQuery("#orderedList_" + id).append(element);
-                    if (jQuery(ui.draggable).hasClass("-3")) {
-                        jQuery(".-3").removeClass("original");
-                        document.getElementById("authorArea_" + id).style.display = "flex";
-                        document.getElementById("clonedAuthorArea_" + id).style.display =
-                            "flex";
-                    }
-                }
+                drop(jQuery(this)[0].id, ui, "cloned", "clonedCharacter", "orderedList", "original");
             },
         });
 
         jQuery(".partAuthor1").droppable({
             accept: ".originalAuthor, .clonedAuthor1, .clonedCharacter1, .originalCharacter",
             drop: function (ev, ui) {
-                if (jQuery(ui.draggable).hasClass("originalAuthor") || (jQuery(ui.draggable).hasClass("originalCharacter"))) {
-                    document.getElementById("jform_string").value = "";
-                    let id = jQuery(this)[0].id.split("_")[1];
-                    let element = ui.draggable.clone();
-                    jQuery(element).removeClass("block");
-                    jQuery(element).addClass("clonedBlock");
-                    if (jQuery(ui.draggable).hasClass("originalAuthor")) {
-                        jQuery(element).addClass("clonedAuthor1");
-                        jQuery(element).removeClass("originalAuthor");
-                    } else {
-                        jQuery(element).addClass("clonedCharacter1");
-                        jQuery(element).removeClass("originalCharacter");
-                    }
-                    jQuery(element).draggable({
-                        //connectToSortable: "#orderedlist_",
-                        revert: function (valid) {
-                            if (!valid) {
-                                jQuery(this).remove();
-                                document.getElementById("jform_string").value = "";
-                            }
-                        },
-                    });
-                    jQuery("#orderedAuthorList1_" + id).append(element);
-                }
+                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor1", "clonedCharacter1", "orderedAuthorList1", "originalAuthor");
             },
         });
-
 
         jQuery(".partAuthor2").droppable({
             accept: ".originalAuthor, .clonedAuthor2, .clonedCharacter2, .originalCharacter",
             drop: function (ev, ui) {
-                if (jQuery(ui.draggable).hasClass("originalAuthor") || (jQuery(ui.draggable).hasClass("originalCharacter"))) {
-                    document.getElementById("jform_string").value = "";
-                    let id = jQuery(this)[0].id.split("_")[1];
-                    let element = ui.draggable.clone();
-                    jQuery(element).removeClass("block");
-                    jQuery(element).addClass("clonedBlock");
-                    if (jQuery(ui.draggable).hasClass("originalAuthor")) {
-                        jQuery(element).addClass("clonedAuthor2");
-                        jQuery(element).removeClass("originalAuthor");
-                    } else {
-                        jQuery(element).addClass("clonedCharacter2");
-                        jQuery(element).removeClass("originalCharacter");
-                    }
-                    jQuery(element).draggable({
-                        //connectToSortable: "#orderedlist_",
-                        revert: function (valid) {
-                            if (!valid) {
-                                jQuery(this).remove();
-                                document.getElementById("jform_string").value = "";
-                            }
-                        },
-                    });
-                    jQuery("#orderedAuthorList2_" + id).append(element);
-                }
+                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor2", "clonedCharacter2", "orderedAuthorList2", "originalAuthor");
             },
         });
-
 
         jQuery(".partAuthor3").droppable({
             accept: ".originalAuthor, .clonedAuthor3, .clonedCharacter3, .originalCharacter",
             drop: function (ev, ui) {
-                if (jQuery(ui.draggable).hasClass("originalAuthor") || (jQuery(ui.draggable).hasClass("originalCharacter"))) {
-                    document.getElementById("jform_string").value = "";
-                    let id = jQuery(this)[0].id.split("_")[1];
-                    let element = ui.draggable.clone();
-                    jQuery(element).removeClass("block");
-                    jQuery(element).addClass("clonedBlock");
-                    if (jQuery(ui.draggable).hasClass("originalAuthor")) {
-                        jQuery(element).addClass("clonedAuthor3");
-                        jQuery(element).removeClass("originalAuthor");
-                    } else {
-                        jQuery(element).addClass("clonedCharacter3");
-                        jQuery(element).removeClass("originalCharacter");
-                    }
-                    jQuery(element).draggable({
-                        //connectToSortable: "#orderedlist_",
-                        revert: function (valid) {
-                            if (!valid) {
-                                jQuery(this).remove();
-                                document.getElementById("jform_string").value = "";
-                            }
-                        },
-                    });
-                    jQuery("#orderedAuthorList3_" + id).append(element);
-                }
+                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor3", "clonedCharacter3", "orderedAuthorList3", "originalAuthor");
             },
         });
 
         jQuery(".partAuthor4").droppable({
             accept: ".clonedCharacter4, .originalCharacter",
             drop: function (ev, ui) {
-                if (jQuery(ui.draggable).hasClass("originalCharacter")) {
-                    document.getElementById("jform_string").value = "";
-                    let id = jQuery(this)[0].id.split("_")[1];
-                    let element = ui.draggable.clone();
-                    jQuery(element).removeClass("block");
-                    jQuery(element).addClass("clonedBlock");
-                    jQuery(element).addClass("clonedCharacter4");
-                    jQuery(element).removeClass("originalCharacter");
-                    jQuery(element).draggable({
-                        //connectToSortable: "#orderedlist_",
-                        revert: function (valid) {
-                            if (!valid) {
-                                jQuery(this).remove();
-                                document.getElementById("jform_string").value = "";
-                            }
-                        },
-                    });
-                    jQuery("#orderedAuthorList4_" + id).append(element);
-                }
+                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor4", "clonedCharacter4", "orderedAuthorList4", "originalAuthor");
             },
         });
     });
@@ -807,7 +622,6 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
     <?php echo JHtml::_('bootstrap.addTab', 'myTab', $type['name'], JText::_("COM_PUBDB_REF_TYPE_" . $type['name'])); ?>
       <legend><?php echo JText::_("COM_PUBDB_REF_TYPE_" . $type['name']); ?></legend>
       <p><?php echo JText::_($type['lable']) ?></p>
-      <br>
       <input type="hidden" name="type_<?php echo $type['id']; ?>" value=""/>
       <div style="display: flex; flex-direction: column;">
           <div style="display: flex; flex-direction: row;">

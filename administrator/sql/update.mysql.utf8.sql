@@ -219,3 +219,27 @@ left join #__pubdb_publisher as publisher
           on l.publishers = publisher.id
 
 WHERE l.state = 1;
+
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (47, ' [', 'COM_PUBDB_OPEN_SQUARE_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (49, '] ', 'COM_PUBDB_CLOSE_SQUARE_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (50, ' (', 'COM_PUBDB_OPEN_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (51, ') ', 'COM_PUBDB_CLOSE_BRACKET', '2');
+
+INSERT INTO `#__pubdb_citation_style`(`name`, `string`) VALUES ('Business & Information Systems Engineering', '{"2":[1,2,5,27,29,3,4,50,10,51,13,7,39,26,6,23],"3":[1,2,5,27,29,3,4,50,10,51,13,7,42,5,16],"10":[1,2,5,27,29,3,4,50,10,51,13,16],"13":[1,2,5,27,29,3,4,50,10,51,13,16],"-1":[1,2,5,27,29,3,4,50,10,51,13,7,42,5,16]}');
+
+#Reference Types
+INSERT INTO `#__pubdb_reference_types` (`id`, `ordering`, `state`, `checked_out`, `checked_out_time`, `created_by`, `modified_by`, `name`, `lable`) VALUES
+(1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_MISC', 'COM_PUBDB_REF_TYPE_MISC_DESC'),
+(2, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_ARTICLE', 'COM_PUBDB_REF_TYPE_ARTICLE_DESC'),
+(3, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_BOOK', 'COM_PUBDB_REF_TYPE_BOOK_DESC'),
+(4, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_BOOKLET', 'COM_PUBDB_REF_TYPE_BOOKLET_DESC'),
+(5, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_CONFERENCE', 'COM_PUBDB_REF_TYPE_CONFERENCE_DESC'),
+(6, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_INBOOK', 'COM_PUBDB_REF_TYPE_INBOOK_DESC'),
+(7, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_INCOLLECTION', 'COM_PUBDB_REF_TYPE_INCOLLECTION_DESC'),
+(8, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_INPROCEEDINGS', 'COM_PUBDB_REF_TYPE_INPROCEEDINGS_DESC'),
+(9, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_MANUAL', 'COM_PUBDB_REF_TYPE_MANUAL_DESC'),
+(10, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_MASTERTHESIS', 'COM_PUBDB_REF_TYPE_MASTERTHESIS_DESC'),
+(11, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_PHDTHESIS', 'COM_PUBDB_REF_TYPE_PHDTHESIS_DESC'),
+(12, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_PROCEEDINGS', 'COM_PUBDB_REF_TYPE_PROCEEDINGS_DESC'),
+(13, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_TECHREPORT', 'COM_PUBDB_REF_TYPE_TECHREPORT_DESC'),
+(14, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'COM_PUBDB_REF_TYPE_UNPUBLISHED', 'COM_PUBDB_REF_TYPE_UNPUBLISHED_DESC');

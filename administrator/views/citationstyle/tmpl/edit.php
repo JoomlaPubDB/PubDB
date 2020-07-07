@@ -200,13 +200,13 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
         height: 100px;
         border-color: grey;
         margin-left: 10px;
-      border-width: 1px;
-      border-radius: 10px;
-      border-style: dotted;
-      flex: 0.2;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
+        border-width: 1px;
+        border-radius: 10px;
+        border-style: dotted;
+        flex: 0.2;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 </style>
 
@@ -214,19 +214,17 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
 ?>
 <script type="text/javascript">
-  js = jQuery.noConflict();
+    js = jQuery.noConflict();
 
-  Joomla.submitbutton = function (task) {
-    if (!submitClicked()) alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
-    if (task === 'citationstyle.cancel') {
-      Joomla.submitform(task, document.getElementById('citationstyle-form'));
-    } else {
+    Joomla.submitbutton = function (task) {
+        submitClicked();
+        if (task === 'citationstyle.cancel') {
+            Joomla.submitform(task, document.getElementById('citationstyle-form'));
+        } else {
 
-      if (task !== 'citationstyle.cancel' && document.formvalidator.isValid(document.id('citationstyle-form'))) {
+            if (task !== 'citationstyle.cancel' && document.formvalidator.isValid(document.id('citationstyle-form'))) {
 
-        Joomla.submitform(task, document.getElementById('citationstyle-form'));
-      } else {
-        alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
+                Joomla.submitform(task, document.getElementById('citationstyle-form'));
             }
         }
     }
@@ -556,13 +554,10 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
                 }
             });
 
-            if (!dict.hasOwnProperty("-1")) return false;
-
             let textField = document.getElementById("jform_string");
             textField.value = JSON.stringify(dict);
             textField.innerText = JSON.stringify(dict);
         }
-        return true;
     }
 
     jQuery(document).ready(function () {

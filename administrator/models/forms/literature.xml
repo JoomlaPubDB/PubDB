@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-  <fieldset>
+  <fieldset addrulepath="/administrator/components/com_pubdb/models/rules">
     <field name="id" type="text" readonly="true" class="readonly" default="0" description="JGLOBAL_FIELD_ID_DESC"/>
     <field name="ordering"/>
     <field name="state" default="1" type="list" label="JSTATUS" description="JFIELD_PUBLISHED_DESC" class="inputbox" size="1">
@@ -16,11 +16,11 @@
     <field name="title" filter="safehtml" type="text" required="true" message="COM_PUBDB_FORM_ERR_LITERATURE_TITLE" label="COM_PUBDB_FORM_LBL_LITERATURE_TITLE" description="COM_PUBDB_FORM_DESC_LITERATURE_TITLE" hint="COM_PUBDB_FORM_LBL_LITERATURE_TITLE"/>
     <field name="subtitle" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_LITERATURE_SUBTITLE" description="COM_PUBDB_FORM_DESC_LITERATURE_SUBTITLE" hint="COM_PUBDB_FORM_LBL_LITERATURE_SUBTITLE"/>
     <field name="published_on" class="inputbox" format="'%d.%m.%Y'" timeformat="12" filter="server_utc" translateformat="true" showtime="false" singleheader="false" todaybutton="false" weeknumbers="false" filltable="false" type="calendar" required="false" label="COM_PUBDB_FORM_LBL_LITERATURE_PUBLISHED_ON" description="COM_PUBDB_FORM_DESC_LITERATURE_PUBLISHED_ON" hint="COM_PUBDB_FORM_LBL_LITERATURE_PUBLISHED_ON"/>
-    <field name="year" filter="safehtml" default="2000" type="number" label="COM_PUBDB_FORM_LBL_LITERATURE_YEAR" description="COM_PUBDB_FORM_DESC_LITERATURE_YEAR" required="true" hint="COM_PUBDB_FORM_LBL_LITERATURE_YEAR"/>
+    <field name="year" filter="safehtml" min="0" default="2000" type="number" label="COM_PUBDB_FORM_LBL_LITERATURE_YEAR" description="COM_PUBDB_FORM_DESC_LITERATURE_YEAR" required="true" hint="COM_PUBDB_FORM_LBL_LITERATURE_YEAR"/>
     <field name="month" filter="safehtml" min="1" max="12" step="1" default="1" type="number" label="COM_PUBDB_FORM_LBL_LITERATURE_MONTH" description="COM_PUBDB_FORM_DESC_LITERATURE_MONTH" hint="COM_PUBDB_FORM_LBL_LITERATURE_MONTH"/>
     <field name="day" filter="safehtml" min="1" max="31" step="1" default="1" type="number" label="COM_PUBDB_FORM_LBL_LITERATURE_DAY" description="COM_PUBDB_FORM_DESC_LITERATURE_DAY" hint="COM_PUBDB_FORM_LBL_LITERATURE_DAY"/>
     <field name="reference_type" type="foreignkey" label="COM_PUBDB_FORM_LBL_LITERATURE_REFERENCE_TYPE" description="COM_PUBDB_FORM_DESC_LITERATURE_REFERENCE_TYPE" class="inputbox" input_type="list" table="#__pubdb_reference_types" key_field="id" value_field="name" required="true" default=""/>
-    <field name="access_date" class="inputbox" default="NOW" format="'%d.%m.%Y'" timeformat="24" filter="server_utc" translateformat="true" showtime="true" singleheader="false" todaybutton="true" weeknumbers="false" filltable="false" type="calendar" label="COM_PUBDB_FORM_LBL_LITERATURE_ACCESS_DATE" description="COM_PUBDB_FORM_DESC_LITERATURE_ACCESS_DATE" hint="COM_PUBDB_FORM_LBL_LITERATURE_ACCESS_DATE"/>
+    <field name="access_date" class="inputbox" default="NOW" validate="date" format="'%d.%m.%Y'" timeformat="24" filter="server_utc" translateformat="true" showtime="true" singleheader="false" todaybutton="true" weeknumbers="false" filltable="false" type="calendar" label="COM_PUBDB_FORM_LBL_LITERATURE_ACCESS_DATE" description="COM_PUBDB_FORM_DESC_LITERATURE_ACCESS_DATE" hint="COM_PUBDB_FORM_LBL_LITERATURE_ACCESS_DATE"/>
     <field name="language" client="site" type="language" label="COM_PUBDB_FORM_LBL_LITERATURE_LANGUAGE" description="COM_PUBDB_FORM_DESC_LITERATURE_LANGUAGE" hint="COM_PUBDB_FORM_LBL_LITERATURE_LANGUAGE"/>
     <field name="doi" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_LITERATURE_DOI" description="COM_PUBDB_FORM_DESC_LITERATURE_DOI" hint="COM_PUBDB_FORM_LBL_LITERATURE_DOI" showon="reference_type:1,2,3,6,7"/>
     <field name="isbn" maxlength="13" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_LITERATURE_ISBN" description="COM_PUBDB_FORM_DESC_LITERATURE_ISBN" hint="COM_PUBDB_FORM_LBL_LITERATURE_ISBN" showon="reference_type:1,3,6,7"/>

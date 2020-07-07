@@ -103,14 +103,6 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 			}
 		}
 	}
-
-    function validateForm() {
-        const form = document.adminForm;
-        const date = new Date();
-
-        if (new Date(form.jform_year.value + '-' + form.jform_month.value + '-' + form.jform_day.value) > date) return false;
-        return new Date(form.jform_access_date.value) <= date;
-    }
 </script>
 
 <form

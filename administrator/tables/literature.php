@@ -56,6 +56,10 @@ class PubdbTableliterature extends \Joomla\CMS\Table\Table
 		$input = JFactory::getApplication()->input;
 		$task = $input->getString('task', '');
 
+    if ($array['year'] == 0 || $array['year'] == null) $array['year'] = 0;
+    if ($array['month'] == 0 || $array['month'] == null) $array['month'] = 1;
+    if ($array['day'] == 0 || $array['day'] == null) $array['day'] = 1;
+
     $datetime = DateTime::createFromFormat("Y-n-j",$array['year'] . "-" . $array['month'] . "-" . $array['day']);
     $array['published_on'] = $datetime->format('Y-m-d');
 

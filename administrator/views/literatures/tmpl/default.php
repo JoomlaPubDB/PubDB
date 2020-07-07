@@ -183,7 +183,7 @@ $sortFields = $this->getSortFields();
             </td>
             <td>
 
-              <?php echo JText::sprintf('COM_PUBDB_REF_TYPE_' . strtoupper($item->reference_type)); ?>
+              <?php echo JText::_($item->reference_type); ?>
             </td>
             <td>
 

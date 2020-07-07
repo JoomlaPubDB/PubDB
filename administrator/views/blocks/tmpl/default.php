@@ -157,7 +157,7 @@ $sortFields = $this->getSortFields();
 
 				</td>				<td>
 
-					<?php echo $item->lable; ?>
+					<?php echo JText::_($item->lable); ?>
 				</td>				<td>
 
 					<?php echo $item->category; ?>

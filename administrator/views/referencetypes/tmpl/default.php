@@ -147,15 +147,15 @@ $sortFields = $this->getSortFields();
                           <?php endif; ?>
                           <?php if ($canEdit) : ?>
                               <a href="<?php echo JRoute::_('index.php?option=com_pubdb&task=referencetype.edit&id=' . (int)$item->id); ?>">
-                                <?php echo $this->escape($item->name); ?></a>
+                                <?php echo JText::_($this->escape($item->name)); ?></a>
                           <?php else : ?>
-                            <?php echo $this->escape($item->name); ?>
+                            <?php echo JText::_($this->escape($item->name)); ?>
                           <?php endif; ?>
 
                         </td>
                         <td>
 
-                          <?php echo $this->escape($item->lable); ?>
+                          <?php echo JText::_($this->escape($item->lable)); ?>
                         </td>
 
                     </tr>

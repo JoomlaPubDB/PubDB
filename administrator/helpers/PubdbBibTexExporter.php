@@ -32,7 +32,138 @@ class PubdbBibTexExporter
    * @var array mapping table for database and BibTex format
    * @since v0.0.7
    */
-  private $fieldMapping = array();
+
+  /**
+   * @var array mapping table for our database fields to  the default BibTex fields
+   */
+  private $defaultFields = array(
+    'ref_type' => 'type',
+    'authors' => 'author',
+    'others_involved' => 'editor',
+    'title' => 'title',
+    'access_data' => 'note',
+    'keywords' => 'keywords',
+    'language' => 'language',
+    'online_address' => 'url',
+    'page_count' => 'pagetotal',
+    'page_range' => 'pages',
+    'year' => 'year',
+    'month' => 'month',
+    'day' => 'day',
+    'volume' => 'volume',
+    'doi' => 'doi',
+    'isbn' => 'isbn',
+    'periodical_issn' => 'issn',
+    'periodical_eissn' => 'eissn',
+    'volume' => 'volume'
+  );
+  /**
+   * @var array mapping for article ref types journal, publisher, address, subtitle
+   */
+  private $articleFields = array(
+    'periodical_name' => 'journal',
+    'publisher_name' => 'publisher',
+    'place_of_publication' => 'address',
+    'subtitle' => 'subtitle'
+  );
+
+  /**
+   * @var array mapping for book ref types publisher, address, subtitle
+   */
+
+  private $bookFields = array(
+    'publisher_name' => 'publisher',
+    'place_of_publication' => 'address',
+    'subtitle' => 'subtitle'
+  );
+
+  /**
+   * @var array mapping for booklet ref types howpublished, address, subtitle
+   */
+
+  private $bookletFields = array(
+    'publisher_name' => 'howpublished',
+    'place_of_publication' => 'address',
+    'subtitle' => 'subtitle'
+  );
+  /**
+   * @var array mapping for inbook ref type publisher, address, subtitle
+   */
+  private $inbookFields = array(
+    'publisher_name' => 'publisher',
+    'place_of_publication' => 'address',
+    'subtitle' => 'subtitle'
+
+  );
+  /**
+   * @var array mapping for incollection ref type editor, publisher, address, title
+   */
+  private $incollectionFields = array(
+    'publisher_name' => 'publisher',
+    'place_of_publication' => 'address',
+    'subtitle' => 'title',
+  );
+
+  /**
+   * @var array mapping for inproceedings ref type, editor, publisher, address, title, series
+   */
+
+  private $inproceedingsFields = array(
+    'publisher_name' => 'publisher',
+    'place_of_publication' => 'address',
+    'subtitle' => 'title',
+    'series_title_name' => 'series'
+  );
+
+  /**
+   * @var array mapping for manual ref type address organization
+   */
+  private $manualFields = array(
+    'place_of_publication' => 'address',
+    'publisher_name' => 'organization'
+  );
+
+  /**
+   * @var array mapping for masterthesis ref type school, address
+   */
+  private $masterthesisFields = array(
+    'publisher_name' => 'school',
+    'place_of_publication' => 'address'
+  );
+
+  /**
+   * @var array mapping for misc ref type howpublished, note
+   */
+  private $miscFields = array(
+    'online_address' => 'howpublished',
+    'accessed_on' => 'note'
+  );
+
+  /**
+   * @var array mapping for phd ref type school, address
+   */
+  private $phdFields = array(
+    'publisher_name' => 'school',
+    'place_of_publication' => 'address'
+  );
+  /**
+   * @var array mapping for proceedings ref type editor, publisher, address, series
+   */
+  private $proceedingsFields = array(
+    'publisher_name' => 'publisher',
+    'place_of_publication' => 'address',
+    'series_title_name' => 'series'
+  );
+
+  /**
+   * @var array mapping for techreport ref type editor, institution, address, series
+   */
+
+  private $techreportFields = array(
+    'publisher_name' => 'institution',
+    'place_of_publication' => 'address',
+    'series_title_name' => 'series'
+  );
 
   function __construct($ids)
   {
@@ -47,29 +178,6 @@ class PubdbBibTexExporter
       '{\"O}' => "Ö",
       '{\ss}' => "ß",
       '{\&}' => "&"
-    );
-
-    $this->fieldMapping = array(
-      "address" => "place_of_publication",
-      "author" => "authors", //reference done
-      "booktitle" => "title",
-      "doi" => "doi",
-      "edition" => "volume",
-      "eisbn" => "eisbn",
-      "institution" => "publisher_name", //reference done
-      "isbn" => "isbn",
-      "journal" => "periodical_name", //reference done
-      "issn" => "periodical_issn",
-      "eissn" => "periodical_eissn",
-      "month" => "month",
-      "pages" => "page_range",
-      "publisher" => "publisher_name", //reference done
-      "type" => "ref_type", //reference done
-      "title" => "title",
-      "series" => "series_title_name", //reference done
-      "url" => "online_address",
-      "urldate" => "access_date",
-      "year" => "year"
     );
   }
 
@@ -117,11 +225,12 @@ class PubdbBibTexExporter
    */
   private function formatItems($items)
   {
-    $fieldMapping = array_flip($this->fieldMapping);
     $arrItems = array();
     foreach ($items as $item) {
       $formattedValues = array();
       foreach ($item as $field => $value) {
+        $typeFields = strtolower($item['ref_type']) . 'Fields';
+        $fieldMapping = (isset($this->$typeFields)) ? array_merge($this->defaultFields, $this->$typeFields) : $this->defaultFields;
         if (method_exists(self::class, 'format' . ucfirst($field))) {
           $formattedValues[$fieldMapping[$field]] = call_user_func(array(__CLASS__, 'format' . ucfirst($field)), $item);
         } else {
@@ -193,6 +302,7 @@ class PubdbBibTexExporter
   {
     $arrReturn = array();
     $arrAuthors = array();
+    if ($item['authors_last_name'] == "" && $item['authors_first_name'] == "") return "";
     $last_names = explode(',', $item['authors_last_name']);
     $first_names = explode(',', $item['authors_first_name']);
 
@@ -203,7 +313,59 @@ class PubdbBibTexExporter
     foreach ($arrAuthors as $author) {
       $arrReturn[] = $this->formatBibTexString($author);
     }
+
     return implode(' and ', $arrReturn);
+  }
+
+  /**
+   * Format Authors of an Literature with last and first name
+   * In addition connect them with an "and" to get BibTeX format
+   * @param $item
+   * @return string
+   * @since v0.0.5
+   */
+  private function formatOthers_involved($item)
+  {
+    $arrReturn = array();
+    $arrEditors = array();
+    if ($item['others_involved_last_name'] == "" && $item['others_involved_first_name'] == "") return "";
+
+    $last_names = explode(',', $item['others_involved_last_name']);
+    $first_names = explode(',', $item['others_involved_first_name']);
+
+    for ($i = 0; $i < count($last_names); $i++) {
+      $arrEditors[] = $last_names[$i] . "," . $first_names[$i];
+    }
+
+    foreach ($arrEditors as $editor) {
+      $arrReturn[] = $this->formatBibTexString($editor);
+    }
+    return implode(' and ', $arrReturn);
+  }
+
+  /**
+   * Replace numeric month value with BibTex String
+   * @param $item stdClass Item Object to Fromat
+   * @return String month String in BibTex format
+   */
+
+  private function formatMonth($item)
+  {
+    $months = array(
+      '1' => 'jan',
+      '2' => 'feb',
+      '3' => 'mar',
+      '4' => 'apr',
+      '5' => 'may',
+      '6' => 'jun',
+      '7' => 'jul',
+      '8' => 'aug',
+      '9' => 'sep',
+      '10' => 'oct',
+      '11' => 'nov',
+      '12' => 'dec'
+    );
+    return $months[$item['month']];
   }
 
   /**
@@ -218,7 +380,9 @@ class PubdbBibTexExporter
     $mapping = array_flip($this->umlautsMapping);
 
     //check if whitespaces are in the value
-    if (preg_match('/\s/', $value)) {
+    $value = str_replace(',', ', ', $value);
+    $value = trim($value);
+    if (preg_match('/\s/', $value) || preg_match('/,/', $value)) {
       $value = "{" . $value . "}";
     }
 

@@ -68,7 +68,7 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 			<fieldset class="adminform">
 				<legend><?php echo JText::_('COM_PUBDB_FIELDSET_REFERENCETYPE'); ?></legend>
                 <div class="controls">
-                  <?php echo JText::_(trim($this->form->getValue('name'))); ?>
+                  <?php echo JText::_("COM_PUBDB_REF_TYPE_" . trim($this->form->getValue('name'))); ?>
                 </div>
 				<?php echo $this->form->renderField('name'); ?>
                 <div class="controls">

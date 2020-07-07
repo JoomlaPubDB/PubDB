@@ -147,9 +147,9 @@ $sortFields = $this->getSortFields();
                           <?php endif; ?>
                           <?php if ($canEdit) : ?>
                               <a href="<?php echo JRoute::_('index.php?option=com_pubdb&task=referencetype.edit&id=' . (int)$item->id); ?>">
-                                <?php echo JText::_($this->escape($item->name)); ?></a>
+                                <?php echo JText::_("COM_PUBDB_REF_TYPE_" . $this->escape($item->name)); ?></a>
                           <?php else : ?>
-                            <?php echo JText::_($this->escape($item->name)); ?>
+                            <?php echo JText::_("COM_PUBDB_REF_TYPE_" . $this->escape($item->name)); ?>
                           <?php endif; ?>
 
                         </td>

@@ -804,8 +804,8 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
     </div>
   <?php echo JHtml::_('bootstrap.endTab'); ?>
   <?php foreach ($reference_types as $type): ?>
-    <?php echo JHtml::_('bootstrap.addTab', 'myTab', $type['name'], JText::_($type['name'])); ?>
-      <legend><?php echo JText::_($type['name']); ?></legend>
+    <?php echo JHtml::_('bootstrap.addTab', 'myTab', $type['name'], JText::_("COM_PUBDB_REF_TYPE_" . $type['name'])); ?>
+      <legend><?php echo JText::_("COM_PUBDB_REF_TYPE_" . $type['name']); ?></legend>
       <p><?php echo JText::_($type['lable']) ?></p>
       <br>
       <input type="hidden" name="type_<?php echo $type['id']; ?>" value=""/>

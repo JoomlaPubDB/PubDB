@@ -68,6 +68,9 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 			<fieldset class="adminform">
 				<legend><?php echo JText::_('COM_PUBDB_FIELDSET_BLOCK'); ?></legend>
 				<?php echo $this->form->renderField('name'); ?>
+                <div class="controls">
+                  <?php echo JText::_(trim($this->form->getValue('lable'))); ?>
+                </div>
 				<?php echo $this->form->renderField('lable'); ?>
 				<?php echo $this->form->renderField('category'); ?>
 				<?php if ($this->state->params->get('save_history', 1)) : ?>

@@ -67,7 +67,13 @@ $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/form.css');
 		<div class="span10 form-horizontal">
 			<fieldset class="adminform">
 				<legend><?php echo JText::_('COM_PUBDB_FIELDSET_REFERENCETYPE'); ?></legend>
+                <div class="controls">
+                  <?php echo JText::_(trim($this->form->getValue('name'))); ?>
+                </div>
 				<?php echo $this->form->renderField('name'); ?>
+                <div class="controls">
+                  <?php echo JText::_(trim($this->form->getValue('lable'))); ?>
+                </div>
 				<?php echo $this->form->renderField('lable'); ?>
 				<?php if ($this->state->params->get('save_history', 1)) : ?>
 					<div class="control-group">

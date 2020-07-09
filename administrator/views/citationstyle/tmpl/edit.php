@@ -639,6 +639,12 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
             // Makes cloned block draggable and adds it to list
             makeDraggable(id, clonedBlock);
             document.getElementById(listToAddTo + "_" + id).append(clonedBlock);
+
+            // Shows author area if needed
+            if (jQuery(ui.draggable).hasClass("-3")) {
+                jQuery(ui.draggable).removeClass("original");
+                showAuthorArea(id);
+            }
         }
     }
 

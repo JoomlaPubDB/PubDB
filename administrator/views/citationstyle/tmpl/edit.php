@@ -241,115 +241,68 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
     let citationStyle = {};
     let reference_type_ids = {};
 
-
     /**
-     * Excecuted when the page is loaded. If a citationstlye is available, it loads it's blocks into the views.
+     * On document loaded create blocks and load citation style
      */
-    function loadItems() {
-        // Checks whether the citation style has blocks to display
-        if (document.getElementById("jform_string").value !== "") {
-            // Maps default citation style (-1) to id 1
-            citationStyle = JSON.parse(document.getElementById("jform_string").value);
-            citationStyle[1] = citationStyle[-1];
+    jQuery(document).ready(function () {
 
-            // For each reference type fill its tab
-            reference_type_ids.forEach(id => loadReferenceTypeTab(id));
-        }
-    }
+        //jQuery("#orderedlist_").sortable();
 
-    function hideAuthorArea(id) {
-        document.getElementById("authorArea_" + id).style.display = "none";
-        document.getElementById("clonedAuthorArea_" + id).style.display = "none";
-    }
+        // Get blocks from db
+        blocks = JSON.parse('<?php echo json_encode($blocks) ?>');
+        blocks["-3"] = "Author";
+        authorBlocks = JSON.parse('<?php echo json_encode($authorBlocks) ?>');
+        specialBlocks = JSON.parse('<?php echo json_encode($specialBlocks) ?>');
+        reference_type_ids = JSON.parse('<?php echo json_encode($reference_type_ids); ?>');
 
-    function showAuthorArea(id) {
-        document.getElementById("authorArea_" + id).style.display = "flex";
-        document.getElementById("clonedAuthorArea_" + id).style.display = "flex";
-    }
+        // Create all blocks
+        createBlocks(document.getElementsByClassName("fixlist"), sortByValue(blocks), "original");
+        createBlocks(document.getElementsByClassName("fixAuthorList"), sortByValue(authorBlocks), "originalAuthor");
+        createBlocks(document.getElementsByClassName("fixSpecialList"), sortByValue(specialBlocks), "originalCharacter");
 
-    function emptyAllDropZones(id) {
-        jQuery("#orderedList_" + id).empty();
-        emptyAuthorDropZones(id);
-    }
+        // Load block into drop area for citation style
+        loadItems();
 
-    function emptyAuthorDropZones(id) {
-        jQuery("#orderedAuthorList1_" + id).empty();
-        jQuery("#orderedAuthorList2_" + id).empty();
-        jQuery("#orderedAuthorList3_" + id).empty();
-    }
+        //Makes all blocks draggable
+        jQuery(".block").draggable({helper: "clone", revert: "invalid"});
 
-    function createLiElement(...classes) {
-        const li = document.createElement("li");
-        classes.forEach(string => li.addClass(string));
-        return li;
-    }
-
-    function makeDraggable(id, li) {
-        jQuery(li).draggable({
-            //connectToSortable: "#orderedlist_",
-
-            // remove block from list and clean up author drop zone
-            revert: function (valid) {
-                if (!valid) {
-                    if (this.hasClass("-3")) {
-                        emptyAuthorDropZones(id);
-                        hideAuthorArea(id);
-                        //ToDo issue #75
-                        jQuery(".-3").addClass("original");
-                    }
-                    this.remove();
-                    document.getElementById("jform_string").value = "";
-                }
+        jQuery(".clonedArea").droppable({
+            // Defines which blocks can be dragged here
+            accept: ".original, .cloned, .originalCharacter, .clonedCharacter",
+            // On drop definition
+            drop: function (ev, ui) {
+                drop(jQuery(this)[0].id, ui, "cloned", "clonedCharacter", "orderedList", "original");
             },
         });
-    }
 
-    function processNonAuthorBlocks(id, nonAuthorBlock, blockList) {
-        const li = createLiElement("clonedBlock", nonAuthorBlock);
+        jQuery(".partAuthor1").droppable({
+            accept: ".originalAuthor, .clonedAuthor1, .clonedCharacter1, .originalCharacter",
+            drop: function (ev, ui) {
+                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor1", "clonedCharacter1", "orderedAuthorList1", "originalAuthor");
+            },
+        });
 
-        // db view field or special character block
-        if (nonAuthorBlock in blocks) {
-            li.addClass("cloned");
-            li.appendText(blocks[nonAuthorBlock]);
-        } else {
-            li.addClass("clonedCharacter");
-            li.appendText(specialBlocks[nonAuthorBlock]);
-        }
+        jQuery(".partAuthor2").droppable({
+            accept: ".originalAuthor, .clonedAuthor2, .clonedCharacter2, .originalCharacter",
+            drop: function (ev, ui) {
+                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor2", "clonedCharacter2", "orderedAuthorList2", "originalAuthor");
+            },
+        });
 
-        // make block draggable
-        makeDraggable(id, li);
+        jQuery(".partAuthor3").droppable({
+            accept: ".originalAuthor, .clonedAuthor3, .clonedCharacter3, .originalCharacter",
+            drop: function (ev, ui) {
+                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor3", "clonedCharacter3", "orderedAuthorList3", "originalAuthor");
+            },
+        });
 
-        // add block to list
-        blockList.appendChild(li);
-
-        //ToDo issue #75
-        if (nonAuthorBlock === -3) jQuery(".-3").removeClass("original");
-    }
-
-    function processAuthorBlocks(id, blockAuthor, blockListAuthor, classNameAuthor, classNameCharacter) {
-        const li = createLiElement("clonedBlock", blockAuthor);
-
-        // author block or special character block
-        if (blockAuthor in authorBlocks) {
-            li.addClass(classNameAuthor);
-            li.appendText(authorBlocks[blockAuthor]);
-        } else {
-            li.addClass(classNameCharacter);
-            li.appendText(specialBlocks[blockAuthor]);
-        }
-
-        makeDraggable(id, li);
-        blockListAuthor.appendChild(li);
-    }
-
-    function processSpecialCharacterBlocks(id, blockSpecialCharacter, blockListSpecialCharacter) {
-        const li = createLiElement("clonedBlock", blockSpecialCharacter, "clonedCharacter4");
-        li.appendText(specialBlocks[blockSpecialCharacter]);
-
-        makeDraggable(id, li);
-        blockListSpecialCharacter.appendChild(li);
-    }
-
+        jQuery(".partAuthor4").droppable({
+            accept: ".clonedCharacter4, .originalCharacter",
+            drop: function (ev, ui) {
+                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor4", "clonedCharacter4", "orderedAuthorList4", "originalAuthor");
+            },
+        });
+    });
 
     /**
      * Sorts jsonObject by first value and return sorted array
@@ -367,9 +320,52 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
         return sortedArray.sort((a, b) => a[0].toLowerCase().localeCompare(b[0].toLowerCase()));
     }
 
+    /**
+     * Creates all blocks for each tab from blockArray with class
+     *
+     * @param tabIds The ids of the tabs
+     * @param blockArray The array of [String, id] to create a block from
+     * @param className Class for block
+     */
+    function createBlocks(tabIds, blockArray, className) {
+        blockArray.forEach(sortedArrayEntry => {
+            Array.from(tabIds).forEach(ol => {
+                const li = createLiElement("block", className, sortedArrayEntry[1])
+                li.appendText(String.from(sortedArrayEntry[0]));
+                ol.appendChild(li);
+            });
+        });
+    }
 
     /**
-     * Loads blocks from reference type into tab
+     * Creates a li-DOM element with classes
+     *
+     * @param classes The class strings for the li element
+     * @return lo The DOM-element with classes
+     */
+    function createLiElement(...classes) {
+        const li = document.createElement("li");
+        classes.forEach(string => li.addClass(string));
+        return li;
+    }
+
+    /**
+     * If a citation style is available, it loads it's blocks into the views.
+     */
+    function loadItems() {
+        // Checks whether the citation style has blocks to display
+        if (document.getElementById("jform_string").value !== "") {
+            // Grabs citation style and maps default citation style (-1) to id 1
+            citationStyle = JSON.parse(document.getElementById("jform_string").value);
+            citationStyle[1] = citationStyle[-1];
+
+            // For each reference type fill its tab
+            reference_type_ids.forEach(id => loadReferenceTypeTab(id));
+        }
+    }
+
+    /**
+     * Loads blocks from reference type into a tab
      *
      * @param id Reference type id
      */
@@ -445,20 +441,169 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
         }
     }
 
+    /**
+     * Hides the author area for a tab
+     *
+     * @param id The tab id where the area should be hidden
+     */
+    function hideAuthorArea(id) {
+        document.getElementById("authorArea_" + id).style.display = "none";
+        document.getElementById("clonedAuthorArea_" + id).style.display = "none";
+    }
+
+    /**
+     * Shows the author area for a tab
+     *
+     * @param id The tab id where the area should be shown
+     */
+    function showAuthorArea(id) {
+        document.getElementById("authorArea_" + id).style.display = "flex";
+        document.getElementById("clonedAuthorArea_" + id).style.display = "flex";
+    }
+
+    /**
+     * Removes all blocks from each drop zone for a tab
+     *
+     * @param id The tab id where the drop zones should be emptied
+     */
+    function emptyAllDropZones(id) {
+        jQuery("#orderedList_" + id).empty();
+        emptyAuthorDropZones(id);
+    }
+
+    /**
+     * Removes all blocks from the author drop zone for a tab
+     *
+     * @param id The tab id where the author drop zone should be emptied
+     */
+    function emptyAuthorDropZones(id) {
+        jQuery("#orderedAuthorList1_" + id).empty();
+        jQuery("#orderedAuthorList2_" + id).empty();
+        jQuery("#orderedAuthorList3_" + id).empty();
+    }
+
+    /**
+     * Makes the li element draggable and adds a remove function
+     *
+     * @param id The tab id where the block is used
+     * @param li The li-DOM element which should be draggable
+     */
+    function makeDraggable(id, li) {
+        jQuery(li).draggable({
+            //connectToSortable: "#orderedlist_",
+
+            // remove block from list and clean up author drop zone
+            revert: function (valid) {
+                if (!valid) {
+                    if (this.hasClass("-3")) {
+                        emptyAuthorDropZones(id);
+                        hideAuthorArea(id);
+                        jQuery(".-3").addClass("original");
+                    }
+                    this.remove();
+                    document.getElementById("jform_string").value = "";
+                }
+            },
+        });
+    }
+
+    /**
+     * Loads non author blocks from reference type into a tab
+     *
+     * @param id Reference type id
+     * @param nonAuthorBlock The block to be process
+     * @param blockList The ol element to add the block to
+     */
+    function processNonAuthorBlocks(id, nonAuthorBlock, blockList) {
+        const li = createLiElement("clonedBlock", nonAuthorBlock);
+
+        // db view field or special character block
+        if (nonAuthorBlock in blocks) {
+            li.addClass("cloned");
+            li.appendText(blocks[nonAuthorBlock]);
+        } else {
+            li.addClass("clonedCharacter");
+            li.appendText(specialBlocks[nonAuthorBlock]);
+        }
+
+        // make block draggable
+        makeDraggable(id, li);
+
+        // add block to list
+        blockList.appendChild(li);
+
+        if (nonAuthorBlock === -3) jQuery(".-3").removeClass("original");
+    }
+
+    /**
+     * Loads author blocks from reference type into a tab
+     *
+     * @param id Reference type id
+     * @param blockAuthor The block to be process
+     * @param blockListAuthor The ol element to add the block to
+     * @param classNameAuthor The class to be added to the author block
+     * @param classNameCharacter The class to be added to the character block
+     */
+    function processAuthorBlocks(id, blockAuthor, blockListAuthor, classNameAuthor, classNameCharacter) {
+        const li = createLiElement("clonedBlock", blockAuthor);
+
+        // author block or special character block
+        if (blockAuthor in authorBlocks) {
+            li.addClass(classNameAuthor);
+            li.appendText(authorBlocks[blockAuthor]);
+        } else {
+            li.addClass(classNameCharacter);
+            li.appendText(specialBlocks[blockAuthor]);
+        }
+
+        makeDraggable(id, li);
+        blockListAuthor.appendChild(li);
+    }
+
+    /**
+     * Loads special blocks from reference type into a tab
+     *
+     * @param id Reference type id
+     * @param blockSpecialCharacter The block to be process
+     * @param blockListSpecialCharacter The ol element to add the block to
+     */
+    function processSpecialCharacterBlocks(id, blockSpecialCharacter, blockListSpecialCharacter) {
+        const li = createLiElement("clonedBlock", blockSpecialCharacter, "clonedCharacter4");
+        li.appendText(specialBlocks[blockSpecialCharacter]);
+
+        makeDraggable(id, li);
+        blockListSpecialCharacter.appendChild(li);
+    }
+
+    /**
+     * Gets the id of a block
+     *
+     * @param blockListEntry block to get id from
+     * @return {number} id of block
+     */
     function mapBlockToId(blockListEntry) {
+        // Is block -> return block id
         for (const block in blocks)
-            if (blockListEntry.hasClass(block))
+            if (blocks.hasOwnProperty(block) && blockListEntry.hasClass(block))
                 return parseInt(block);
 
+        // Is special block -> return special block id
         for (const specialBlock in specialBlocks)
-            if (blockListEntry.hasClass(specialBlock))
+            if (specialBlocks.hasOwnProperty(specialBlock) && blockListEntry.hasClass(specialBlock))
                 return parseInt(specialBlock)
 
+        // Is author block -> return author block id
         for (const authorBlock in authorBlocks)
-            if (blockListEntry.hasClass(authorBlock))
+            if (authorBlocks.hasOwnProperty(authorBlock) && blockListEntry.hasClass(authorBlock))
                 return parseInt(authorBlock)
     }
 
+    /**
+     * Gets the ids of a block list
+     *
+     * @param blockList blocks to get ids from
+     * @return {[number]} ids of blocks
+     */
     function mapBlocksToIds(blockList) {
         let tmp = [];
         Array.from(blockList.getElementsByTagName("li")).forEach(blockListEntry =>
@@ -466,6 +611,41 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
         return tmp;
     }
 
+    /**
+     * On drop of block function
+     * Adds dragged block to list
+     *
+     * @param id Id of the tab
+     * @param ui Dragged block
+     * @param clonedBlockType Block type class to add
+     * @param clonedCharacter Character type class to add
+     * @param listToAddTo ol list to add block to
+     * @param originalBlockType Block type class to be replaced
+     */
+    function drop(id, ui, clonedBlockType, clonedCharacter, listToAddTo, originalBlockType) {
+        // Is block draggable
+        if (jQuery(ui.draggable).hasClass(originalBlockType) || jQuery(ui.draggable).hasClass("originalCharacter")) {
+            //Clone block and modify classes
+            let clonedBlock = ui.draggable.clone()[0];
+            jQuery(clonedBlock).removeClass("block");
+            jQuery(clonedBlock).addClass("clonedBlock");
+            if (jQuery(ui.draggable).hasClass(originalBlockType)) {
+                jQuery(clonedBlock).addClass(clonedBlockType);
+                jQuery(clonedBlock).removeClass(originalBlockType);
+            } else {
+                jQuery(clonedBlock).addClass(clonedCharacter);
+                jQuery(clonedBlock).removeClass("originalCharacter");
+            }
+            // Makes cloned block draggable and adds it to list
+            makeDraggable(id, clonedBlock);
+            document.getElementById(listToAddTo + "_" + id).append(clonedBlock);
+        }
+    }
+
+    /**
+     * Generate savable json from blocks in tabs
+     * Writes json to actual Joomla! save field
+     */
     function submitClicked() {
         const submitField = document.getElementById("jform_string");
 
@@ -476,7 +656,7 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
                 arrayString = mapBlocksToIds(document.getElementById("orderedList_" + id));
 
                 let dictArray;
-                // adds the author, if available
+                // replaced the author placeholder, if available
                 if (arrayString.includes(-3)) {
                     arrayStringAuthor1 = mapBlocksToIds(document.getElementById("partAuthor1_" + id));
                     arrayStringAuthor2 = mapBlocksToIds(document.getElementById("partAuthor2_" + id));
@@ -505,86 +685,6 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
         }
     }
 
-    function createBlocks(list, sortedArray, className) {
-        sortedArray.forEach(sortedArrayEntry => {
-            Array.from(list).forEach(ol => {
-                const li = createLiElement("block", className, sortedArrayEntry[1])
-                li.appendText(String.from(sortedArrayEntry[0]));
-                ol.appendChild(li);
-            });
-        });
-    }
-
-    function drop(id, ui, clonedBlockType, clonedCharacter, listToAddTo, originalBlockType) {
-        if (jQuery(ui.draggable).hasClass(originalBlockType) || jQuery(ui.draggable).hasClass("originalCharacter")) {
-            let element = ui.draggable.clone()[0];
-            jQuery(element).removeClass("block");
-            jQuery(element).addClass("clonedBlock");
-            if (jQuery(ui.draggable).hasClass(originalBlockType)) {
-                jQuery(element).addClass(clonedBlockType);
-                jQuery(element).removeClass(originalBlockType);
-            } else {
-                jQuery(element).addClass(clonedCharacter);
-                jQuery(element).removeClass("originalCharacter");
-            }
-            makeDraggable(id, element);
-            document.getElementById(listToAddTo + "_" + id).append(element);
-        }
-    }
-
-    jQuery(document).ready(function () {
-
-        //jQuery("#orderedlist_").sortable();
-
-        blocks = JSON.parse('<?php echo json_encode($blocks) ?>');
-        blocks["-3"] = "Author";
-        authorBlocks = JSON.parse('<?php echo json_encode($authorBlocks) ?>');
-        specialBlocks = JSON.parse('<?php echo json_encode($specialBlocks) ?>');
-        reference_type_ids = JSON.parse('<?php echo json_encode($reference_type_ids); ?>');
-
-        createBlocks(document.getElementsByClassName("fixlist"), sortByValue(blocks), "original");
-        createBlocks(document.getElementsByClassName("fixAuthorList"), sortByValue(authorBlocks), "originalAuthor");
-        createBlocks(document.getElementsByClassName("fixSpecialList"), sortByValue(specialBlocks), "originalCharacter");
-
-        loadItems();
-
-        jQuery(".block").draggable({helper: "clone", revert: "invalid"});
-
-        jQuery(".clonedArea").droppable({
-            accept: ".original, .cloned, .originalCharacter, .clonedCharacter",
-            drop: function (ev, ui) {
-                drop(jQuery(this)[0].id, ui, "cloned", "clonedCharacter", "orderedList", "original");
-            },
-        });
-
-        jQuery(".partAuthor1").droppable({
-            accept: ".originalAuthor, .clonedAuthor1, .clonedCharacter1, .originalCharacter",
-            drop: function (ev, ui) {
-                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor1", "clonedCharacter1", "orderedAuthorList1", "originalAuthor");
-            },
-        });
-
-        jQuery(".partAuthor2").droppable({
-            accept: ".originalAuthor, .clonedAuthor2, .clonedCharacter2, .originalCharacter",
-            drop: function (ev, ui) {
-                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor2", "clonedCharacter2", "orderedAuthorList2", "originalAuthor");
-            },
-        });
-
-        jQuery(".partAuthor3").droppable({
-            accept: ".originalAuthor, .clonedAuthor3, .clonedCharacter3, .originalCharacter",
-            drop: function (ev, ui) {
-                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor3", "clonedCharacter3", "orderedAuthorList3", "originalAuthor");
-            },
-        });
-
-        jQuery(".partAuthor4").droppable({
-            accept: ".clonedCharacter4, .originalCharacter",
-            drop: function (ev, ui) {
-                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor4", "clonedCharacter4", "orderedAuthorList4", "originalAuthor");
-            },
-        });
-    });
 </script>
 
 

@@ -196,6 +196,8 @@ function makeDraggable(id, li) {
                 }
                 this.remove();
                 document.getElementById("jform_string").value = "";
+            } else {
+                return true;
             }
         },
     });

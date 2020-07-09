@@ -96,9 +96,6 @@ $document->addScript(Uri::root() . 'administrator/components/com_pubdb/assets/js
      * On document loaded create blocks and load citation style
      */
     jQuery(document).ready(function () {
-
-        //jQuery("#orderedlist_").sortable();
-
         // Get blocks from db
         blocks = JSON.parse('<?php echo json_encode($blocks) ?>');
         blocks["-3"] = "Author";
@@ -153,6 +150,8 @@ $document->addScript(Uri::root() . 'administrator/components/com_pubdb/assets/js
                 drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor4", "clonedCharacter4", "orderedAuthorList4", "originalAuthor");
             },
         });
+
+        jQuery(".orderedList").sortable();
     });
 
 
@@ -201,7 +200,7 @@ $document->addScript(Uri::root() . 'administrator/components/com_pubdb/assets/js
                       <ol style="list-style-type: none;" class="containers fixlist"></ol>
                   </div>
                   <div class="clonedArea" id="<?php echo $type['id']; ?>">
-                      <ol style="list-style-type: none;" class="containers"
+                      <ol style="list-style-type: none;" class="containers orderedList"
                           id="orderedList_<?php echo $type['id']; ?>"></ol>
                   </div>
                   <div class="authors">
@@ -211,22 +210,22 @@ $document->addScript(Uri::root() . 'administrator/components/com_pubdb/assets/js
                       <div class="clonedAuthorArea" id="clonedAuthorArea_<?php echo $type['id']; ?>">
                         <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_FIRST'); ?>
                           <div class="partAuthor1" id="partAuthor1_<?php echo $type['id']; ?>">
-                              <ol style="list-style-type: none;" class="containers"
+                              <ol style="list-style-type: none;" class="containers orderedList"
                                   id="orderedAuthorList1_<?php echo $type['id']; ?>"></ol>
                           </div>
                         <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_SECOND'); ?>*
                           <div class="partAuthor2" id="partAuthor2_<?php echo $type['id']; ?>">
-                              <ol style="list-style-type: none;" class="containers"
+                              <ol style="list-style-type: none;" class="containers orderedList"
                                   id="orderedAuthorList2_<?php echo $type['id']; ?>"></ol>
                           </div>
                         <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_THIRD'); ?>
                           <div class="partAuthor3" id="partAuthor3_<?php echo $type['id']; ?>">
-                              <ol style="list-style-type: none;" class="containers"
+                              <ol style="list-style-type: none;" class="containers orderedList"
                                   id="orderedAuthorList3_<?php echo $type['id']; ?>"></ol>
                           </div>
                         <?php echo JText::_('COM_PUBDB_TAB_LITERATURE_AUTHOR_SEPARATOR'); ?>*
                           <div class="partAuthor4" id="partAuthor4_<?php echo $type['id']; ?>">
-                              <ol style="list-style-type: none;" class="containers"
+                              <ol style="list-style-type: none;" class="containers orderedList"
                                   id="orderedAuthorList4_<?php echo $type['id']; ?>"></ol>
                           </div>
                       </div>

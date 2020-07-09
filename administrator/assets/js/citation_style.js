@@ -182,9 +182,9 @@ function emptyAuthorDropZones(id) {
  * @param id The tab id where the block is used
  * @param li The li-DOM element which should be draggable
  */
-function makeDraggable(id, li) {
+function makeDraggable(id, li, sortable) {
     jQuery(li).draggable({
-        //connectToSortable: "#orderedlist_",
+        connectToSortable: sortable,
 
         // remove block from list and clean up author drop zone
         revert: function (valid) {
@@ -223,7 +223,7 @@ function processNonAuthorBlocks(id, nonAuthorBlock, blockList) {
     }
 
     // make block draggable
-    makeDraggable(id, li);
+    makeDraggable(id, li, blockList);
 
     // add block to list
     blockList.appendChild(li);
@@ -250,7 +250,7 @@ function processAuthorBlocks(id, blockAuthor, blockListAuthor, classNameAuthor, 
         li.appendText(specialBlocks[blockAuthor]);
     }
 
-    makeDraggable(id, li);
+    makeDraggable(id, li, blockListAuthor);
     blockListAuthor.appendChild(li);
 }
 
@@ -265,7 +265,7 @@ function processSpecialCharacterBlocks(id, blockSpecialCharacter, blockListSpeci
     const li = createLiElement("clonedBlock", blockSpecialCharacter, "clonedCharacter4");
     li.appendText(specialBlocks[blockSpecialCharacter]);
 
-    makeDraggable(id, li);
+    makeDraggable(id, li, blockListSpecialCharacter);
     blockListSpecialCharacter.appendChild(li);
 }
 
@@ -332,8 +332,9 @@ function drop(id, ui, clonedBlockType, clonedCharacter, listToAddTo, originalBlo
             jQuery(clonedBlock).removeClass("originalCharacter");
         }
         // Makes cloned block draggable and adds it to list
-        makeDraggable(id, clonedBlock);
-        document.getElementById(listToAddTo + "_" + id).append(clonedBlock);
+        const list = document.getElementById(listToAddTo + "_" + id);
+        makeDraggable(id, clonedBlock, list);
+        list.append(clonedBlock);
 
         // Shows author area if needed
         if (jQuery(ui.draggable).hasClass("-3")) {

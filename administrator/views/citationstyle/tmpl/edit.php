@@ -221,9 +221,7 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
         if (task === 'citationstyle.cancel') {
             Joomla.submitform(task, document.getElementById('citationstyle-form'));
         } else {
-
             if (task !== 'citationstyle.cancel' && document.formvalidator.isValid(document.id('citationstyle-form'))) {
-
                 Joomla.submitform(task, document.getElementById('citationstyle-form'));
             }
         }
@@ -531,8 +529,6 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
 
         // add block to list
         blockList.appendChild(li);
-
-        if (nonAuthorBlock === -3) jQuery(".-3").removeClass("original");
     }
 
     /**
@@ -623,6 +619,7 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery-ui.js');
      * @param originalBlockType Block type class to be replaced
      */
     function drop(id, ui, clonedBlockType, clonedCharacter, listToAddTo, originalBlockType) {
+        document.getElementById("jform_string").value = "";
         // Is block draggable
         if (jQuery(ui.draggable).hasClass(originalBlockType) || jQuery(ui.draggable).hasClass("originalCharacter")) {
             //Clone block and modify classes

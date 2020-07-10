@@ -147,7 +147,8 @@ $document->addScript(Uri::root() . 'administrator/components/com_pubdb/assets/js
         jQuery(".partAuthor4").droppable({
             accept: ".clonedCharacter4, .originalCharacter",
             drop: function (ev, ui) {
-                drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor4", "clonedCharacter4", "orderedAuthorList4", "originalAuthor");
+                if ($(this).children[0].children.length < 1)
+                    drop(jQuery(this)[0].id.split("_")[1], ui, "clonedAuthor4", "clonedCharacter4", "orderedAuthorList4", "originalAuthor");
             },
         });
 

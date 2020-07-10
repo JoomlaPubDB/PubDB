@@ -113,10 +113,16 @@ left join #__pubdb_publisher as publisher
 
 WHERE l.state = 1;
 
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (47, ' [', 'COM_PUBDB_OPEN_SQUARE_BRACKET', '2');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (49, '] ', 'COM_PUBDB_CLOSE_SQUARE_BRACKET', '2');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (50, ' (', 'COM_PUBDB_OPEN_BRACKET', '2');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (51, ') ', 'COM_PUBDB_CLOSE_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (5, 'Comma', 'COM_PUBDB_COMMA', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (6, 'Colon', 'COM_PUBDB_COLON', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (7, 'Point', 'COM_PUBDB_POINT', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (8, 'pp', 'COM_PUBDB_PP', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (9, 'and', 'COM_PUBDB_AND', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (46, 'Available_at', 'COM_PUBDB_AVAILABLE_AT', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (47, 'Open_square_bracket', 'COM_PUBDB_OPEN_SQUARE_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (49, 'Close_square_bracket', 'COM_PUBDB_CLOSE_SQUARE_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (50, 'Open_bracket', 'COM_PUBDB_OPEN_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (51, 'Close_bracket', 'COM_PUBDB_CLOSE_BRACKET', '2');
 
 INSERT INTO `#__pubdb_citation_style`(`name`, `string`) VALUES ('Business & Information Systems Engineering', '{"2":[1,2,5,27,29,3,4,50,10,51,13,7,39,26,6,23],"3":[1,2,5,27,29,3,4,50,10,51,13,7,42,5,16],"10":[1,2,5,27,29,3,4,50,10,51,13,16],"13":[1,2,5,27,29,3,4,50,10,51,13,16],"-1":[1,2,5,27,29,3,4,50,10,51,13,7,42,5,16]}');
 INSERT INTO `#__pubdb_citation_style`(`name`, `string`) VALUES ('Springer - Lecture Notes in Computer Science', '{"2":[1,2,5,27,5,29,3,4,6,13,7,39,7,26,5,23,50,10,51,7,10],"3":[1,2,5,27,5,29,3,4,6,13,7,42,5,16,50,10,51,7],"-1":[1,2,5,27,5,29,3,4,6,13,7,39,7,26,5,23,50,10,51,7,10]}');

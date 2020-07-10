@@ -215,11 +215,11 @@ INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (1, 'Re
 INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (2, 'Split First/Main', 'COM_PUBDB_SPLIT_FIRST_MAIN', '3');
 INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (3, 'Split Main/Last', 'COM_PUBDB_SPLIT_MAIN_LAST', '3');
 INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (4, 'Repetition end', 'COM_PUBDB_REPETITION_END', '3');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (5, ', ', 'COM_PUBDB_COMMA', '2');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (6, ': ', 'COM_PUBDB_COLON', '2');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (7, '. ', 'COM_PUBDB_POINT', '2');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (8, 'pp.', 'COM_PUBDB_PP', '2');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (9, 'and ', 'COM_PUBDB_AND', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (5, 'Comma', 'COM_PUBDB_COMMA', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (6, 'Colon', 'COM_PUBDB_COLON', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (7, 'Point', 'COM_PUBDB_POINT', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (8, 'pp', 'COM_PUBDB_PP', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (9, 'and', 'COM_PUBDB_AND', '2');
 INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (10, 'Year', 'COM_PUBDB_YEAR', '1');
 INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (11, 'Month', 'COM_PUBDB_MONTH', '1');
 INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (12, 'Day', 'COM_PUBDB_DAY', '1');
@@ -256,12 +256,12 @@ INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (42, 'P
 INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (43, 'Series_title_name', 'COM_PUBDB_SERIES_TITLE_NAME', '1');
 INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (44, 'Series_title_editor', 'COM_PUBDB_SERIES_TITLE_EDITOR', '1');
 INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (45, 'online', 'COM_PUBDB_ONLINE', '2');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (46, 'Available at:', 'COM_PUBDB_AVAILABLE_AT', '2');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (47, ' [', 'COM_PUBDB_OPEN_SQUARE_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (46, 'Available_at', 'COM_PUBDB_AVAILABLE_AT', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (47, 'Open_square_bracket', 'COM_PUBDB_OPEN_SQUARE_BRACKET', '2');
 INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (48, 'Accessed', 'COM_PUBDB_ACCESSED', '2');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (49, '] ', 'COM_PUBDB_CLOSE_SQUARE_BRACKET', '2');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (50, ' (', 'COM_PUBDB_OPEN_BRACKET', '2');
-INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (51, ') ', 'COM_PUBDB_CLOSE_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (49, 'Close_square_bracket', 'COM_PUBDB_CLOSE_SQUARE_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (50, 'Open_bracket', 'COM_PUBDB_OPEN_BRACKET', '2');
+INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (51, 'Close_bracket', 'COM_PUBDB_CLOSE_BRACKET', '2');
 
 #Reference Types
 INSERT INTO `#__pubdb_reference_types` (`id`, `ordering`, `state`, `checked_out`, `checked_out_time`, `created_by`, `modified_by`, `name`, `lable`) VALUES

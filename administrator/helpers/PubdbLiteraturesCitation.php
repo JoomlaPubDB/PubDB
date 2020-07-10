@@ -180,7 +180,7 @@ class PubdbLiteraturesCitation
     if ($content != null && array_key_exists($content, (array)$entry))
       $result .= $entry->$content;
     else
-      $result .= $content;
+      $result .= JText::_('COM_PUBDB_CITATIONSTLYE_' . strtoupper($content));
 
     return $result;
   }

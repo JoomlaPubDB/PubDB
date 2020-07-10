@@ -226,6 +226,7 @@ INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (50, ' 
 INSERT INTO `#__pubdb_blocks` (`id`, `name`, `lable`, `category`) VALUES (51, ') ', 'COM_PUBDB_CLOSE_BRACKET', '2');
 
 INSERT INTO `#__pubdb_citation_style`(`name`, `string`) VALUES ('Business & Information Systems Engineering', '{"2":[1,2,5,27,29,3,4,50,10,51,13,7,39,26,6,23],"3":[1,2,5,27,29,3,4,50,10,51,13,7,42,5,16],"10":[1,2,5,27,29,3,4,50,10,51,13,16],"13":[1,2,5,27,29,3,4,50,10,51,13,16],"-1":[1,2,5,27,29,3,4,50,10,51,13,7,42,5,16]}');
+INSERT INTO `#__pubdb_citation_style`(`name`, `string`) VALUES ('Springer - Lecture Notes in Computer Science', '{"2":[1,2,5,27,5,29,3,4,6,13,7,39,7,26,5,23,50,10,51,7,10],"3":[1,2,5,27,5,29,3,4,6,13,7,42,5,16,50,10,51,7],"-1":[1,2,5,27,5,29,3,4,6,13,7,39,7,26,5,23,50,10,51,7,10]}');
 
 #Reference Types
 INSERT INTO `#__pubdb_reference_types` (`id`, `ordering`, `state`, `checked_out`, `checked_out_time`, `created_by`, `modified_by`, `name`, `lable`) VALUES

@@ -141,6 +141,7 @@ function loadReferenceTypeTab(id) {
  * @param id The tab id where the area should be hidden
  */
 function hideAuthorArea(id) {
+    document.getElementById("authors_" + id).style.display = "none";
     document.getElementById("authorArea_" + id).style.display = "none";
     document.getElementById("clonedAuthorArea_" + id).style.display = "none";
 }
@@ -151,6 +152,7 @@ function hideAuthorArea(id) {
  * @param id The tab id where the area should be shown
  */
 function showAuthorArea(id) {
+    document.getElementById("authors_" + id).style.display = "inline";
     document.getElementById("authorArea_" + id).style.display = "flex";
     document.getElementById("clonedAuthorArea_" + id).style.display = "flex";
 }

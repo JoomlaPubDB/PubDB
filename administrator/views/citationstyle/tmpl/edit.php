@@ -207,7 +207,7 @@ $document->addScript(Uri::root() . 'administrator/components/com_pubdb/assets/js
                       <ol style="list-style-type: none;" class="containers orderedList"
                           id="orderedList_<?php echo $type['id']; ?>"></ol>
                   </div>
-                  <div class="authors">
+                  <div class="authors" id="authors_<?php echo $type['id']; ?>">
                       <div class="authorArea" id="authorArea_<?php echo $type['id']; ?>">
                           <ol style="list-style-type: none;" class="containers fixAuthorList"></ol>
                       </div>

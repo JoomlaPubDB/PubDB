@@ -69,7 +69,7 @@ function loadReferenceTypeTab(id) {
     emptyAllDropZones(id);
 
     // is reference type in citation style defined
-    if (citationStyle.hasOwnProperty(id)) {
+    if (citationStyle.hasOwnProperty(id) && citationStyle[id]) {
         let referenceTypeInCitationStyle = citationStyle[id];
 
         // Contains author?

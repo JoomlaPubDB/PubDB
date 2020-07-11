@@ -6,6 +6,12 @@ require(JPATH_COMPONENT . '/helpers/vendor/autoload.php');
 
 JLoader::register('PubdbBibTexImporter', JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'PubdbBibTexImporter.php');
 
+/**
+ * Class PubdbBibTexImporter
+ * Class to import BibTex files to the database. For the parsing process of the BibTex format a external library is used.
+ * The parsed data will be checked with the data in the database and new entries will be imported.
+ * @since 0.0.7
+ */
 class PubdbBibTexImporter
 {
 
@@ -81,7 +87,8 @@ class PubdbBibTexImporter
       "urldate" => "access_date",
       "year" => "year",
       "month" => "month",
-      "editor" => "others_involved"
+      "editor" => "others_involved",
+      "keywords" => "keywords"
     );
   }
 
@@ -97,7 +104,6 @@ class PubdbBibTexImporter
   {
     $this->entries = $this->listener->export();
     $formattedEntries = array();
-
     //just formatting stuff
     foreach ($this->entries as $literature) {
       $formattedValues = array();
@@ -222,6 +228,7 @@ class PubdbBibTexImporter
       $db_in->execute();
       return $db_in->insertid();
     } else {
+      $this->updateState('#__pubdb_literature', (int)$id);
       return $id;
     }
   }
@@ -344,6 +351,7 @@ class PubdbBibTexImporter
       $db_in->execute();
       return $db_in->insertid();
     } else {
+      $this->updateState('#__pubdb_person', (int)$id);
       return $id;
     }
   }
@@ -370,6 +378,7 @@ class PubdbBibTexImporter
     if ($id == null) {
       return 1;
     } else {
+      $this->updateState('#__pubdb_reference_types', (int)$id);
       return $id;
     }
   }
@@ -402,6 +411,7 @@ class PubdbBibTexImporter
       $db->execute();
       return $db->insertid();
     } else {
+      $this->updateState('#__pubdb_publisher', (int)$id);
       return $id;
     }
   }
@@ -437,6 +447,7 @@ class PubdbBibTexImporter
       $db->execute();
       return $db->insertid();
     } else {
+      $this->updateState('#__pubdb_periodical', (int)$id);
       return $id;
     }
   }
@@ -468,8 +479,49 @@ class PubdbBibTexImporter
       $db->execute();
       return $db->insertid();
     } else {
+      $this->updateState('#__pubdb_series_title', (int)$id);
       return $id;
     }
+  }
+
+  /**
+   * Check if the keywords of the literature already exist.
+   * If not insert a new keyword into the database and return a list of IDs.
+   * @param $item
+   * @return mixed|string
+   * @since v0.0.7
+   */
+
+  private function checkRelationKeywords($item)
+  {
+    $returnIds = array();
+    $field = $item[0];
+    $keywords = $this->cleanUpString($item[1][$field]);
+    $keywords = explode(',', $keywords);
+
+    foreach ($keywords as $keyword) {
+      $db = JFactory::getDbo();
+      $query = $db->getQuery(true);
+      $keyword = $this->cleanUpString($keyword);
+      $query->select($db->quoteName('id'))
+        ->from($db->quoteName('#__pubdb_keywords'))
+        ->where($db->quoteName('name') . ' = ' . $db->quote($keyword));
+      $db->setQuery($query);
+      $id = $db->loadResult();
+      if ($id == null) {
+        $insert_query = $db->getQuery(true);
+        $insert_query->insert('#__pubdb_keywords')
+          ->columns($db->quoteName(array('name')))
+          ->values($db->quote($keyword));
+        $db->setQuery($insert_query);
+        $db->execute();
+        $returnIds [] = $db->insertid();
+      } else {
+        $returnIds[] = $id;
+        $this->updateState('#__pubdb_keywords', (int)$id);
+      }
+    }
+    return implode(',', $returnIds);
   }
 
 
@@ -494,6 +546,30 @@ class PubdbBibTexImporter
       $ret = $this->cleanUpString($authors);
     }
     return $ret;
+  }
+
+  /**
+   * Update the State of an Element to 1 so it's published.
+   * Joomla! won't delete elements instead, they are changing states with this the unpublished state will be updated
+   * and the element ist active again
+   * @param $table String table name of the element
+   * @param $id int id of the element
+   * @return mixed
+   * @since v0.0.7
+   */
+
+  private function updateState($table, $id)
+  {
+    $db = JFactory::getDbo();
+    $query = $db->getQuery(true);
+
+    $fields = array($db->quoteName('state') . " = 1");
+
+    $conditions = array($db->quoteName('id') . ' = ' . $id);
+
+    $query->update($db->quoteName($table))->set($fields)->where($conditions);
+    $db->setQuery($query);
+    return $db->execute();
   }
 
   /**

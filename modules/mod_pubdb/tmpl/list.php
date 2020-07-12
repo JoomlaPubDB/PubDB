@@ -37,9 +37,11 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/dataTables.select.min.js'
 $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/jquery.dataTables.css');
 $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/searchPanes.dataTables.min.css');
 
-$params = $helper->getParams($title);
+
 $stateArr = array();
-foreach ($params as $key => $value) {
+
+//use all params from mod_pubdb.php
+foreach ($allParams as $key => $value) {
   $stateArr[$key] = $value;
 }
 

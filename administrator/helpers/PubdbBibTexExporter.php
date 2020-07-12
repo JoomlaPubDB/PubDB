@@ -27,20 +27,24 @@ class PubdbBibTexExporter
    * @var array mapping table for umlauts
    * @since v0.0.7
    */
-  private $umlautsMapping = array();
+  private $latexMapping = array();
   /**
    * @var array mapping table for database and BibTex format
    * @since v0.0.7
    */
 
   /**
-   * @var array mapping table for our database fields to  the default BibTex fields
+   * @var String json file path for latex mapping
+   * @since v0.0.7
    */
+  private $json_file = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'latex_conversion.json';
+
   private $defaultFields = array(
     'ref_type' => 'type',
     'authors' => 'author',
     'others_involved' => 'editor',
     'title' => 'title',
+    'subtitle' => 'booktitle',
     'access_data' => 'note',
     'keywords' => 'keywords',
     'language' => 'language',
@@ -168,17 +172,7 @@ class PubdbBibTexExporter
   function __construct($ids)
   {
     $this->ids = $ids;
-
-    $this->umlautsMapping = array(
-      '{\"u}' => "ü",
-      '{\"U}' => "Ü",
-      '{\"a}' => "ä",
-      '{\"A}' => "Ä",
-      '{\"o}' => "ö",
-      '{\"O}' => "Ö",
-      '{\ss}' => "ß",
-      '{\&}' => "&"
-    );
+    $this->latexMapping = json_decode(file_get_contents($this->json_file));
   }
 
   /**
@@ -232,7 +226,7 @@ class PubdbBibTexExporter
         $typeFields = strtolower($item['ref_type']) . 'Fields';
         $fieldMapping = (isset($this->$typeFields)) ? array_merge($this->defaultFields, $this->$typeFields) : $this->defaultFields;
         if (method_exists(self::class, 'format' . ucfirst($field))) {
-          $formattedValues[$fieldMapping[$field]] = call_user_func(array(__CLASS__, 'format' . ucfirst($field)), $item);
+          $formattedValues[$fieldMapping[$field]] = $this->formatBibTexString(call_user_func(array(__CLASS__, 'format' . ucfirst($field)), $item), true);
         } else {
           if ($field == 'ref_type') {
             $formattedValues[$fieldMapping[$field]] = $value;
@@ -265,15 +259,15 @@ class PubdbBibTexExporter
       // unset value for later loop operation
       $item['type'] = "";
       $item['citekey'] = "";
-
+      $last_key = end(array_keys($item));
+      // loop through the item and generate BibTex formatted line
       foreach ($item as $field => $value) {
         if ($value == "" || $field == "") continue;
-        $itemBlock .= $field . " = " . $value . ',' . PHP_EOL;
+        $comma = ($field == $last_key) ? '' : ',';
+        $itemBlock .= $field . " = " . $value . $comma . PHP_EOL;
       }
-
       $strReturn .= $itemBlock . "}" . PHP_EOL;
     }
-
     return $strReturn;
 
   }
@@ -311,7 +305,7 @@ class PubdbBibTexExporter
     $first_names = explode(',', $item['authors_first_name']);
 
     for ($i = 0; $i < count($last_names); $i++) {
-      $arrAuthors[] = $last_names[$i] . "," . $first_names[$i];
+      $arrAuthors[] = trim($last_names[$i]) . ", " . trim($first_names[$i]);
     }
 
     foreach ($arrAuthors as $author) {
@@ -338,7 +332,7 @@ class PubdbBibTexExporter
     $first_names = explode(',', $item['others_involved_first_name']);
 
     for ($i = 0; $i < count($last_names); $i++) {
-      $arrEditors[] = $last_names[$i] . "," . $first_names[$i];
+      $arrEditors[] = trim($last_names[$i]) . ", " . trim($first_names[$i]);
     }
 
     foreach ($arrEditors as $editor) {
@@ -373,26 +367,43 @@ class PubdbBibTexExporter
   }
 
   /**
+   * Format the in joomla! saved comma separated list of keywords to an semicolon separated list
+   * @param $item mixed Item to format
+   * @return String keyword string with semicolon
+   */
+  private function formatKeywords($item)
+  {
+    $keywords = $item['keywords'];
+    if ($keywords == "") return null;
+    return str_replace(',', ';', $keywords);
+  }
+
+  /**
    * Format strings to get ensure BibTex format.
    * Add Brackets, replace special chars with escaping etc
    * @param $value
+   * @param bool $dq flag if double quotes should be ignored
    * @return string|string[]
    * @since v0.0.5
    */
-  private function formatBibTexString($value)
+  private function formatBibTexString($value, $dq = false)
   {
-    $mapping = array_flip($this->umlautsMapping);
-    //check if whitespaces are in the value
+    $mapping = (array)$this->latexMapping;
 
     $value = str_replace(',', ', ', $value);
     $value = trim($value);
-    $value = "{" . $value . "}";
 
-    // replace all special chars in value
-    foreach ($mapping as $s => $r) {
-      $value = str_replace($s, $r, $value);
+    foreach ($mapping as $field => $char) {
+      if ($field == " ") continue;
+      if (($field == "{" || $field == "}") && $dq) continue;
+      if ($field == "\\") continue;
+      if ($field == '"' && $dq) continue;
+      if ($field == "'" && $dq) continue;
+      $value = str_replace($field, $char, $value);
     }
-    if ($value == "{}") return null;
-    return $value;
+
+    $strValue = "{" . $value . "}";
+    if ($strValue == "{}") return null;
+    return $strValue;
   }
 }

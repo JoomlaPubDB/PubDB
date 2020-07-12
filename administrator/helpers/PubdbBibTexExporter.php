@@ -13,7 +13,9 @@ JLoader::register('PubdbBibTexExporter', JPATH_ADMINISTRATOR . DIRECTORY_SEPARAT
 
 /**
  * Class PubdbBibTexExporter
- * class to export literature in BibTeX formatting for download
+ * Class to export literature in BibTeX formatting for download.
+ * Use the publication_list database View as base for all the data. Export every entry in the table or only
+ * the literature with the given id.
  * @since v0.0.5
  */
 class PubdbBibTexExporter
@@ -39,6 +41,11 @@ class PubdbBibTexExporter
    */
   private $json_file = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'latex_conversion.json';
 
+  /**
+   * @var mixed Array to map database fields to BibTex fields
+   * @since v0.0.7
+   */
+
   private $defaultFields = array(
     'ref_type' => 'type',
     'authors' => 'author',
@@ -61,8 +68,10 @@ class PubdbBibTexExporter
     'periodical_eissn' => 'eissn',
     'volume' => 'volume'
   );
+
   /**
    * @var array mapping for article ref types journal, publisher, address, subtitle
+   * @since v0.0.7
    */
   private $articleFields = array(
     'periodical_name' => 'journal',
@@ -73,6 +82,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for book ref types publisher, address, subtitle
+   * @since v0.0.7
    */
 
   private $bookFields = array(
@@ -83,6 +93,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for booklet ref types howpublished, address, subtitle
+   * @since v0.0.7
    */
 
   private $bookletFields = array(
@@ -92,6 +103,7 @@ class PubdbBibTexExporter
   );
   /**
    * @var array mapping for inbook ref type publisher, address, subtitle
+   * @since v0.0.7
    */
   private $inbookFields = array(
     'publisher_name' => 'publisher',
@@ -101,6 +113,7 @@ class PubdbBibTexExporter
   );
   /**
    * @var array mapping for incollection ref type editor, publisher, address, title
+   * @since v0.0.7
    */
   private $incollectionFields = array(
     'publisher_name' => 'publisher',
@@ -110,6 +123,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for inproceedings ref type, editor, publisher, address, title, series
+   * @since v0.0.7
    */
 
   private $inproceedingsFields = array(
@@ -121,6 +135,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for manual ref type address organization
+   * @since v0.0.7
    */
   private $manualFields = array(
     'place_of_publication' => 'address',
@@ -129,6 +144,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for masterthesis ref type school, address
+   * @since v0.0.7
    */
   private $masterthesisFields = array(
     'publisher_name' => 'school',
@@ -137,6 +153,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for misc ref type howpublished, note
+   * @since v0.0.7
    */
   private $miscFields = array(
     'online_address' => 'howpublished',
@@ -145,6 +162,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for phd ref type school, address
+   * @since v0.0.7
    */
   private $phdFields = array(
     'publisher_name' => 'school',
@@ -152,6 +170,7 @@ class PubdbBibTexExporter
   );
   /**
    * @var array mapping for proceedings ref type editor, publisher, address, series
+   * @since v0.0.7
    */
   private $proceedingsFields = array(
     'publisher_name' => 'publisher',
@@ -161,6 +180,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for techreport ref type editor, institution, address, series
+   * @since v0.0.7
    */
 
   private $techreportFields = array(
@@ -169,6 +189,11 @@ class PubdbBibTexExporter
     'series_title_name' => 'series'
   );
 
+  /**
+   * PubdbBibTexExporter constructor.
+   * @param $ids mixed Ids to export
+   * @since v0.0.7
+   */
   function __construct($ids)
   {
     $this->ids = $ids;
@@ -345,6 +370,7 @@ class PubdbBibTexExporter
    * Replace numeric month value with BibTex String
    * @param $item stdClass Item Object to Fromat
    * @return String month String in BibTex format
+   * @since v0.0.7
    */
 
   private function formatMonth($item)
@@ -370,6 +396,7 @@ class PubdbBibTexExporter
    * Format the in joomla! saved comma separated list of keywords to an semicolon separated list
    * @param $item mixed Item to format
    * @return String keyword string with semicolon
+   * @since v0.0.7
    */
   private function formatKeywords($item)
   {

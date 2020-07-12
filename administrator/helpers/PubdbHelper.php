@@ -19,126 +19,127 @@ use \Joomla\CMS\Factory;
  */
 class PubdbHelper
 {
-	/**
-	 * Configure the Linkbar.
-	 *
-	 * @param   string  $vName  string
-	 *
-	 * @return void
-	 */
-	public static function addSubmenu($vName = '')
-	{
-		JHtmlSidebar::addEntry(
-			JText::_('COM_PUBDB_TITLE_LITERATURES'),
-			'index.php?option=com_pubdb&view=literatures',
-			$vName == 'literatures'
-		);
+  /**
+   * Configure the Linkbar in the adminstration Back End
+   *
+   * @param string $vName string
+   *
+   * @return void
+   * @since v0.0.5
+   */
+  public static function addSubmenu($vName = '')
+  {
+    JHtmlSidebar::addEntry(
+      JText::_('COM_PUBDB_TITLE_LITERATURES'),
+      'index.php?option=com_pubdb&view=literatures',
+      $vName == 'literatures'
+    );
 
-JHtmlSidebar::addEntry(
-			JText::_('COM_PUBDB_TITLE_PERIODICALS'),
-			'index.php?option=com_pubdb&view=periodicals',
-			$vName == 'periodicals'
-		);
+    JHtmlSidebar::addEntry(
+      JText::_('COM_PUBDB_TITLE_PERIODICALS'),
+      'index.php?option=com_pubdb&view=periodicals',
+      $vName == 'periodicals'
+    );
 
-JHtmlSidebar::addEntry(
-			JText::_('COM_PUBDB_TITLE_SERIES_TITLES'),
-			'index.php?option=com_pubdb&view=series_titles',
-			$vName == 'series_titles'
-		);
+    JHtmlSidebar::addEntry(
+      JText::_('COM_PUBDB_TITLE_SERIES_TITLES'),
+      'index.php?option=com_pubdb&view=series_titles',
+      $vName == 'series_titles'
+    );
 
-JHtmlSidebar::addEntry(
-			JText::_('COM_PUBDB_TITLE_PEOPLE'),
-			'index.php?option=com_pubdb&view=people',
-			$vName == 'people'
-		);
+    JHtmlSidebar::addEntry(
+      JText::_('COM_PUBDB_TITLE_PEOPLE'),
+      'index.php?option=com_pubdb&view=people',
+      $vName == 'people'
+    );
 
-JHtmlSidebar::addEntry(
-			JText::_('COM_PUBDB_TITLE_PUBLISHERS'),
-			'index.php?option=com_pubdb&view=publishers',
-			$vName == 'publishers'
-		);
+    JHtmlSidebar::addEntry(
+      JText::_('COM_PUBDB_TITLE_PUBLISHERS'),
+      'index.php?option=com_pubdb&view=publishers',
+      $vName == 'publishers'
+    );
 
-JHtmlSidebar::addEntry(
-			JText::_('COM_PUBDB_TITLE_KEYWORDS'),
-			'index.php?option=com_pubdb&view=keywords',
-			$vName == 'keywords'
-		);
+    JHtmlSidebar::addEntry(
+      JText::_('COM_PUBDB_TITLE_KEYWORDS'),
+      'index.php?option=com_pubdb&view=keywords',
+      $vName == 'keywords'
+    );
 
-JHtmlSidebar::addEntry(
-			JText::_('COM_PUBDB_TITLE_CITATIONSTYLES'),
-			'index.php?option=com_pubdb&view=citationstyles',
-			$vName == 'citationstyles'
-		);
+    JHtmlSidebar::addEntry(
+      JText::_('COM_PUBDB_TITLE_CITATIONSTYLES'),
+      'index.php?option=com_pubdb&view=citationstyles',
+      $vName == 'citationstyles'
+    );
 
-JHtmlSidebar::addEntry(
-			JText::_('COM_PUBDB_TITLE_REFERENCETYPES'),
-			'index.php?option=com_pubdb&view=referencetypes',
-			$vName == 'referencetypes'
-		);
+    JHtmlSidebar::addEntry(
+      JText::_('COM_PUBDB_TITLE_REFERENCETYPES'),
+      'index.php?option=com_pubdb&view=referencetypes',
+      $vName == 'referencetypes'
+    );
 
-JHtmlSidebar::addEntry(
-			JText::_('COM_PUBDB_TITLE_BLOCKS'),
-			'index.php?option=com_pubdb&view=blocks',
-			$vName == 'blocks'
-		);
+    JHtmlSidebar::addEntry(
+      JText::_('COM_PUBDB_TITLE_BLOCKS'),
+      'index.php?option=com_pubdb&view=blocks',
+      $vName == 'blocks'
+    );
 
-JHtmlSidebar::addEntry(
+    JHtmlSidebar::addEntry(
       JText::_('COM_PUBDB_TITLE_IMPORTER'),
       'index.php?option=com_pubdb&view=importer',
       $vName == 'blocks'
     );
-	}
+  }
 
-	/**
-	 * Gets the files attached to an item
-	 *
-	 * @param   int     $pk     The item's id
-	 *
-	 * @param   string  $table  The table's name
-	 *
-	 * @param   string  $field  The field's name
-	 *
-	 * @return  array  The files
-	 */
-	public static function getFiles($pk, $table, $field)
-	{
-		$db = Factory::getDbo();
-		$query = $db->getQuery(true);
+  /**
+   * Gets the files attached to an item
+   *
+   * @param int $pk The item's id
+   *
+   * @param string $table The table's name
+   *
+   * @param string $field The field's name
+   *
+   * @return  array  The files
+   * @since v0.0.5
+   */
+  public static function getFiles($pk, $table, $field)
+  {
+    $db = Factory::getDbo();
+    $query = $db->getQuery(true);
 
-		$query
-			->select($field)
-			->from($table)
-			->where('id = ' . (int) $pk);
+    $query
+      ->select($field)
+      ->from($table)
+      ->where('id = ' . (int)$pk);
 
-		$db->setQuery($query);
+    $db->setQuery($query);
 
-		return explode(',', $db->loadResult());
-	}
+    return explode(',', $db->loadResult());
+  }
 
-	/**
-	 * Gets a list of the actions that can be performed.
-	 *
-	 * @return    JObject
-	 *
-	 * @since    1.6
-	 */
-	public static function getActions()
-	{
-		$user   = Factory::getUser();
-		$result = new JObject;
+  /**
+   * Gets a list of the actions that can be performed.
+   *
+   * @return    JObject
+   *
+   * @since    1.6
+   */
+  public static function getActions()
+  {
+    $user = Factory::getUser();
+    $result = new JObject;
 
-		$assetName = 'com_pubdb';
+    $assetName = 'com_pubdb';
 
-		$actions = array(
-			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.delete'
-		);
+    $actions = array(
+      'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.delete'
+    );
 
-		foreach ($actions as $action)
-		{
-			$result->set($action, $user->authorise($action, $assetName));
-		}
+    foreach ($actions as $action) {
+      $result->set($action, $user->authorise($action, $assetName));
+    }
 
-		return $result;
-	}
+    return $result;
+  }
 }
 

@@ -51,11 +51,14 @@ class PubdbBibTexImporter
   private $json_file = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'latex_conversion.json';
 
 
+  /**
+   * PubdbBibTexImporter constructor.
+   * @param $file_string String file path of the import file
+   * @throws \RenanBr\BibTexParser\Exception\ParserException
+   * @since v0.0.7
+   */
   function __construct($file_string)
   {
-    /**
-     *
-     */
     $this->parser = new \RenanBr\BibTexParser\Parser();
     $this->listener = new \RenanBr\BibTexParser\Listener();
     $this->parser->addListener($this->listener);
@@ -601,8 +604,9 @@ class PubdbBibTexImporter
 
   /**
    * Format BibTex month String to numeric value jan => 1
-   * @param $item
-   * @return mixed
+   * @param $month String month to format
+   * @return String formatted month string
+   * @since v0.0.7
    */
   private function formatMonth($month)
   {
@@ -632,6 +636,7 @@ class PubdbBibTexImporter
    * Remove "-" from isbn to fit database format
    * @param $isbn isbn number to format
    * @return string|string[] formatted string
+   * @since v0.0.7
    */
 
   private function formatIsbn($isbn)

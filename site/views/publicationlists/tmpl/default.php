@@ -12,8 +12,6 @@ defined('_JEXEC') or die;
 use \Joomla\CMS\HTML\HTMLHelper;
 use \Joomla\CMS\Factory;
 use \Joomla\CMS\Uri\Uri;
-use \Joomla\CMS\Router\Route;
-use \Joomla\CMS\Language\Text;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
@@ -278,7 +276,7 @@ if ($group_by == '0' || !isset($group_by)) {
           }
 
           foreach ($tmpArray as $key => $list) {
-            if ($group_by == 'ref_type') $key = JText::sprintf('COM_PUBDB_REF_TYPE_'.strtoupper($key));
+            if ($group_by == 'ref_type') $key = JText::sprintf('COM_PUBDB_REF_TYPE_' . strtoupper($key));
             $output .= "<li><h2>" . $key . "</h2></li>";
             $output .= "<ul>";
             foreach ($list as $item) {

@@ -18,10 +18,12 @@ use Joomla\Registry\Registry;
 
 /**
  * Helper for mod_pubdb
+ * Helper function for the PubDB component module.
+ * Handles the database queries and publishes the parameter information from the administration.
  *
- * @package     com_pubdb
- * @subpackage  mod_pubdb
  * @since       1.6
+ * @subpackage  mod_pubdb
+ * @package     com_pubdb
  */
 class ModPubdbHelper
 {
@@ -110,13 +112,14 @@ class ModPubdbHelper
 
 
   /**
-   * Retrieve component items
+   * Retrieve component items from the database and create publication list items with citation style
    *
    * @param Joomla\Registry\Registry &$params module parameters
    *
    * @return array Array with all the elements
    *
    * @throws Exception
+   * @since 0.0.7
    */
   public static function getList(&$params)
   {
@@ -162,6 +165,7 @@ class ModPubdbHelper
    * @param mixed $state State
    *
    * @return bool
+   * @since 0.0.7
    */
   public function getState($state)
   {
@@ -171,6 +175,7 @@ class ModPubdbHelper
   /**
    * Get list of all citation styles available
    * @return mixed array with citation style id and name
+   * @since 0.0.7
    */
   public function getCitationStyles()
   {

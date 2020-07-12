@@ -14,7 +14,8 @@ jimport('joomla.application.component.view');
 
 /**
  * Class PubdbViewPublicationlists
- * Used to enable downloading the publicationlist as BibTex file
+ * Used to enable downloading the publication list as BibTex file.
+ * Echos the export file and set HTTP header to download the output.
  * @since v0.0.7
  */
 class PubdbViewPublicationlists extends JViewLegacy

@@ -17,7 +17,6 @@ use \Joomla\CMS\Language\Text;
 
 /**
  * View class for a list of Pubdb.
- *
  * @since  1.6
  */
 class PubdbViewPublicationlists extends \Joomla\CMS\MVC\View\HtmlView
@@ -55,8 +54,7 @@ class PubdbViewPublicationlists extends \Joomla\CMS\MVC\View\HtmlView
     $this->citation_styles = $this->getCitationStyles();
 
     // Check for errors.
-    if (count($errors = $this->get('Errors')))
-    {
+    if (count($errors = $this->get('Errors'))) {
       throw new Exception(implode("\n", $errors));
     }
 
@@ -75,7 +73,7 @@ class PubdbViewPublicationlists extends \Joomla\CMS\MVC\View\HtmlView
    */
   protected function _prepareDocument()
   {
-    $app   = Factory::getApplication();
+    $app = Factory::getApplication();
     $menus = $app->getMenu();
     $title = null;
 
@@ -83,44 +81,33 @@ class PubdbViewPublicationlists extends \Joomla\CMS\MVC\View\HtmlView
     // we need to get it from the menu item itself
     $menu = $menus->getActive();
 
-    if ($menu)
-    {
+    if ($menu) {
       $this->params->def('page_heading', $this->params->get('page_title', $menu->title));
-    }
-    else
-    {
+    } else {
       $this->params->def('page_heading', Text::_('COM_PUBDB_DEFAULT_PAGE_TITLE'));
     }
 
     $title = $this->params->get('page_title', '');
 
-    if (empty($title))
-    {
+    if (empty($title)) {
       $title = $app->get('sitename');
-    }
-    elseif ($app->get('sitename_pagetitles', 0) == 1)
-    {
+    } elseif ($app->get('sitename_pagetitles', 0) == 1) {
       $title = Text::sprintf('JPAGETITLE', $app->get('sitename'), $title);
-    }
-    elseif ($app->get('sitename_pagetitles', 0) == 2)
-    {
+    } elseif ($app->get('sitename_pagetitles', 0) == 2) {
       $title = Text::sprintf('JPAGETITLE', $title, $app->get('sitename'));
     }
 
     $this->document->setTitle($title);
 
-    if ($this->params->get('menu-meta_description'))
-    {
+    if ($this->params->get('menu-meta_description')) {
       $this->document->setDescription($this->params->get('menu-meta_description'));
     }
 
-    if ($this->params->get('menu-meta_keywords'))
-    {
+    if ($this->params->get('menu-meta_keywords')) {
       $this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
     }
 
-    if ($this->params->get('robots'))
-    {
+    if ($this->params->get('robots')) {
       $this->document->setMetadata('robots', $this->params->get('robots'));
     }
   }

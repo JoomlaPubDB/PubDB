@@ -20,7 +20,6 @@ JLoader::register('ModPubdbHelper', dirname(__FILE__) . '/helper.php');
 $doc = Factory::getDocument();
 
 //allocate params
-
 $allParams = $params;
 
 require ModuleHelper::getLayoutPath('mod_pubdb', 'list');

@@ -21,25 +21,25 @@ use \Joomla\CMS\Factory;
  */
 class PubdbController extends \Joomla\CMS\MVC\Controller\BaseController
 {
-	/**
-	 * Method to display a view.
-	 *
-	 * @param   boolean $cachable  If true, the view output will be cached
-	 * @param   mixed   $urlparams An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
-	 *
-	 * @return  JController   This object to support chaining.
-	 *
-	 * @since    1.5
-     * @throws Exception
-	 */
-	public function display($cachable = false, $urlparams = false)
-	{
-        $app = Factory::getApplication();
+  /**
+   * Method to display a view.
+   *
+   * @param boolean $cachable If true, the view output will be cached
+   * @param mixed $urlparams An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+   *
+   * @return  JController   This object to support chaining.
+   *
+   * @throws Exception
+   * @since    1.5
+   */
+  public function display($cachable = false, $urlparams = false)
+  {
+    $app = Factory::getApplication();
     $view = $app->input->getCmd('view', 'publicationlists');
     $app->input->set('view', $view);
 
-		parent::display($cachable, $urlparams);
+    parent::display($cachable, $urlparams);
 
-		return $this;
-	}
+    return $this;
+  }
 }

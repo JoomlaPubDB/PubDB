@@ -14,8 +14,6 @@ jimport('joomla.application.component.modeladmin');
 
 use \Joomla\CMS\Table\Table;
 use \Joomla\CMS\Factory;
-use \Joomla\CMS\Language\Text;
-use \Joomla\CMS\Plugin\PluginHelper;
 
 /**
  * Pubdb model.
@@ -34,9 +32,9 @@ class PubdbModelImporter extends \Joomla\CMS\MVC\Model\AdminModel
   /**
    * Returns a reference to the a Table object, always creating it.
    *
-   * @param   string  $type    The table type to instantiate
-   * @param   string  $prefix  A prefix for the table class name. Optional.
-   * @param   array   $config  Configuration array for model. Optional.
+   * @param string $type The table type to instantiate
+   * @param string $prefix A prefix for the table class name. Optional.
+   * @param array $config Configuration array for model. Optional.
    *
    * @return    JTable    A database object
    *
@@ -50,14 +48,14 @@ class PubdbModelImporter extends \Joomla\CMS\MVC\Model\AdminModel
   /**
    * Method to get the record form.
    *
-   * @param   array    $data      An optional array of data for the form to interogate.
-   * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+   * @param array $data An optional array of data for the form to interogate.
+   * @param boolean $loadData True if the form is to load its own data (default case), false if not.
    *
    * @return  JForm  A JForm object on success, false on failure
    *
+   * @throws
    * @since    1.6
    *
-   * @throws
    */
   public function getForm($data = array(), $loadData = true)
   {
@@ -72,8 +70,7 @@ class PubdbModelImporter extends \Joomla\CMS\MVC\Model\AdminModel
       )
     );
 
-    if (empty($form))
-    {
+    if (empty($form)) {
       return false;
     }
 
@@ -85,9 +82,9 @@ class PubdbModelImporter extends \Joomla\CMS\MVC\Model\AdminModel
    *
    * @return   mixed  The data for the form.
    *
+   * @throws
    * @since    1.6
    *
-   * @throws
    */
   protected function loadFormData()
   {

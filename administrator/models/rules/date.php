@@ -37,7 +37,7 @@ class JFormRuleDate extends JFormRule
     $today = new Date();
     $expected = new Date($value);
     if ($expected->format('Y-m-d') > $today->format('Y-m-d')) {
-      $element->addAttribute('message',  JText::sprintf('COM_PUBDB_LITERATURES_DATE_IN_FUTURE', JText::sprintf($element['label'])));
+      $element->addAttribute('message', JText::sprintf('COM_PUBDB_LITERATURES_DATE_IN_FUTURE', JText::sprintf($element['label'])));
       return false;
     }
     return true;

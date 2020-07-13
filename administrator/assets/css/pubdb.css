@@ -1,122 +1,166 @@
 .icon-48-literatures {
-      background-image: url(../images/l_literatures.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_literatures.png);
+    padding-left: 60px !important;
 }
 
 .icon-48-literature {
-      background-image: url(../images/l_literatures.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_literatures.png);
+    padding-left: 60px !important;
 }
 
-.color-box-literatures { 
-      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+.color-box-literatures {
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
 
 .icon-48-periodicals {
-      background-image: url(../images/l_periodicals.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_periodicals.png);
+    padding-left: 60px !important;
 }
 
 .icon-48-periodical {
-      background-image: url(../images/l_periodicals.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_periodicals.png);
+    padding-left: 60px !important;
 }
 
-.color-box-periodicals { 
-      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+.color-box-periodicals {
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
 
 .icon-48-series_titles {
-      background-image: url(../images/l_series_titles.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_series_titles.png);
+    padding-left: 60px !important;
 }
 
 .icon-48-series_title {
-      background-image: url(../images/l_series_titles.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_series_titles.png);
+    padding-left: 60px !important;
 }
 
-.color-box-series_titles { 
-      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+.color-box-series_titles {
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
 
 .icon-48-people {
-      background-image: url(../images/l_people.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_people.png);
+    padding-left: 60px !important;
 }
 
 .icon-48-person {
-      background-image: url(../images/l_people.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_people.png);
+    padding-left: 60px !important;
 }
 
-.color-box-people { 
-      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+.color-box-people {
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
 
 .icon-48-publishers {
-      background-image: url(../images/l_publishers.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_publishers.png);
+    padding-left: 60px !important;
 }
 
 .icon-48-publisher {
-      background-image: url(../images/l_publishers.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_publishers.png);
+    padding-left: 60px !important;
 }
 
-.color-box-publishers { 
-      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+.color-box-publishers {
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
 
 .icon-48-keywords {
-      background-image: url(../images/l_keywords.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_keywords.png);
+    padding-left: 60px !important;
 }
 
 .icon-48-keyword {
-      background-image: url(../images/l_keywords.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_keywords.png);
+    padding-left: 60px !important;
 }
 
-.color-box-keywords { 
-      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+.color-box-keywords {
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
 
 .icon-48-citationstyles {
-      background-image: url(../images/l_citationstyles.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_citationstyles.png);
+    padding-left: 60px !important;
 }
 
 .icon-48-citationstyle {
-      background-image: url(../images/l_citationstyles.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_citationstyles.png);
+    padding-left: 60px !important;
 }
 
-.color-box-citationstyles { 
-      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+.color-box-citationstyles {
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
 
 .icon-48-referencetypes {
-      background-image: url(../images/l_referencetypes.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_referencetypes.png);
+    padding-left: 60px !important;
 }
 
 .icon-48-referencetype {
-      background-image: url(../images/l_referencetypes.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_referencetypes.png);
+    padding-left: 60px !important;
 }
 
-.color-box-referencetypes { 
-      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+.color-box-referencetypes {
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
 
 .icon-48-blocks {
-      background-image: url(../images/l_blocks.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_blocks.png);
+    padding-left: 60px !important;
 }
 
 .icon-48-block {
-      background-image: url(../images/l_blocks.png);
-      padding-left:60px!important;
+    background-image: url(../images/l_blocks.png);
+    padding-left: 60px !important;
 }
 
-.color-box-blocks { 
-      float: left;      width: 15px;      height: 15px;      margin-right: 5px;      border: 1px solid rgba(0, 0, 0, .2);}
+.color-box-blocks {
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
 
 
-
-.other-filters{
+.other-filters {
     padding: 0 14px;
 }

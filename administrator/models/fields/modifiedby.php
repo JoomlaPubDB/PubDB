@@ -20,32 +20,31 @@ use \Joomla\CMS\Factory;
  */
 class JFormFieldModifiedby extends \Joomla\CMS\Form\FormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var        string
-	 * @since    1.6
-	 */
-	protected $type = 'modifiedby';
+  /**
+   * The form field type.
+   *
+   * @var        string
+   * @since    1.6
+   */
+  protected $type = 'modifiedby';
 
-	/**
-	 * Method to get the field input markup.
-	 *
-	 * @return    string    The field input markup.
-	 *
-	 * @since    1.6
-	 */
-	protected function getInput()
-	{
-		// Initialize variables.
-		$html   = array();
-		$user   = Factory::getUser();
-		$html[] = '<input type="hidden" name="' . $this->name . '" value="' . $user->id . '" />';
-		if (!$this->hidden)
-		{
-			$html[] = "<div>" . $user->name . " (" . $user->username . ")</div>";
-		}
+  /**
+   * Method to get the field input markup.
+   *
+   * @return    string    The field input markup.
+   *
+   * @since    1.6
+   */
+  protected function getInput()
+  {
+    // Initialize variables.
+    $html = array();
+    $user = Factory::getUser();
+    $html[] = '<input type="hidden" name="' . $this->name . '" value="' . $user->id . '" />';
+    if (!$this->hidden) {
+      $html[] = "<div>" . $user->name . " (" . $user->username . ")</div>";
+    }
 
-		return implode($html);
-	}
+    return implode($html);
+  }
 }

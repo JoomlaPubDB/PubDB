@@ -147,83 +147,83 @@ if ($group_by == '0' || !isset($group_by)) {
         ]";
   }
   ?>
-  <table id="example" class="display">
-    <thead>
-    <tr>
-      <th><?php echo JText::sprintf('COM_PUBDB_TITLE_LITERATURE'); ?></th>
-      <th><?php echo JText::sprintf('COM_PUBDB_FORM_LBL_LITERATURE_PUBLISHERS'); ?></th>
-      <th><?php echo JText::sprintf('COM_PUBDB_FORM_LBL_LITERATURE_AUTHORS'); ?></th>
-      <th> <?php echo JText::sprintf('COM_PUBDB_YEAR'); ?> </th>
-      <th><?php echo JText::sprintf('COM_PUBDB_LITERATURES_KEYWORDS'); ?></th>
-      <th><?php echo JText::sprintf('COM_PUBDB_TITLE_SERIES_TITLES'); ?></th>
-      <th><?php echo JText::sprintf('COM_PUBDB_TITLE_REFERENCETYPES'); ?></th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-  <script>
-    let data = <?php echo json_encode($this->items)?>;
-    jQuery(document).ready(function () {
-        //init data table with citation  style column
-        jQuery('#example').DataTable({
-          language: {
-            sSearch: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_SSEARCH'); ?>",
-            sInfo: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_SINFO'); ?>",
-            searchPanes: {
-              title: {
-                _: "<?php echo "%d " . JText::sprintf('COM_PUBDB_FILTER_PANE_TITLE_MULTI')?>",
-                0: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_TITLE_NONE'); ?>",
-                1: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_TITLE_ONE'); ?>",
-              },
-              count: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_COUNT'); ?>",
-              countFiltered: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_COUNT_FILTERED'); ?>",
-              clearMessage: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_CLEAR_MSG'); ?>",
+    <table id="example" class="display">
+        <thead>
+        <tr>
+            <th><?php echo JText::sprintf('COM_PUBDB_TITLE_LITERATURE'); ?></th>
+            <th><?php echo JText::sprintf('COM_PUBDB_FORM_LBL_LITERATURE_PUBLISHERS'); ?></th>
+            <th><?php echo JText::sprintf('COM_PUBDB_FORM_LBL_LITERATURE_AUTHORS'); ?></th>
+            <th> <?php echo JText::sprintf('COM_PUBDB_YEAR'); ?> </th>
+            <th><?php echo JText::sprintf('COM_PUBDB_LITERATURES_KEYWORDS'); ?></th>
+            <th><?php echo JText::sprintf('COM_PUBDB_TITLE_SERIES_TITLES'); ?></th>
+            <th><?php echo JText::sprintf('COM_PUBDB_TITLE_REFERENCETYPES'); ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script>
+        let data = <?php echo json_encode($this->items)?>;
+        jQuery(document).ready(function () {
+                //init data table with citation  style column
+                jQuery('#example').DataTable({
+                    language: {
+                        sSearch: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_SSEARCH'); ?>",
+                        sInfo: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_SINFO'); ?>",
+                        searchPanes: {
+                            title: {
+                                _: "<?php echo "%d " . JText::sprintf('COM_PUBDB_FILTER_PANE_TITLE_MULTI')?>",
+                                0: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_TITLE_NONE'); ?>",
+                                1: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_TITLE_ONE'); ?>",
+                            },
+                            count: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_COUNT'); ?>",
+                            countFiltered: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_COUNT_FILTERED'); ?>",
+                            clearMessage: "<?php echo JText::sprintf('COM_PUBDB_FILTER_PANE_CLEAR_MSG'); ?>",
+                        }
+                    },
+                  <?php if ($filter_active) echo "dom: 'Pfrtip',"; ?>
+                    "data": data,
+                    "stateSave": false,
+                    "paging": <?php echo $filter_paging ?>,
+                    "columns": [
+                        {"data": "formatted_string"},
+                        {"data": "publisher_name"},
+                        {"data": "authors"},
+                        {"data": "year"},
+                        {"data": "keywords"},
+                        {"data": "series_title_name"},
+                        {"data": "ref_type"}
+                    ],
+                  <?php echo $filter_json ?>
+                });
+
+                // add show / hide button to filter pane
+                if (document.getElementsByClassName('dtsp-clearAll')[0]) {
+
+                    jQuery('.dtsp-searchPane').hide();
+                    let btn = document.createElement('button');
+                    btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_SHOW')?>";
+                    btn.setAttribute('class', 'dtsp-clearAll');
+                    let container = document.getElementsByClassName('dtsp-titleRow')[0];
+                    let btn_ref = document.getElementsByClassName('dtsp-clearAll')[0];
+                    container.insertBefore(btn, btn_ref);
+                    let hide = false;
+                    btn.addEventListener('click', function () {
+                        if (hide) {
+                            jQuery('.dtsp-searchPane').hide();
+                            hide = !hide;
+                            btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_SHOW')?>";
+                        } else {
+                            jQuery('.dtsp-searchPane').show();
+                            hide = !hide;
+                            btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_HIDE')?>";
+                        }
+                    });
+                }
+
             }
-          },
-          <?php if ($filter_active) echo "dom: 'Pfrtip',"; ?>
-          "data": data,
-          "stateSave": false,
-          "paging": <?php echo $filter_paging ?>,
-          "columns": [
-            {"data": "formatted_string"},
-            {"data": "publisher_name"},
-            {"data": "authors"},
-            {"data": "year"},
-            {"data": "keywords"},
-            {"data": "series_title_name"},
-            {"data": "ref_type"}
-          ],
-          <?php echo $filter_json ?>
-        });
-
-        // add show / hide button to filter pane
-        if (document.getElementsByClassName('dtsp-clearAll')[0]) {
-
-          jQuery('.dtsp-searchPane').hide();
-          let btn = document.createElement('button');
-          btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_SHOW')?>";
-          btn.setAttribute('class', 'dtsp-clearAll');
-          let container = document.getElementsByClassName('dtsp-titleRow')[0];
-          let btn_ref = document.getElementsByClassName('dtsp-clearAll')[0];
-          container.insertBefore(btn, btn_ref);
-          let hide = false;
-          btn.addEventListener('click', function () {
-            if (hide) {
-              jQuery('.dtsp-searchPane').hide();
-              hide = !hide;
-              btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_SHOW')?>";
-            } else {
-              jQuery('.dtsp-searchPane').show();
-              hide = !hide;
-              btn.innerHTML = "<?php echo JText::sprintf('COM_PUBDB_FILTER_HIDE')?>";
-            }
-          });
-        }
-
-      }
-    );
-  </script>
+        );
+    </script>
 <?php } else {
 
   //logic for pure list view
@@ -258,125 +258,125 @@ if ($group_by == '0' || !isset($group_by)) {
   }
 
   ?>
-  <table id="grouped_table" class="display">
-    <thead>
-    <tr>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>
-        <ul>
-          <?php
-          $current_group = $this->items[0][$group_by];
-          $tmpArray = array();
-          foreach ($grouped_items as $item) {
-            $tmpArray[$item[$group_by]][] = $item;
-          }
+    <table id="grouped_table" class="display">
+        <thead>
+        <tr>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <ul>
+                  <?php
+                  $current_group = $this->items[0][$group_by];
+                  $tmpArray = array();
+                  foreach ($grouped_items as $item) {
+                    $tmpArray[$item[$group_by]][] = $item;
+                  }
 
-          foreach ($tmpArray as $key => $list) {
-            if ($group_by == 'ref_type') $key = JText::sprintf('COM_PUBDB_REF_TYPE_' . strtoupper($key));
-            $output .= "<li><h2>" . $key . "</h2></li>";
-            $output .= "<ul>";
-            foreach ($list as $item) {
-              $output .= "<li>" . $item['formatted_string'] . "</li>";
-            }
-            $output .= "</ul>";
-          }
-          print $output;
-          ?>
-        </ul>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+                  foreach ($tmpArray as $key => $list) {
+                    if ($group_by == 'ref_type') $key = JText::sprintf('COM_PUBDB_REF_TYPE_' . strtoupper($key));
+                    $output .= "<li><h2>" . $key . "</h2></li>";
+                    $output .= "<ul>";
+                    foreach ($list as $item) {
+                      $output .= "<li>" . $item['formatted_string'] . "</li>";
+                    }
+                    $output .= "</ul>";
+                  }
+                  print $output;
+                  ?>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
   <?php
 }
 // create an citations selection if the administrator allowed it in the back end
 if (isset($stateArr['parameters.menu']['allow_citation_change'])) {
   ?>
-  <br>
-  <form class="form-inline">
-    <div class="form-group">
-      <label for="citation_selection">
-        <?php echo JText::_('COM_PUBDB_VIEW_PUBLICATION_LIST_CHOOSE_CITATION_STYLE'); ?>
-      </label>
-      <select class="form-control" style="width:auto;" id="citation_selection" onchange="reloadPage(event);">
-        <?php
-        $current_style = isset($_GET['citation_style']) ? $_GET['citation_style'] : $stateArr['parameters.menu']['citation_style_id'];
-        foreach ($this->citation_styles as $style) {
-          if ($current_style == $style['id']) {
-            echo '<option selected value="' . $style['id'] . '">' . $style['name'] . '</option>';
-          } else {
-            echo '<option value="' . $style['id'] . '">' . $style['name'] . '</option>';
-          }
+    <br>
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="citation_selection">
+              <?php echo JText::_('COM_PUBDB_VIEW_PUBLICATION_LIST_CHOOSE_CITATION_STYLE'); ?>
+            </label>
+            <select class="form-control" style="width:auto;" id="citation_selection" onchange="reloadPage(event);">
+              <?php
+              $current_style = isset($_GET['citation_style']) ? $_GET['citation_style'] : $stateArr['parameters.menu']['citation_style_id'];
+              foreach ($this->citation_styles as $style) {
+                if ($current_style == $style['id']) {
+                  echo '<option selected value="' . $style['id'] . '">' . $style['name'] . '</option>';
+                } else {
+                  echo '<option value="' . $style['id'] . '">' . $style['name'] . '</option>';
+                }
+              }
+              ?>
+            </select>
+        </div>
+    </form>
+    <script>
+        /**
+         * Eventhandler to reload page if a new citation style is choosen
+         * @param evt
+         */
+        function reloadPage(evt) {
+            location.href = URL_add_parameter(location.href, 'citation_style', evt.target.value);
         }
-        ?>
-      </select>
-    </div>
-  </form>
-  <script>
-    /**
-     * Eventhandler to reload page if a new citation style is choosen
-     * @param evt
-     */
-    function reloadPage(evt) {
-      location.href = URL_add_parameter(location.href, 'citation_style', evt.target.value);
-    }
 
-    /**
-     * Add or rewrite url parameter
-     * @param url String of the URL
-     * @param param String of the parameter name
-     * @param value value to set param
-     * @returns {string}
-     * @constructor
-     */
-    function URL_add_parameter(url, param, value) {
-      const hash = {};
-      const parser = document.createElement('a');
+        /**
+         * Add or rewrite url parameter
+         * @param url String of the URL
+         * @param param String of the parameter name
+         * @param value value to set param
+         * @returns {string}
+         * @constructor
+         */
+        function URL_add_parameter(url, param, value) {
+            const hash = {};
+            const parser = document.createElement('a');
 
-      parser.href = url;
+            parser.href = url;
 
-      const parameters = parser.search.split(/\?|&/);
+            const parameters = parser.search.split(/\?|&/);
 
-      for (let i = 0; i < parameters.length; i++) {
-        if (!parameters[i])
-          continue;
+            for (let i = 0; i < parameters.length; i++) {
+                if (!parameters[i])
+                    continue;
 
-        let ary = parameters[i].split('=');
-        hash[ary[0]] = ary[1];
-      }
+                let ary = parameters[i].split('=');
+                hash[ary[0]] = ary[1];
+            }
 
-      hash[param] = value;
+            hash[param] = value;
 
-      let list = [];
-      Object.keys(hash).forEach(function (key) {
-        list.push(key + '=' + hash[key]);
-      });
+            let list = [];
+            Object.keys(hash).forEach(function (key) {
+                list.push(key + '=' + hash[key]);
+            });
 
-      parser.search = '?' + list.join('&');
-      return parser.href;
-    }
+            parser.search = '?' + list.join('&');
+            return parser.href;
+        }
 
-  </script>
+    </script>
   <?php
 }
 // create export button if the setting is activated in the back end administration
 if (isset($stateArr['parameters.menu']['allow_export'])) {
   ?>
-  <form action="<?php echo JRoute::_('index.php?option=com_pubdb&view=publicationlists'); ?>" method="post"
-        name="adminForm" id="adminForm" class="form-validate form-inline" enctype="multipart/form-data">
-    <button class="btn btn-primary pull-right" type="submit"
-            onclick="document.getElementById('task').value = 'publicationlists.export';this.form.submit()"/>
-    <i class="icon-download icon-white"></i>
-    <?php echo JText::_('COM_PUBDB_EXPORT'); ?></button>
-    <?php echo JHTML::_('form.token'); ?>
-    <input type="hidden" name="option" value="com_pubdb"/>
-    <input type="hidden" name="task" id="task" value="importer.import"/>
-    <input type="hidden" name="export_id" value="<?php echo implode(',', $this->state->get('export_ids')); ?>">
-    <input type="hidden" name="controller" value="publicationlists"/>
-  </form>
+    <form action="<?php echo JRoute::_('index.php?option=com_pubdb&view=publicationlists'); ?>" method="post"
+          name="adminForm" id="adminForm" class="form-validate form-inline" enctype="multipart/form-data">
+        <button class="btn btn-primary pull-right" type="submit"
+                onclick="document.getElementById('task').value = 'publicationlists.export';this.form.submit()"/>
+        <i class="icon-download icon-white"></i>
+      <?php echo JText::_('COM_PUBDB_EXPORT'); ?></button>
+      <?php echo JHTML::_('form.token'); ?>
+        <input type="hidden" name="option" value="com_pubdb"/>
+        <input type="hidden" name="task" id="task" value="importer.import"/>
+        <input type="hidden" name="export_id" value="<?php echo implode(',', $this->state->get('export_ids')); ?>">
+        <input type="hidden" name="controller" value="publicationlists"/>
+    </form>
   <?php
 }

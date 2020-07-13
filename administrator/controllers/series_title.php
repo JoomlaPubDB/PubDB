@@ -19,14 +19,14 @@ jimport('joomla.application.component.controllerform');
  */
 class PubdbControllerSeries_title extends \Joomla\CMS\MVC\Controller\FormController
 {
-	/**
-	 * Constructor
-	 *
-	 * @throws Exception
-	 */
-	public function __construct()
-	{
-		$this->view_list = 'series_titles';
-		parent::__construct();
-	}
+  /**
+   * Constructor
+   *
+   * @throws Exception
+   */
+  public function __construct()
+  {
+    $this->view_list = 'series_titles';
+    parent::__construct();
+  }
 }

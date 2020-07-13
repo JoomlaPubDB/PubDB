@@ -19,14 +19,14 @@ jimport('joomla.application.component.controllerform');
  */
 class PubdbControllerBlock extends \Joomla\CMS\MVC\Controller\FormController
 {
-	/**
-	 * Constructor
-	 *
-	 * @throws Exception
-	 */
-	public function __construct()
-	{
-		$this->view_list = 'blocks';
-		parent::__construct();
-	}
+  /**
+   * Constructor
+   *
+   * @throws Exception
+   */
+  public function __construct()
+  {
+    $this->view_list = 'blocks';
+    parent::__construct();
+  }
 }

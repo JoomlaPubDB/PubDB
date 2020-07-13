@@ -14,15 +14,15 @@ defined('_JEXEC') or die;
 
 <div class="item_fields">
 
-	<table class="table">
-		
+    <table class="table">
 
-		<tr>
-			<th><?php echo JText::_('COM_PUBDB_FORM_LBL_PUBLISHER_NAME'); ?></th>
-			<td><?php echo $this->item->name; ?></td>
-		</tr>
 
-	</table>
+        <tr>
+            <th><?php echo JText::_('COM_PUBDB_FORM_LBL_PUBLISHER_NAME'); ?></th>
+            <td><?php echo $this->item->name; ?></td>
+        </tr>
+
+    </table>
 
 </div>
 

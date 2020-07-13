@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-  <fieldset>
-    <field name="type" type="list"
-           label="COM_PUBDB_FIELD_IMPORTER_TYPE_LABEL" description="COM_PUBDB_FIELD_IMPORTER_TYPE_LABEL"
-           class="inputbox" filter="intval" size="1" default="1">
-      <option value="1">COM_PUBDB_BIBTEX</option>
-    </field>
+    <fieldset>
+        <field name="type" type="list" label="COM_PUBDB_FIELD_IMPORTER_TYPE_LABEL"
+               description="COM_PUBDB_FIELD_IMPORTER_TYPE_LABEL" class="inputbox" filter="intval" size="1" default="1">
+            <option value="1">COM_PUBDB_BIBTEX</option>
+        </field>
 
-    <field name="import_file"
-           type="file" accept=".bib"
-           label="COM_PUBDB_FIELD_IMPORTER_UPLOAD_LABEL"
-           description="COM_PUBDB_FIELD_IMPORTER_UPLOAD_DESC"
-    />
+        <field name="import_file" type="file" accept=".bib" label="COM_PUBDB_FIELD_IMPORTER_UPLOAD_LABEL"
+               description="COM_PUBDB_FIELD_IMPORTER_UPLOAD_DESC"/>
 
-    <field name="type_export" type="list"
-           label="COM_PUBDB_FIELD_IMPORTER_TYPE_LABEL" description="COM_PUBDB_FIELD_IMPORTER_TYPE_LABEL"
-           class="inputbox" filter="intval" size="1" default="1">
-      <option value="1">COM_PUBDB_BIBTEX</option>
-    </field>
-  </fieldset>
+        <field name="type_export" type="list" label="COM_PUBDB_FIELD_IMPORTER_TYPE_LABEL"
+               description="COM_PUBDB_FIELD_IMPORTER_TYPE_LABEL" class="inputbox" filter="intval" size="1" default="1">
+            <option value="1">COM_PUBDB_BIBTEX</option>
+        </field>
+    </fieldset>
 </form>

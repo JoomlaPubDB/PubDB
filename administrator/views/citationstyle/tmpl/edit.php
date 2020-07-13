@@ -57,9 +57,15 @@ $reference_types = $db->loadAssocList('id');
 $reference_type_ids = array_keys($reference_types);
 
 // Add labels
-$blocks = array_map(function($block) {return JText::sprintf('COM_PUBDB_CITATIONSTLYE_' . $block);}, $blocks);
-$specialBlocks = array_map(function($block) {return JText::sprintf('COM_PUBDB_CITATIONSTLYE_' . $block);}, $specialBlocks);
-$authorBlocks = array_map(function($block) {return JText::sprintf('COM_PUBDB_CITATIONSTLYE_' . $block);}, $authorBlocks);
+$blocks = array_map(function ($block) {
+  return JText::sprintf('COM_PUBDB_CITATIONSTLYE_' . $block);
+}, $blocks);
+$specialBlocks = array_map(function ($block) {
+  return JText::sprintf('COM_PUBDB_CITATIONSTLYE_' . $block);
+}, $specialBlocks);
+$authorBlocks = array_map(function ($block) {
+  return JText::sprintf('COM_PUBDB_CITATIONSTLYE_' . $block);
+}, $authorBlocks);
 
 
 // Import CSS

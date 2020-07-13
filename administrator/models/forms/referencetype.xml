@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-  <fieldset>
-    <field name="id" type="text" readonly="true" class="readonly" default="0" description="JGLOBAL_FIELD_ID_DESC"/>
-    <field name="ordering"/>
-    <field name="state" default="1" type="list" label="JSTATUS" description="JFIELD_PUBLISHED_DESC" class="inputbox" size="1">
-      <option value="1">JPUBLISHED</option>
-      <option value="0">JUNPUBLISHED</option>
-      <option value="2">JARCHIVED</option>
-      <option value="-2">JTRASHED</option>
-    </field>
-    <field name="checked_out" type="hidden" filter="unset"/>
-    <field name="checked_out_time" default="0000-00-00 00:00:00" type="hidden" filter="unset"/>
-    <field name="created_by" type="createdby" default="0" label="COM_PUBDB_FORM_LBL_REFERENCETYPE_CREATED_BY" description="COM_PUBDB_FORM_DESC_REFERENCETYPE_CREATED_BY" hidden="true" hint="COM_PUBDB_FORM_LBL_REFERENCETYPE_CREATED_BY"/>
-    <field name="modified_by" type="modifiedby" default="0" label="COM_PUBDB_FORM_LBL_REFERENCETYPE_MODIFIED_BY" description="COM_PUBDB_FORM_DESC_REFERENCETYPE_MODIFIED_BY" hidden="true" hint="COM_PUBDB_FORM_LBL_REFERENCETYPE_MODIFIED_BY"/>
-    <field name="name" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_REFERENCETYPE_NAME" description="COM_PUBDB_FORM_DESC_REFERENCETYPE_NAME" hint="COM_PUBDB_FORM_LBL_REFERENCETYPE_NAME"/>
-    <field name="lable" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_REFERENCETYPE_LABLE" description="COM_PUBDB_FORM_DESC_REFERENCETYPE_LABLE" hint="COM_PUBDB_FORM_LBL_REFERENCETYPE_LABLE"/>
-    <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
-  </fieldset>
+    <fieldset>
+        <field name="id" type="text" readonly="true" class="readonly" default="0" description="JGLOBAL_FIELD_ID_DESC"/>
+        <field name="ordering"/>
+        <field name="state" default="1" type="list" label="JSTATUS" description="JFIELD_PUBLISHED_DESC" class="inputbox"
+               size="1">
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+            <option value="2">JARCHIVED</option>
+            <option value="-2">JTRASHED</option>
+        </field>
+        <field name="checked_out" type="hidden" filter="unset"/>
+        <field name="checked_out_time" default="0000-00-00 00:00:00" type="hidden" filter="unset"/>
+        <field name="created_by" type="createdby" default="0" label="COM_PUBDB_FORM_LBL_REFERENCETYPE_CREATED_BY"
+               description="COM_PUBDB_FORM_DESC_REFERENCETYPE_CREATED_BY" hidden="true"
+               hint="COM_PUBDB_FORM_LBL_REFERENCETYPE_CREATED_BY"/>
+        <field name="modified_by" type="modifiedby" default="0" label="COM_PUBDB_FORM_LBL_REFERENCETYPE_MODIFIED_BY"
+               description="COM_PUBDB_FORM_DESC_REFERENCETYPE_MODIFIED_BY" hidden="true"
+               hint="COM_PUBDB_FORM_LBL_REFERENCETYPE_MODIFIED_BY"/>
+        <field name="name" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_REFERENCETYPE_NAME"
+               description="COM_PUBDB_FORM_DESC_REFERENCETYPE_NAME" hint="COM_PUBDB_FORM_LBL_REFERENCETYPE_NAME"/>
+        <field name="lable" filter="safehtml" type="text" required="true" label="COM_PUBDB_FORM_LBL_REFERENCETYPE_LABLE"
+               description="COM_PUBDB_FORM_DESC_REFERENCETYPE_LABLE" hint="COM_PUBDB_FORM_LBL_REFERENCETYPE_LABLE"/>
+        <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL"
+               description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
+    </fieldset>
 </form>

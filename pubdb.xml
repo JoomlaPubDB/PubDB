@@ -14,14 +14,14 @@
 
     <install> <!-- Runs on install -->
         <sql>
-          <file driver="mysql" charset="utf8">sql/0.0.7.sql</file>
+            <file driver="mysql" charset="utf8">sql/0.0.7.sql</file>
         </sql>
     </install>
-  <update> <!-- Runs on update -->
-    <schemas>
-      <schemapath type="mysql">sql/updates/mysql</schemapath>
-    </schemas>
-  </update>
+    <update> <!-- Runs on update -->
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
     <uninstall> <!-- Runs on uninstall -->
         <sql>
             <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
@@ -45,31 +45,47 @@
     </media>
     <languages folder="site/languages">
 
-    <language tag="de-DE">de-DE/de-DE.com_pubdb.ini</language>
+        <language tag="de-DE">de-DE/de-DE.com_pubdb.ini</language>
     </languages>
     <administration>
         <menu>COM_PUBDB</menu>
         <submenu>
 
-        <menu link="option=com_pubdb&amp;view=literatures" view="literatures" alt="Pubdb/Literatures">COM_PUBDB_TITLE_LITERATURES</menu>
+            <menu link="option=com_pubdb&amp;view=literatures" view="literatures" alt="Pubdb/Literatures">
+                COM_PUBDB_TITLE_LITERATURES
+            </menu>
 
-			<menu link="option=com_pubdb&amp;view=periodicals" view="periodicals" alt="Pubdb/Periodicals">COM_PUBDB_TITLE_PERIODICALS</menu>
+            <menu link="option=com_pubdb&amp;view=periodicals" view="periodicals" alt="Pubdb/Periodicals">
+                COM_PUBDB_TITLE_PERIODICALS
+            </menu>
 
-			<menu link="option=com_pubdb&amp;view=series_titles" view="series_titles" alt="Pubdb/Series_titles">COM_PUBDB_TITLE_SERIES_TITLES</menu>
+            <menu link="option=com_pubdb&amp;view=series_titles" view="series_titles" alt="Pubdb/Series_titles">
+                COM_PUBDB_TITLE_SERIES_TITLES
+            </menu>
 
-			<menu link="option=com_pubdb&amp;view=people" view="people" alt="Pubdb/People">COM_PUBDB_TITLE_PEOPLE</menu>
+            <menu link="option=com_pubdb&amp;view=people" view="people" alt="Pubdb/People">COM_PUBDB_TITLE_PEOPLE</menu>
 
-			<menu link="option=com_pubdb&amp;view=publishers" view="publishers" alt="Pubdb/Publishers">COM_PUBDB_TITLE_PUBLISHERS</menu>
+            <menu link="option=com_pubdb&amp;view=publishers" view="publishers" alt="Pubdb/Publishers">
+                COM_PUBDB_TITLE_PUBLISHERS
+            </menu>
 
-			<menu link="option=com_pubdb&amp;view=keywords" view="keywords" alt="Pubdb/Keywords">COM_PUBDB_TITLE_KEYWORDS</menu>
+            <menu link="option=com_pubdb&amp;view=keywords" view="keywords" alt="Pubdb/Keywords">
+                COM_PUBDB_TITLE_KEYWORDS
+            </menu>
 
-			<menu link="option=com_pubdb&amp;view=citationstyles" view="citationstyles" alt="Pubdb/Citationstyles">COM_PUBDB_TITLE_CITATIONSTYLES</menu>
+            <menu link="option=com_pubdb&amp;view=citationstyles" view="citationstyles" alt="Pubdb/Citationstyles">
+                COM_PUBDB_TITLE_CITATIONSTYLES
+            </menu>
 
-			<menu link="option=com_pubdb&amp;view=referencetypes" view="referencetypes" alt="Pubdb/Referencetypes">COM_PUBDB_TITLE_REFERENCETYPES</menu>
+            <menu link="option=com_pubdb&amp;view=referencetypes" view="referencetypes" alt="Pubdb/Referencetypes">
+                COM_PUBDB_TITLE_REFERENCETYPES
+            </menu>
 
-			<menu link="option=com_pubdb&amp;view=blocks" view="blocks" alt="Pubdb/Blocks">COM_PUBDB_TITLE_BLOCKS</menu>
+            <menu link="option=com_pubdb&amp;view=blocks" view="blocks" alt="Pubdb/Blocks">COM_PUBDB_TITLE_BLOCKS</menu>
 
-            <menu link="option=com_pubdb&amp;view=importer" view="importer" alt="Pubdb/Importer">COM_PUBDB_TITLE_IMPORTER</menu>
+            <menu link="option=com_pubdb&amp;view=importer" view="importer" alt="Pubdb/Importer">
+                COM_PUBDB_TITLE_IMPORTER
+            </menu>
 
         </submenu>
         <files folder="administrator">
@@ -88,14 +104,14 @@
         </files>
         <languages folder="administrator/languages">
 
-        <language tag="de-DE">de-DE/de-DE.com_pubdb.ini</language>
-			<language tag="de-DE">de-DE/de-DE.com_pubdb.sys.ini</language>
+            <language tag="de-DE">de-DE/de-DE.com_pubdb.ini</language>
+            <language tag="de-DE">de-DE/de-DE.com_pubdb.sys.ini</language>
         </languages>
     </administration>
     <config>
         <fields name="params">
             <fieldset name="component">
-                <field name="save_history" default="0" />
+                <field name="save_history" default="0"/>
             </fieldset>
         </fields>
     </config>
@@ -103,6 +119,6 @@
         <plugin group="search" plugin="pubdb"/>
     </plugins>
     <modules>
-		<module module="mod_pubdb" />
-	</modules>
+        <module module="mod_pubdb"/>
+    </modules>
 </extension>

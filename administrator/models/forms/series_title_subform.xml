@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-  <fieldset>
-    <field name="name" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_SERIES_TITLE_NAME" description="COM_PUBDB_FORM_DESC_SERIES_TITLE_NAME" hint="COM_PUBDB_FORM_LBL_SERIES_TITLE_NAME"/>
-    <field name="series_title_editor" type="foreignkey" label="COM_PUBDB_FORM_LBL_SERIES_TITLE_SERIES_TITLE_EDITOR" description="COM_PUBDB_FORM_DESC_SERIES_TITLE_SERIES_TITLE_EDITOR" class="inputbox" input_type="list" table="#__pubdb_person" key_field="id" value_multiple="1" value_field_multiple="first_name,last_name,middle_name" value_field="fk_value" separator=" " multiple="multiple" default="0"/>
-  </fieldset>
+    <fieldset>
+        <field name="name" filter="safehtml" type="text" label="COM_PUBDB_FORM_LBL_SERIES_TITLE_NAME"
+               description="COM_PUBDB_FORM_DESC_SERIES_TITLE_NAME" hint="COM_PUBDB_FORM_LBL_SERIES_TITLE_NAME"/>
+        <field name="series_title_editor" type="foreignkey" label="COM_PUBDB_FORM_LBL_SERIES_TITLE_SERIES_TITLE_EDITOR"
+               description="COM_PUBDB_FORM_DESC_SERIES_TITLE_SERIES_TITLE_EDITOR" class="inputbox" input_type="list"
+               table="#__pubdb_person" key_field="id" value_multiple="1"
+               value_field_multiple="first_name,last_name,middle_name" value_field="fk_value" separator=" "
+               multiple="multiple" default="0"/>
+    </fieldset>
 </form>

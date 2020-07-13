@@ -19,14 +19,14 @@ jimport('joomla.application.component.controllerform');
  */
 class PubdbControllerCitationstyle extends \Joomla\CMS\MVC\Controller\FormController
 {
-	/**
-	 * Constructor
-	 *
-	 * @throws Exception
-	 */
-	public function __construct()
-	{
-		$this->view_list = 'citationstyles';
-		parent::__construct();
-	}
+  /**
+   * Constructor
+   *
+   * @throws Exception
+   */
+  public function __construct()
+  {
+    $this->view_list = 'citationstyles';
+    parent::__construct();
+  }
 }

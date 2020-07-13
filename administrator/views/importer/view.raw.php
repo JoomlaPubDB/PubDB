@@ -8,16 +8,16 @@
  */
 
 // No direct access
-defined('_JEXEC') or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 
-jimport( 'joomla.application.component.view');
+jimport('joomla.application.component.view');
 
 class PubdbViewImporter extends JViewLegacy
 {
   function display($tpl = null)
   {
     global $mainframe;
-    $file           = $this->get('Export');
+    $file = $this->get('Export');
 
     $session = JFactory::getSession();
 
@@ -25,8 +25,8 @@ class PubdbViewImporter extends JViewLegacy
     $doc = JFactory::getDocument();
     $doc->setMimeEncoding('text/plain');
 
-    $filename="pubdb"."-export-".date('d-m-Y-H-i').'.bib';
-    JResponse::setHeader('Content-disposition', 'attachment'.'; filename='.$filename);
+    $filename = "pubdb" . "-export-" . date('d-m-Y-H-i') . '.bib';
+    JResponse::setHeader('Content-disposition', 'attachment' . '; filename=' . $filename);
     echo $file;
   }
 }

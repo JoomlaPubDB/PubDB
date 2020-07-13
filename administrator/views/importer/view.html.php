@@ -12,9 +12,6 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-use \Joomla\CMS\Factory;
-use \Joomla\CMS\Language\Text;
-
 /**
  * View to edit
  *
@@ -31,7 +28,7 @@ class PubdbViewImporter extends JViewLegacy
   /**
    * Display the view
    *
-   * @param   string  $tpl  Template name
+   * @param string $tpl Template name
    *
    * @return void
    *
@@ -39,12 +36,11 @@ class PubdbViewImporter extends JViewLegacy
    */
   public function display($tpl = null)
   {
-    $this->state            = $this->get('State');
-    $this->form     = $this->get('Form');
+    $this->state = $this->get('State');
+    $this->form = $this->get('Form');
 
     // Check for errors.
-    if (count($errors = $this->get('Errors')))
-    {
+    if (count($errors = $this->get('Errors'))) {
       throw new Exception(implode("\n", $errors));
     }
 

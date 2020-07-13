@@ -9,8 +9,6 @@
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
 
-use Joomla\CMS\Input\Json;
-
 defined('_JEXEC') or die;
 
 JLoader::register('PubdbLiteraturesHelper', JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'literatures.php');

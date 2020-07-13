@@ -15,8 +15,8 @@
     </files>
     <languages folder="languages">
 
-    <language tag="de-DE">de-DE/de-DE.plg_search_pubdb.ini</language>
-			<language tag="de-DE">de-DE/de-DE.plg_search_pubdb.sys.ini</language>
+        <language tag="de-DE">de-DE/de-DE.plg_search_pubdb.ini</language>
+        <language tag="de-DE">de-DE/de-DE.plg_search_pubdb.sys.ini</language>
     </languages>
     <config>
         <fields name="params">
@@ -24,7 +24,7 @@
             <fieldset name="basic">
                 <field name="search_limit" type="text" default="50" size="5"
                        description="PLG_SEARCH_COM_PUBDB_FIELD_SEARCHLIMIT_DESC"
-                       label="PLG_SEARCH_COM_PUBDB_FIELD_SEARCHLIMIT_LABEL" />
+                       label="PLG_SEARCH_COM_PUBDB_FIELD_SEARCHLIMIT_LABEL"/>
             </fieldset>
 
         </fields>

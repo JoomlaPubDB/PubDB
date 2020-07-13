@@ -10,8 +10,6 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Date\Date;
-
 /**
  * Class JFormRuleDate
  *
@@ -34,8 +32,8 @@ class JFormRuleName extends JFormRule
    */
   public function test(SimpleXMLElement $element, $value, $group = null, JRegistry $input = null, JForm $form = null)
   {
-    if (empty($value) || !isset($value)  || $value == '') {
-      $element->addAttribute('message',  JText::sprintf('COM_PUBDB_CITATIONSTLYE_NO_NAME', $element['label'], JText::sprintf('COM_PUBDB_TITLE_CITATIONSTYLES')));
+    if (empty($value) || !isset($value) || $value == '') {
+      $element->addAttribute('message', JText::sprintf('COM_PUBDB_CITATIONSTLYE_NO_NAME', $element['label'], JText::sprintf('COM_PUBDB_TITLE_CITATIONSTYLES')));
       return false;
     }
     return true;

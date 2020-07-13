@@ -186,7 +186,7 @@ class PubdbModelPublicationlists extends \Joomla\CMS\MVC\Model\ListModel
     $items = parent::getItems();
     $params = $this->state->get('parameters.menu');
     $pattern = $params['citation_style_id'][0];
-    $formattedStrings = PubdbLiteraturesCitation::mapList($pattern, $items);
+    $formattedStrings = PubdbLiteraturesCitation::generateFormattedStings($pattern, $items);
     $arrReturn = array();
     // build json object
 

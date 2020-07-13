@@ -12,8 +12,26 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Date\Date;
 
+/**
+ * Class JFormRuleCitation
+ *
+ * @since  v0.0.7
+ */
 class JFormRuleCitation extends JFormRule
 {
+  /**
+   * Server-side validation function for citation style
+   * Is default citation style filled
+   *
+   * @param SimpleXMLElement $element
+   * @param mixed $value
+   * @param null $group
+   * @param JRegistry|null $input
+   * @param JForm|null $form
+   * @return bool
+   *
+   * @since  v0.0.7
+   */
   public function test(SimpleXMLElement $element, $value, $group = null, JRegistry $input = null, JForm $form = null)
   {
     if (!strpos($value, '-1')) {

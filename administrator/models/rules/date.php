@@ -12,8 +12,26 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Date\Date;
 
+/**
+ * Class JFormRuleDate
+ *
+ * @since  v0.0.7
+ */
 class JFormRuleDate extends JFormRule
 {
+  /**
+   * Server-side validation function for access date
+   * Is date in the past
+   *
+   * @param SimpleXMLElement $element
+   * @param mixed $value
+   * @param null $group
+   * @param JRegistry|null $input
+   * @param JForm|null $form
+   * @return bool
+   *
+   * @since v0.0.7
+   */
   public function test(SimpleXMLElement $element, $value, $group = null, JRegistry $input = null, JForm $form = null)
   {
     $today = new Date();

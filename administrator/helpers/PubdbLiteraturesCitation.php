@@ -8,6 +8,9 @@
  * @copyright  2020 Max Dunger, Julian Pfau, Robert Strobel, Florian Warnke
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
+
+use Joomla\CMS\Input\Json;
+
 defined('_JEXEC') or die;
 
 JLoader::register('PubdbLiteraturesHelper', JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'literatures.php');
@@ -25,172 +28,191 @@ class PubdbLiteraturesCitation
 {
 
   /**
-   * Was passiert hier
+   * Generates formatted String in citation style format
+   * for each entry in literature list
    *
    * @param $patternId
    * @param $literatureList
+   * @return array String[] with formatted strings in citation style format
    * @since  0.0.1
    */
-  public function mapList($patternId, $literatureList)
+  public function generateFormattedStings($patternId, $literatureList)
   {
     global $blocks;
+
+    // Get all blocks from DB, associated by id
     $db = JFactory::getDbo();
     $query = $db->getQuery(true);
-
     $query
       ->select('*')
       ->from($db->quoteName('#__pubdb_blocks'));
     $db->setQuery($query);
     $blocks = $db->loadAssocList('id');
 
+    // Get citation style pattern as json
     $pattern = self::getPatternFromDb($patternId);
     $res = array();
 
-    foreach ($literatureList as $entry) {
-      $res[] = self::mapEntry($pattern, $entry);
-    }
+    // Each literature literatureEntry is processed
+    foreach ($literatureList as $literatureEntry)
+      $res[] = self::generateFormattedString($pattern, $literatureEntry);
 
     return $res;
   }
 
   /**
-   * Was passiert hier
+   * Generates formatted String in citation style format
+   * for given entry. Global variable Blocks need to be filled before.
    *
    * @param $pattern
-   * @param $entry
+   * @param $literatureEntry
    *
-   * @return String citation
+   * @return String literature string in citation style format
    *
    * @since  0.0.1
    */
-  private function mapEntry($pattern, $entry)
+  private function generateFormattedString($pattern, $literatureEntry)
   {
     $result = "";
-    $ref_type_id = self::getRefIdFromDb($entry->ref_type);
-    if (!array_key_exists($ref_type_id, $pattern))
-      $ref_type_id = -1;
 
-    $author_state = 0;
-    $next_is_delimiter = false;
-    $first_is_empty = false;
+    // Gets reference type of literature (Default = -1)
+    $refTypeId = self::getRefIdFromDb($literatureEntry->ref_type);
+    if (!array_key_exists($refTypeId, $pattern))
+      $refTypeId = -1;
+
+    // State logic
+    $repetitionState = 0;
+    $nextIsDelimiter = false;
+    $firstAuthorIsEmpty = false;
     $delimiter = null;
-    $repetition_amount = -1;
+    $amountAuthors = -1;
+    $isInAuthorBlocks = false;
+    $personBlocks = [];
 
-    $is_in_rep = false;
-    $person_blocks = [];
-    // Block is int id from block_  db
-    for ($i = 0; $i < count((array)$pattern[$ref_type_id]); $i++) {
-      $block = $pattern[$ref_type_id][$i];
+    // Format each block
+    for ($citationStyleIndex = 0; $citationStyleIndex < count((array)$pattern[$refTypeId]); $citationStyleIndex++) {
+      $block = $pattern[$refTypeId][$citationStyleIndex];
 
-      //Repetition logic
+      // Start of author blocks (1,...,2,delimiter,...,3,...4)
       if ($block == 1) {
-        $is_in_rep = true;
-        $repetition_amount = count(explode(',', $entry->authors_first_name));
+        $isInAuthorBlocks = true;
+        $amountAuthors = count(explode(',', $literatureEntry->authors_first_name));
       }
 
+      // Gets delimiter from block logic
       if ($block == 2) {
-        $next_is_delimiter = true;
-        $first_is_empty = ($pattern[$ref_type_id][$i - 1] == 1);
-      } elseif ($next_is_delimiter) {
-        $delimiter = self::getFormattedBlock($block, $entry);
-        $next_is_delimiter = false;
+        $nextIsDelimiter = true;
+        $firstAuthorIsEmpty = ($pattern[$refTypeId][$citationStyleIndex - 1] == 1);
+      } elseif ($nextIsDelimiter) {
+        $delimiter = self::getFormattedBlock($block, $literatureEntry);
+        $nextIsDelimiter = false;
         continue;
       }
 
-      if ($is_in_rep) {
-        //Cash data for repetition
-        array_push($person_blocks, $block);
+      // Process blocks for author
+      if ($isInAuthorBlocks) {
+        // Cash blocks for repetition
+        array_push($personBlocks, $block);
 
-        //Fill on end with repetition
+        // At the end of author blocks format through repetition
         if ($block == 4) {
-          $is_in_rep = false;
+          $isInAuthorBlocks = false;
 
-          //For each person
-          for ($j = 0; $j < $repetition_amount; $j++) {
-            //For each block
-            foreach ($person_blocks as $person_block) {
-              //Is repetition block
-              if ($person_block <= 4) {
-                $author_state = $person_block;
+          // For each person
+          for ($personIndex = 0; $personIndex < $amountAuthors; $personIndex++) {
+            // For each block
+            foreach ($personBlocks as $personBlock) {
+
+              // Is repetition helper block (1,2,3,4) update repetition state
+              if ($personBlock <= 4) {
+                $repetitionState = $personBlock;
                 continue;
               }
-              //Is a content block
-              if (27 <= $person_block && $person_block <= 38)
-                $person_part = explode(',', self::getFormattedBlock($person_block, $entry))[$j];
-              //Is a format block
-              else
-                $person_part = self::getFormattedBlock($person_block, $entry);
 
-              switch ($author_state) {
+              // Is a content or format block
+              if (27 <= $personBlock && $personBlock <= 38)
+                $personPart = explode(',', self::getFormattedBlock($personBlock, $literatureEntry))[$personIndex];
+              else
+                $personPart = self::getFormattedBlock($personBlock, $literatureEntry);
+
+              // How to handle block according to $repetitionState
+              switch ($repetitionState) {
                 case 1:
-                  if ($j == 0 && !$first_is_empty) $result .= $person_part;
+                  // Isn't first author empty and first block, append block
+                  if (!$firstAuthorIsEmpty && $personIndex == 0) $result .= $personPart;
                   break;
                 case 2:
-                  if ($j == 0 && $first_is_empty) $result .= $person_part;
-                  if ($j != 0 && $j != $repetition_amount - 1) $result .= $person_part;
+                  // Is first author empty and first block, append block
+                  if ($firstAuthorIsEmpty && $personIndex == 0) $result .= $personPart;
+                  // Isn't last author and not first block, append block
+                  if ($personIndex != $amountAuthors - 1 && $personIndex != 0) $result .= $personPart;
                   break;
                 case 3:
-                  //Last
-                  if ($j != 0 && $j == $repetition_amount - 1) $result .= $person_part;
+                  // Is last author and not first block, append block
+                  if ($personIndex == $amountAuthors - 1 && $personIndex != 0) $result .= $personPart;
                   break;
               }
             }
-            if ($j < $repetition_amount - 2) $result .= $delimiter;
+            // After each, but last, person append delimiter
+            if ($personIndex < $amountAuthors - 2) $result .= $delimiter;
           }
 
-          //Reset
-          $author_state = 0;
-          $next_is_delimiter = false;
-          $first_is_empty = false;
+          //Reset states
+          $repetitionState = 0;
+          $nextIsDelimiter = false;
+          $firstAuthorIsEmpty = false;
           $delimiter = null;
-          $repetition_amount = -1;
+          $amountAuthors = -1;
         }
         continue;
       }
 
-      $result .= self::getFormattedBlock($block, $entry);
+      // Append formatted non author block
+      $result .= self::getFormattedBlock($block, $literatureEntry);
     }
     return $result;
   }
 
   /**
-   * Was passiert hier
+   * Format block
    *
-   * @param $block
-   * @param $entry
-   * @return String
+   * @param $block String block to be formatted
+   * @param $literatureEntry stdClass literature entry to get data from
+   * @return String formatted block
    *
    * @since  0.0.1
    */
 
-  private function getFormattedBlock($block, $entry)
+  private function getFormattedBlock($block, $literatureEntry)
   {
     global $blocks;
     $result = "";
 
-    //Has format function
+    // Has format function -> call it
     $blockName = ucfirst(strtolower($blocks[$block]['name']));
     if (method_exists(self::class, 'format' . $blockName . 'Field'))
-      $content = call_user_func(array(__CLASS__, 'format' . $blockName . 'Field'), $entry);
-    //get from DB
+      $content = call_user_func(array(__CLASS__, 'format' . $blockName . 'Field'), $literatureEntry);
     else
+      // Get data from DB
       $content = strtolower($blocks[$block]['name']);
 
-    //Content is from DB or just format (e.g. "," or ":")
-    if ($content != null && array_key_exists($content, (array)$entry))
-      $result .= $entry->$content;
+    // Is content from DB or just format block (e.g. "," or ":")
+    if ($content != null && array_key_exists($content, (array)$literatureEntry))
+      // Get from $literatureEntry
+      $result .= $literatureEntry->$content;
     else
+      // Get translation for block
       $result .= JText::_('COM_PUBDB_CITATIONSTLYE_' . strtoupper($content));
 
     return $result;
   }
 
   /**
-   * Was passiert hier
+   * Get citation style from DB
    *
-   * @param $citation_style_id
+   * @param $citation_style_id int Id of the citation style
    *
-   * @return String pattern
+   * @return json Pattern of the citation style
    *
    * @since  0.0.1
    */
@@ -210,22 +232,22 @@ class PubdbLiteraturesCitation
   }
 
   /**
-   * Was passiert hier
+   * Get reference type id by name
    *
-   * @param $ref_type
-   * @return String pattern
+   * @param $refTypeName String reference type name
+   * @return int reference type id
    *
    * @since  0.0.1
    */
 
-  private function getRefIdFromDb($ref_type)
+  private function getRefIdFromDb($refTypeName)
   {
     $db = JFactory::getDbo();
     $query = $db->getQuery(true);
     $query
       ->select($db->qn('id'))
       ->from($db->quoteName('#__pubdb_reference_types'))
-      ->where($db->quoteName('name') . ' LIKE ' . $db->quote($ref_type));
+      ->where($db->quoteName('name') . ' LIKE ' . $db->quote($refTypeName));
     $db->setQuery($query);
     return $db->loadResult();
   }

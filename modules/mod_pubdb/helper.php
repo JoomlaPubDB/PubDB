@@ -127,7 +127,7 @@ class ModPubdbHelper
     foreach ($items as $item) {
       $item_objects[] = (object)$item;
     }
-    $formattedStrings = PubdbLiteraturesCitation::mapList($pattern, $item_objects);
+    $formattedStrings = PubdbLiteraturesCitation::generateFormattedStings($pattern, $item_objects);
     $arrReturn = array();
     // build json object
     $export_ids = array();

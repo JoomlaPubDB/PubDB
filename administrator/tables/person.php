@@ -56,6 +56,7 @@ class PubdbTableperson extends \Joomla\CMS\Table\Table
 		$input = JFactory::getApplication()->input;
 		$task = $input->getString('task', '');
 
+    // Generate first name initials
         $first = trim($array['first_name']);
         if (!empty($first)) {
           foreach (explode(" ", $first) as $part)

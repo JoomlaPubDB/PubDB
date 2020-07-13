@@ -225,6 +225,16 @@ class PubdbLiteraturesCitation
       ->where($db->quoteName('id') . ' = ' . (int)$citation_style_id);
     $db->setQuery($query);
     $pattern = $db->loadResult();
+    //fallback if the pattern does not exist
+    if ($pattern == null) {
+      $query = $db->getQuery(true);
+      $query
+        ->select($db->qn('string'))
+        ->from($db->quoteName('#__pubdb_citation_style'))
+        ->where($db->quoteName('id') . ' = 1');
+      $db->setQuery($query);
+      $pattern = $db->loadResult();
+    }
     $pattern = json_decode($pattern, 1);
     return $pattern;
   }

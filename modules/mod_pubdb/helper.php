@@ -122,7 +122,10 @@ class ModPubdbHelper
   {
     $items = ModPubdbHelper::getItemList($params);
     $pattern = (int)$params['citation_style_id'];
-    if (isset($_GET['citation_style'])) $pattern = (int)$_GET['citation_style'];
+    if (isset($params['allow_citation_change']) && isset($_GET['citation_style'])) {
+      $pattern = (int)$_GET['citation_style'];
+    }
+    //if (isset($_GET['citation_style'])) $pattern = (int)$_GET['citation_style'];
     $item_objects = array();
     foreach ($items as $item) {
       $item_objects[] = (object)$item;

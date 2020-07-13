@@ -44,6 +44,8 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
   {
     $model = $this->getModel();
     $data = $this->input->post->get('jform', array(), 'array');
+
+    // Add author if in subform
     if (isset($data['author_subform']) && trim($data['author_subform']['author_subform0']['first_name']) != '' && trim($data['author_subform']['author_subform0']['last_name']) != '') {
       $arrAuthors = array();
       foreach ($data['author_subform'] as $author) {
@@ -55,6 +57,8 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['authors'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
+
+    // Add translator if in subform
     if (isset($data['translator_subform']) && trim($data['translator_subform']['translator_subform0']['first_name']) != '' && trim($data['translator_subform']['translator_subform0']['last_name']) != '') {
       $arrTranslators = array();
       foreach ($data['translator_subform'] as $translator) {
@@ -66,6 +70,8 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['translators'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
+
+    // Add others involved if in subform
     if (isset($data['other_subform']) && trim($data['other_subform']['other_subform0']['first_name']) != '' && trim($data['other_subform']['other_subform0']['last_name']) != '') {
       $arrOthersInvolved = array();
       foreach ($data['other_subform'] as $otherInvolved) {
@@ -77,6 +83,8 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['others_involved'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
+
+    // Add publisher if in subform
     if (isset($data['publisher_subform']) && trim($data['publisher_subform']['publisher_subform0']['name'])) {
       $arrPublishers = array();
       foreach ($data['publisher_subform'] as $publisher) {
@@ -88,6 +96,8 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['publishers'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
+
+    // Add keywords if in subform
     if (isset($data['keyword_subform']) && trim($data['keyword_subform']['keyword_subform0']['name'])) {
       $arrKeywords = array();
       foreach ($data['keyword_subform'] as $keyword) {
@@ -99,10 +109,14 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
       $data['keywords'] = $arr_merged;
       $this->input->post->set('jform', $data);
     }
+
+    // Add periodical if in subform
     if (isset($data['periodical_subform']) && trim($data['periodical_subform']['periodical_subform0']['issn']) != '' && trim($data['periodical_subform']['periodical_subform0']['name']) != '') {
       $data['periodical_id'] = (int)$this->checkForNewPeriodical($data['periodical_subform']);
       $this->input->post->set('jform', $data);
     }
+
+    // Add series title if in subform
     if (isset($data['series_title_subform']) && trim($data['series_title_subform']['series_title_subform0']['name']) != '') {
       $data['series_title_id'] = (int)$this->checkForNewSeriesTitle($data['series_title_subform']);
       $this->input->post->set('jform', $data);
@@ -112,16 +126,17 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
 
   /**
    * Check if new Person already exists and insert new one. Return person id in both cases.
-   * @param $author
-   * @return mixed
+   * @param $person stdClass person object
+   * @return int id of the person
    * @since 0.0.7
    */
-  private function checkForNewPerson($author)
+  private function checkForNewPerson($person)
   {
     $db = JFactory::getDbo();
-    $first_name = $author['first_name'];
-    $last_name = $author['last_name'];
+    $first_name = $person['first_name'];
+    $last_name = $person['last_name'];
 
+    // Check if person already exists
     $query = $db->getQuery(true);
     $query->select($db->quoteName('id'));
     $query->from('#__pubdb_person');
@@ -130,18 +145,22 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
     $db->setQuery($query);
     $id = $db->loadResult();
 
+    // Insert new person if not existing
     if ($id == null) {
+      // Generate first name initial
       $first_name_initial = "";
       $first = trim($first_name);
       foreach (explode(" ", $first) as $part)
         $first_name_initial .= " " . ucfirst(trim($part)[0]) . ".";
       if (trim($first_name_initial) == ".") $first_name_initial = null;
+
+      // Insert into db
       $db_in = JFactory::getDbo();
       $query_in = $db_in->getQuery(true);
       $query_in->insert('#__pubdb_person');
       $query_in->columns($db->quoteName(array('first_name', 'last_name', 'first_name_initial', 'middle_name', 'title', 'sex', 'created_by', 'modified_by')));
       $query_in->values(implode(',', array($db->quote($first_name), $db->quote($last_name), $db->quote($first_name_initial),
-        $db->quote($author['middle_name']), $db->quote($author['title']), $db->quote($author['sex']), JFactory::getUser()->id, JFactory::getUser()->id
+        $db->quote($person['middle_name']), $db->quote($person['title']), $db->quote($person['sex']), JFactory::getUser()->id, JFactory::getUser()->id
       )));
       $db_in->setQuery($query_in);
       $db_in->execute();
@@ -153,8 +172,8 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
 
   /**
    * Check if new Publisher already exists and insert new one. Return publisher id in both cases.
-   * @param $publisher
-   * @return mixed
+   * @param $publisher stdClass publisher object
+   * @return int id of publisher
    * @since 0.0.7
    */
   private function checkForNewPublisher($publisher)
@@ -162,6 +181,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
     $db = JFactory::getDbo();
     $name = $publisher['name'];
 
+    // Check if publisher already exists
     $query = $db->getQuery(true);
     $query->select($db->quoteName('id'));
     $query->from('#__pubdb_publisher');
@@ -169,6 +189,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
     $db->setQuery($query);
     $id = $db->loadResult();
 
+    // Insert new publisher if not existing
     if ($id == null) {
       $db_in = JFactory::getDbo();
       $query_in = $db_in->getQuery(true);
@@ -186,8 +207,8 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
 
   /**
    * Check if new Keyword already exists and insert new one. Return keyword id in both cases.
-   * @param $keyword
-   * @return mixed
+   * @param $keyword stdClass keyword objects
+   * @return int id of keyword
    * @since 0.0.7
    */
   private function checkForNewKeyword($keyword)
@@ -195,6 +216,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
     $db = JFactory::getDbo();
     $name = $keyword['name'];
 
+    // Check if keyword already exists
     $query = $db->getQuery(true);
     $query->select($db->quoteName('id'));
     $query->from('#__pubdb_keywords');
@@ -202,6 +224,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
     $db->setQuery($query);
     $id = $db->loadResult();
 
+    // Insert new keyword if not existing
     if ($id == null) {
       $db_in = JFactory::getDbo();
       $query_in = $db_in->getQuery(true);
@@ -219,8 +242,8 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
 
   /**
    * Check if new Periodical already exists and insert new one. Return periodical id in both cases.
-   * @param $periodical
-   * @return mixed
+   * @param $periodical stdClass periodical objects
+   * @return int id of keyword
    * @since 0.0.7
    */
   private function checkForNewPeriodical($periodical)
@@ -230,6 +253,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
     $eissn = $periodical['eissn'];
     $name = $periodical['name'];
 
+    // Check if periodical already exists
     $query = $db->getQuery(true);
     $query->select($db->quoteName('id'));
     $query->from('#__pubdb_periodical');
@@ -238,6 +262,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
     $db->setQuery($query);
     $id = $db->loadResult();
 
+    // Insert new periodical if not existing
     if ($id == null) {
       $db_in = JFactory::getDbo();
       $query_in = $db_in->getQuery(true);
@@ -256,8 +281,8 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
 
   /**
    * Check if new Series Title already exists and insert new one. Return series title id in both cases.
-   * @param $seriesTitle
-   * @return mixed
+   * @param $seriesTitle stdClass series title objects
+   * @return int id of keyword
    * @since 0.0.7
    */
   private function checkForNewSeriesTitle($seriesTitle)
@@ -266,6 +291,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
     $seriesTitleEditor = $seriesTitle['series_title_editor'];
     $name = $seriesTitle['name'];
 
+    // Check if periodical already exists
     $query = $db->getQuery(true);
     $query->select($db->quoteName('id'));
     $query->from('#__pubdb_series_title');
@@ -273,6 +299,7 @@ class PubdbControllerLiterature extends \Joomla\CMS\MVC\Controller\FormControlle
     $db->setQuery($query);
     $id = $db->loadResult();
 
+    // Insert new periodical if not existing
     if ($id == null) {
       $db_in = JFactory::getDbo();
       $query_in = $db_in->getQuery(true);

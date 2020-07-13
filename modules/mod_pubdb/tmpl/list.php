@@ -22,8 +22,6 @@ $export_ids = $app->get('mod_pubdb_export_id');
 
 // Import CSS
 $document = Factory::getDocument();
-//$document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/list.css');
-//$document->addScript('https://code.jquery.com/jquery-3.5.0.js"');
 
 //add Datatable.JS Scripts
 $document->addScript(Uri::root() . 'media/com_pubdb/js/jquery.dataTables.js');
@@ -37,9 +35,11 @@ $document->addScript(Uri::root() . 'media/com_pubdb/js/dataTables.select.min.js'
 $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/jquery.dataTables.css');
 $document->addStyleSheet(Uri::root() . 'media/com_pubdb/css/searchPanes.dataTables.min.css');
 
-$params = $helper->getParams($title);
+
 $stateArr = array();
-foreach ($params as $key => $value) {
+
+//use all params from mod_pubdb.php
+foreach ($allParams as $key => $value) {
   $stateArr[$key] = $value;
 }
 
@@ -53,6 +53,8 @@ $group_by = $stateArr['pubdb_group_by'];
  * @param $arr input array to sort
  * @param $col col key to sort by
  * @param int $dir sort order
+ * @return mixed sorted array
+ * @since v0.0.7
  */
 
 function array_sort_by_column($arr, $col, $dir = SORT_ASC)
@@ -67,6 +69,8 @@ function array_sort_by_column($arr, $col, $dir = SORT_ASC)
   return $arr;
 }
 
+
+//basically same code as in the component publication list
 
 //ignore datatables if grouping
 if ($group_by == '0' || !isset($group_by)) {

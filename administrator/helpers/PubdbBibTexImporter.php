@@ -6,6 +6,12 @@ require(JPATH_COMPONENT . '/helpers/vendor/autoload.php');
 
 JLoader::register('PubdbBibTexImporter', JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'PubdbBibTexImporter.php');
 
+/**
+ * Class PubdbBibTexImporter
+ * Class to import BibTex files to the database. For the parsing process of the BibTex format a external library is used.
+ * The parsed data will be checked with the data in the database and new entries will be imported.
+ * @since 0.0.7
+ */
 class PubdbBibTexImporter
 {
 
@@ -31,37 +37,39 @@ class PubdbBibTexImporter
    * @var array mapping table for umlauts
    * @since v0.0.7
    */
-  private $umlautsMapping = array();
+  private $latexMapping = array();
   /**
    * @var array mapping table for database and BibTex format
    * @since v0.0.7
    */
   private $fieldMapping = array();
 
+  /**
+   * @var String json file path for latex mapping
+   * @since v0.0.7
+   */
+  private $json_file = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'latex_conversion.json';
+
+
+  /**
+   * PubdbBibTexImporter constructor.
+   * @param $file_string String file path of the import file
+   * @throws \RenanBr\BibTexParser\Exception\ParserException
+   * @since v0.0.7
+   */
   function __construct($file_string)
   {
-    /**
-     *
-     */
     $this->parser = new \RenanBr\BibTexParser\Parser();
     $this->listener = new \RenanBr\BibTexParser\Listener();
     $this->parser->addListener($this->listener);
     $this->parser->parseString($file_string);
-    $this->umlautsMapping = array(
-      '{\"u}' => "ü",
-      '{\"U}' => "Ü",
-      '{\"a}' => "ä",
-      '{\"A}' => "Ä",
-      '{\"o}' => "ö",
-      '{\"O}' => "Ö",
-      '{\ss}' => "ß",
-      '{\&}' => "&"
-    );
+
+    $this->latexMapping = array_flip((array)json_decode(file_get_contents($this->json_file)));
 
     $this->fieldMapping = array(
       "address" => "place_of_publication",
       "author" => "authors", //reference done
-      "booktitle" => "title",
+      "booktitle" => "subtitle",
       "doi" => "doi",
       "edition" => "volume",
       "volume" => "volume",
@@ -81,10 +89,10 @@ class PubdbBibTexImporter
       "urldate" => "access_date",
       "year" => "year",
       "month" => "month",
-      "editor" => "others_involved"
+      "editor" => "others_involved",
+      "keywords" => "keywords"
     );
   }
-
 
   /**
    * Start the import process by calling the BibTex parser
@@ -97,7 +105,6 @@ class PubdbBibTexImporter
   {
     $this->entries = $this->listener->export();
     $formattedEntries = array();
-
     //just formatting stuff
     foreach ($this->entries as $literature) {
       $formattedValues = array();
@@ -194,11 +201,12 @@ class PubdbBibTexImporter
     $query->select($db->quoteName('id'));
     $query->from('#__pubdb_literature');
     $query->where($db->quoteName('title') . ' = ' . $db->quote($literature['title']));
-    $query->where($db->quoteName('year') . ' = ' . $db->quote($literature['year']));
+    $query->where($db->quoteName('year') . ' = ' . $db->quote($literature['year']), 'OR');
     if (isset($literature['isbn'])) $query->where($db->quoteName('isbn') . ' = ' . $db->quote($literature['isbn']), 'AND');
     if (isset($literature['eisbn'])) $query->where($db->quoteName('eisbn') . ' = ' . $db->quote($literature['eisbn']), 'AND');
     if (isset($literature['doi'])) $query->where($db->quoteName('doi') . ' = ' . $db->quote($literature['doi']), 'AND');
     if (isset($literature['reference_type'])) $query->where($db->quoteName('reference_type') . ' = ' . $db->quote($literature['reference_type']), "AND");
+    if (isset($literature['subtitle'])) $query->where($db->quoteName('subtitle') . ' = ' . $db->quote($literature['subtitle']), "AND");
     $db->setQuery($query);
     $id = $db->loadResult();
 
@@ -222,6 +230,7 @@ class PubdbBibTexImporter
       $db_in->execute();
       return $db_in->insertid();
     } else {
+      $this->updateState('#__pubdb_literature', (int)$id);
       return $id;
     }
   }
@@ -247,20 +256,20 @@ class PubdbBibTexImporter
       $arrAuthorName = explode(',', $authors);
       if (count($arrAuthorName) == 1) {
         $arrName = explode(' ', $authors);
-        return $this->getAuthorIdFromDB($arrName[0], $arrName[count($arrName) - 1]);
+        return $this->getPersonIDFromDB($arrName[0], $arrName[count($arrName) - 1]);
       } else {
-        return $this->getAuthorIdFromDB($arrAuthorName[1], $arrAuthorName[0]);
+        return $this->getPersonIDFromDB($arrAuthorName[1], $arrAuthorName[0]);
       }
     } else {
       foreach (explode(';', $authors) as $author) {
         if (count(explode(',', $author)) == 1) {
           $arrName = explode(' ', $author);
           $arrName = array_filter($arrName);
-          $arrAuthorIds[] = $this->getAuthorIdFromDB($arrName[0], $arrName[count($arrName) - 1]);
+          $arrAuthorIds[] = $this->getPersonIDFromDB($arrName[0], $arrName[count($arrName) - 1]);
         } else {
           $arrName = explode(',', $author);
           $arrName = array_filter($arrName);
-          $arrAuthorIds[] = $this->getAuthorIdFromDB($arrName[count($arrName) - 1], $arrName[0]);
+          $arrAuthorIds[] = $this->getPersonIDFromDB($arrName[count($arrName) - 1], $arrName[0]);
         }
       }
       return implode(',', $arrAuthorIds);
@@ -288,9 +297,9 @@ class PubdbBibTexImporter
       $arrPersonName = explode(',', $persons);
       if (count($arrPersonName) == 1) {
         $arrName = explode(' ', $persons);
-        return $this->getAuthorIdFromDB($arrPersonName[0], $arrPersonName[count($arrName) - 1]);
+        return $this->getPersonIDFromDB($arrPersonName[0], $arrPersonName[count($arrName) - 1]);
       } else {
-        return $this->getAuthorIdFromDB($arrPersonName[1], $arrPersonName[0]);
+        return $this->getPersonIDFromDB($arrPersonName[1], $arrPersonName[0]);
       }
     } else {
       foreach (explode(' and ', $persons) as $person) {
@@ -298,11 +307,11 @@ class PubdbBibTexImporter
         if (count($arrPersonName) == 1) {
           $arrName = explode(' ', $person);
           $arrName = array_filter($arrName);
-          $arrPersonIds[] = $this->getAuthorIdFromDB($arrName[0], $arrName[count($arrName) - 1]);
+          $arrPersonIds[] = $this->getPersonIDFromDB($arrName[0], $arrName[count($arrName) - 1]);
         } else {
           $arrName = explode(',', $person);
           $arrName = array_filter($arrName);
-          $arrPersonIds[] = $this->getAuthorIdFromDB($arrName[count($arrName) - 1], $arrName[0]);
+          $arrPersonIds[] = $this->getPersonIDFromDB($arrName[count($arrName) - 1], $arrName[0]);
         }
       }
       // return person IDs as comma separated list
@@ -318,8 +327,10 @@ class PubdbBibTexImporter
    * @return mixed
    * @since v0.0.7
    */
-  private function getAuthorIdFromDB($first_name, $last_name)
+  private function getPersonIDFromDB($first_name, $last_name)
   {
+    $first_name = $this->removeBracketsFromString($first_name);
+    $last_name = $this->removeBracketsFromString($last_name);
     $db = JFactory::getDbo();
     $query = $db->getQuery(true);
     $query->select($db->quoteName('id'));
@@ -344,6 +355,7 @@ class PubdbBibTexImporter
       $db_in->execute();
       return $db_in->insertid();
     } else {
+      $this->updateState('#__pubdb_person', (int)$id);
       return $id;
     }
   }
@@ -370,6 +382,7 @@ class PubdbBibTexImporter
     if ($id == null) {
       return 1;
     } else {
+      $this->updateState('#__pubdb_reference_types', (int)$id);
       return $id;
     }
   }
@@ -386,22 +399,49 @@ class PubdbBibTexImporter
     $literature = $params[1];
     $publisher = $literature[$field];
 
+    //new fix if there is more than one publisher
+    if (count(explode('and', $publisher)) > 1) {
+      $publisherIds = array();
+      $publishers = explode('and', $publisher);
+      foreach ($publishers as $pub) {
+        $pub = $this->cleanUpString($pub);
+        $pub = $this->removeBracketsFromString($pub);
+        $publisherIds[] = $this->getPublisherIDFromDB($pub);
+      }
+      return implode(',', $publisherIds);
+    } else {
+      return $this->getPublisherIDFromDB($publisher);
+    }
+  }
+
+  /**
+   * Check database for existing publisher or insert new one by name.
+   * In both cases return the id of the publisher.
+   * @param $name publisher name
+   * @return int publisher id
+   * @since v0.0.7
+   */
+
+  private function getPublisherIDFromDB($name)
+  {
+
     $db = JFactory::getDbo();
     $query = $db->getQuery(true);
     $query->select($db->quoteName('id'));
     $query->from('#__pubdb_publisher');
-    $query->where($db->quoteName('name') . '=' . $db->quote(ucfirst($publisher)));
+    $query->where($db->quoteName('name') . '=' . $db->quote($name));
     $db->setQuery($query);
     $id = $db->loadResult();
     if ($id == null) {
       $insert = $db->getQuery(true);
       $insert->insert('#__pubdb_publisher');
       $insert->columns($db->quoteName('name'));
-      $insert->values($db->quote($publisher));
+      $insert->values($db->quote($name));
       $db->setQuery($insert);
       $db->execute();
       return $db->insertid();
     } else {
+      $this->updateState('#__pubdb_publisher', (int)$id);
       return $id;
     }
   }
@@ -424,8 +464,8 @@ class PubdbBibTexImporter
     $query->select($db->quoteName('id'));
     $query->from('#__pubdb_periodical');
     $query->where($db->quoteName('name') . ' = ' . $db->quote($name));
-    if ($eissn != '') $query->where($db->quote('eissn') . '=' . $db->quote($eissn), 'AND');
-    if ($issn != '') $query->where($db->quote('issn') . '=' . $db->quote($issn), 'AND');
+    if ($eissn != '') $query->where($db->quoteName('eissn') . '=' . $db->quote($eissn), 'OR');
+    if ($issn != '') $query->where($db->quoteName('issn') . ' LIKE ' . $db->quote($issn), 'OR');
     $db->setQuery($query);
     $id = $db->loadResult();
     if ($id == null) {
@@ -437,6 +477,7 @@ class PubdbBibTexImporter
       $db->execute();
       return $db->insertid();
     } else {
+      $this->updateState('#__pubdb_periodical', (int)$id);
       return $id;
     }
   }
@@ -468,8 +509,49 @@ class PubdbBibTexImporter
       $db->execute();
       return $db->insertid();
     } else {
+      $this->updateState('#__pubdb_series_title', (int)$id);
       return $id;
     }
+  }
+
+  /**
+   * Check if the keywords of the literature already exist.
+   * If not insert a new keyword into the database and return a list of IDs.
+   * @param $item
+   * @return mixed|string
+   * @since v0.0.7
+   */
+
+  private function checkRelationKeywords($item)
+  {
+    $returnIds = array();
+    $field = $item[0];
+    $keywords = $this->cleanUpString($item[1][$field]);
+    $keywords = explode(';', $keywords);
+
+    foreach ($keywords as $keyword) {
+      $db = JFactory::getDbo();
+      $query = $db->getQuery(true);
+      $keyword = $this->cleanUpString($keyword);
+      $query->select($db->quoteName('id'))
+        ->from($db->quoteName('#__pubdb_keywords'))
+        ->where($db->quoteName('name') . ' = ' . $db->quote($keyword));
+      $db->setQuery($query);
+      $id = $db->loadResult();
+      if ($id == null) {
+        $insert_query = $db->getQuery(true);
+        $insert_query->insert('#__pubdb_keywords')
+          ->columns($db->quoteName(array('name')))
+          ->values($db->quote($keyword));
+        $db->setQuery($insert_query);
+        $db->execute();
+        $returnIds [] = $db->insertid();
+      } else {
+        $returnIds[] = $id;
+        $this->updateState('#__pubdb_keywords', (int)$id);
+      }
+    }
+    return implode(',', $returnIds);
   }
 
 
@@ -497,11 +579,36 @@ class PubdbBibTexImporter
   }
 
   /**
-   * Format BibTex month String to numeric value jan => 1
-   * @param $item
+   * Update the State of an Element to 1 so it's published.
+   * Joomla! won't delete elements instead, they are changing states with this the unpublished state will be updated
+   * and the element ist active again
+   * @param $table String table name of the element
+   * @param $id int id of the element
    * @return mixed
+   * @since v0.0.7
    */
-  private function formatMonth($item)
+
+  private function updateState($table, $id)
+  {
+    $db = JFactory::getDbo();
+    $query = $db->getQuery(true);
+
+    $fields = array($db->quoteName('state') . " = 1");
+
+    $conditions = array($db->quoteName('id') . ' = ' . $id);
+
+    $query->update($db->quoteName($table))->set($fields)->where($conditions);
+    $db->setQuery($query);
+    return $db->execute();
+  }
+
+  /**
+   * Format BibTex month String to numeric value jan => 1
+   * @param $month String month to format
+   * @return String formatted month string
+   * @since v0.0.7
+   */
+  private function formatMonth($month)
   {
     $months = array(
       '1' => 'jan',
@@ -515,11 +622,26 @@ class PubdbBibTexImporter
       '9' => 'sep',
       '10' => 'oct',
       '11' => 'nov',
-      '12' => 'dec'
+      '12' => 'dec',
     );
 
+    $flip = array_flip($months);
+    $months = array_merge($flip, $months);
     $months = array_flip($months);
-    return $months[$item['month']];
+
+    return $months[$this->cleanUpString($month)];
+  }
+
+  /**
+   * Remove "-" from isbn to fit database format
+   * @param $isbn isbn number to format
+   * @return string|string[] formatted string
+   * @since v0.0.7
+   */
+
+  private function formatIsbn($isbn)
+  {
+    return str_replace('-', '', $isbn);
   }
 
   /**
@@ -534,6 +656,8 @@ class PubdbBibTexImporter
     //remove last and first bracket from string
     $string = rtrim($string, '}');
     $string = ltrim($string, '{');
+    $string = rtrim($string, ' ');
+    $string = ltrim($string, ' ');
     return $string;
   }
 
@@ -551,6 +675,7 @@ class PubdbBibTexImporter
     //remove whitespace from begin and end of string
     $string = rtrim($string, ' ');
     $string = ltrim($string, ' ');
+    $string = str_replace('  ', ' ', $string);
 
     // check if string start with a bracket to reformat string
     if (strpos($string, '{') == 0 && substr($string, -1) == '}') {
@@ -559,7 +684,7 @@ class PubdbBibTexImporter
       $string_return = $string;
     }
     // remove all umlauts from string
-    foreach ($this->umlautsMapping as $umlaut => $rep) {
+    foreach ($this->latexMapping as $umlaut => $rep) {
       $string_return = str_replace($umlaut, $rep, $string_return);
     }
     return $string_return;

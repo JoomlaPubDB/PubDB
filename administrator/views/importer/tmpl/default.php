@@ -32,17 +32,19 @@ JHtml::_('formbehavior.chosen', 'select');
                 <div class="control-label"><?php echo $this->form->getLabel('import_file'); ?></div>
                 <div class="controls"><?php echo $this->form->getInput('import_file'); ?></div>
               </div>
-              <button class="btn btn-primary" type="submit" onclick="this.form.submit()" /><i class="icon-upload icon-white"></i> <?php echo JText::_('COM_PUBDB_IMPORT'); ?></button>
+              <button class="btn btn-primary" type="submit"
+                      onclick="document.getElementById('task').value = 'importer.import';this.form.submit()"/>
+              <i class="icon-upload icon-white"></i> <?php echo JText::_('COM_PUBDB_IMPORT'); ?></button>
             </div>
             <div class="span6">
-              <div class="alert alert-info"><?php echo JText::_('COM_PUBDB_IMPORT_TYPE_TIPS');?></div>
+              <div class="alert alert-info"><?php echo JText::_('COM_PUBDB_IMPORT_TYPE_TIPS'); ?></div>
             </div>
           </div>
         </fieldset>
       </div>
       <div class="row-fluid">
         <fieldset class="form-horizontal">
-          <legend><?php echo JText::_( 'COM_PUBDB_TITLE_EXPORTER' ); ?></legend>
+          <legend><?php echo JText::_('COM_PUBDB_TITLE_EXPORTER'); ?></legend>
           <div class="row-fluid">
             <div class="span6">
               <div class="control-group">

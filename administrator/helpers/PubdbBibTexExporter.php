@@ -13,7 +13,9 @@ JLoader::register('PubdbBibTexExporter', JPATH_ADMINISTRATOR . DIRECTORY_SEPARAT
 
 /**
  * Class PubdbBibTexExporter
- * class to export literature in BibTeX formatting for download
+ * Class to export literature in BibTeX formatting for download.
+ * Use the publication_list database View as base for all the data. Export every entry in the table or only
+ * the literature with the given id.
  * @since v0.0.5
  */
 class PubdbBibTexExporter
@@ -27,20 +29,29 @@ class PubdbBibTexExporter
    * @var array mapping table for umlauts
    * @since v0.0.7
    */
-  private $umlautsMapping = array();
+  private $latexMapping = array();
   /**
    * @var array mapping table for database and BibTex format
    * @since v0.0.7
    */
 
   /**
-   * @var array mapping table for our database fields to  the default BibTex fields
+   * @var String json file path for latex mapping
+   * @since v0.0.7
    */
+  private $json_file = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_pubdb' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'latex_conversion.json';
+
+  /**
+   * @var mixed Array to map database fields to BibTex fields
+   * @since v0.0.7
+   */
+
   private $defaultFields = array(
     'ref_type' => 'type',
     'authors' => 'author',
     'others_involved' => 'editor',
     'title' => 'title',
+    'subtitle' => 'booktitle',
     'access_data' => 'note',
     'keywords' => 'keywords',
     'language' => 'language',
@@ -57,8 +68,10 @@ class PubdbBibTexExporter
     'periodical_eissn' => 'eissn',
     'volume' => 'volume'
   );
+
   /**
    * @var array mapping for article ref types journal, publisher, address, subtitle
+   * @since v0.0.7
    */
   private $articleFields = array(
     'periodical_name' => 'journal',
@@ -69,6 +82,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for book ref types publisher, address, subtitle
+   * @since v0.0.7
    */
 
   private $bookFields = array(
@@ -79,6 +93,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for booklet ref types howpublished, address, subtitle
+   * @since v0.0.7
    */
 
   private $bookletFields = array(
@@ -88,6 +103,7 @@ class PubdbBibTexExporter
   );
   /**
    * @var array mapping for inbook ref type publisher, address, subtitle
+   * @since v0.0.7
    */
   private $inbookFields = array(
     'publisher_name' => 'publisher',
@@ -97,6 +113,7 @@ class PubdbBibTexExporter
   );
   /**
    * @var array mapping for incollection ref type editor, publisher, address, title
+   * @since v0.0.7
    */
   private $incollectionFields = array(
     'publisher_name' => 'publisher',
@@ -106,6 +123,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for inproceedings ref type, editor, publisher, address, title, series
+   * @since v0.0.7
    */
 
   private $inproceedingsFields = array(
@@ -117,6 +135,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for manual ref type address organization
+   * @since v0.0.7
    */
   private $manualFields = array(
     'place_of_publication' => 'address',
@@ -125,6 +144,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for masterthesis ref type school, address
+   * @since v0.0.7
    */
   private $masterthesisFields = array(
     'publisher_name' => 'school',
@@ -133,6 +153,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for misc ref type howpublished, note
+   * @since v0.0.7
    */
   private $miscFields = array(
     'online_address' => 'howpublished',
@@ -141,6 +162,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for phd ref type school, address
+   * @since v0.0.7
    */
   private $phdFields = array(
     'publisher_name' => 'school',
@@ -148,6 +170,7 @@ class PubdbBibTexExporter
   );
   /**
    * @var array mapping for proceedings ref type editor, publisher, address, series
+   * @since v0.0.7
    */
   private $proceedingsFields = array(
     'publisher_name' => 'publisher',
@@ -157,6 +180,7 @@ class PubdbBibTexExporter
 
   /**
    * @var array mapping for techreport ref type editor, institution, address, series
+   * @since v0.0.7
    */
 
   private $techreportFields = array(
@@ -165,20 +189,15 @@ class PubdbBibTexExporter
     'series_title_name' => 'series'
   );
 
+  /**
+   * PubdbBibTexExporter constructor.
+   * @param $ids mixed Ids to export
+   * @since v0.0.7
+   */
   function __construct($ids)
   {
     $this->ids = $ids;
-
-    $this->umlautsMapping = array(
-      '{\"u}' => "ü",
-      '{\"U}' => "Ü",
-      '{\"a}' => "ä",
-      '{\"A}' => "Ä",
-      '{\"o}' => "ö",
-      '{\"O}' => "Ö",
-      '{\ss}' => "ß",
-      '{\&}' => "&"
-    );
+    $this->latexMapping = json_decode(file_get_contents($this->json_file));
   }
 
   /**
@@ -232,7 +251,7 @@ class PubdbBibTexExporter
         $typeFields = strtolower($item['ref_type']) . 'Fields';
         $fieldMapping = (isset($this->$typeFields)) ? array_merge($this->defaultFields, $this->$typeFields) : $this->defaultFields;
         if (method_exists(self::class, 'format' . ucfirst($field))) {
-          $formattedValues[$fieldMapping[$field]] = call_user_func(array(__CLASS__, 'format' . ucfirst($field)), $item);
+          $formattedValues[$fieldMapping[$field]] = $this->formatBibTexString(call_user_func(array(__CLASS__, 'format' . ucfirst($field)), $item), true);
         } else {
           if ($field == 'ref_type') {
             $formattedValues[$fieldMapping[$field]] = $value;
@@ -265,15 +284,15 @@ class PubdbBibTexExporter
       // unset value for later loop operation
       $item['type'] = "";
       $item['citekey'] = "";
-
+      $last_key = end(array_keys($item));
+      // loop through the item and generate BibTex formatted line
       foreach ($item as $field => $value) {
         if ($value == "" || $field == "") continue;
-        $itemBlock .= $field . " = " . $value . ',' . PHP_EOL;
+        $comma = ($field == $last_key) ? '' : ',';
+        $itemBlock .= $field . " = " . $value . $comma . PHP_EOL;
       }
-
       $strReturn .= $itemBlock . "}" . PHP_EOL;
     }
-
     return $strReturn;
 
   }
@@ -311,7 +330,7 @@ class PubdbBibTexExporter
     $first_names = explode(',', $item['authors_first_name']);
 
     for ($i = 0; $i < count($last_names); $i++) {
-      $arrAuthors[] = $last_names[$i] . "," . $first_names[$i];
+      $arrAuthors[] = trim($last_names[$i]) . ", " . trim($first_names[$i]);
     }
 
     foreach ($arrAuthors as $author) {
@@ -338,7 +357,7 @@ class PubdbBibTexExporter
     $first_names = explode(',', $item['others_involved_first_name']);
 
     for ($i = 0; $i < count($last_names); $i++) {
-      $arrEditors[] = $last_names[$i] . "," . $first_names[$i];
+      $arrEditors[] = trim($last_names[$i]) . ", " . trim($first_names[$i]);
     }
 
     foreach ($arrEditors as $editor) {
@@ -351,6 +370,7 @@ class PubdbBibTexExporter
    * Replace numeric month value with BibTex String
    * @param $item stdClass Item Object to Fromat
    * @return String month String in BibTex format
+   * @since v0.0.7
    */
 
   private function formatMonth($item)
@@ -373,26 +393,44 @@ class PubdbBibTexExporter
   }
 
   /**
+   * Format the in joomla! saved comma separated list of keywords to an semicolon separated list
+   * @param $item mixed Item to format
+   * @return String keyword string with semicolon
+   * @since v0.0.7
+   */
+  private function formatKeywords($item)
+  {
+    $keywords = $item['keywords'];
+    if ($keywords == "") return null;
+    return str_replace(',', ';', $keywords);
+  }
+
+  /**
    * Format strings to get ensure BibTex format.
    * Add Brackets, replace special chars with escaping etc
    * @param $value
+   * @param bool $dq flag if double quotes should be ignored
    * @return string|string[]
    * @since v0.0.5
    */
-  private function formatBibTexString($value)
+  private function formatBibTexString($value, $dq = false)
   {
-    $mapping = array_flip($this->umlautsMapping);
-    //check if whitespaces are in the value
+    $mapping = (array)$this->latexMapping;
 
     $value = str_replace(',', ', ', $value);
     $value = trim($value);
-    $value = "{" . $value . "}";
 
-    // replace all special chars in value
-    foreach ($mapping as $s => $r) {
-      $value = str_replace($s, $r, $value);
+    foreach ($mapping as $field => $char) {
+      if ($field == " ") continue;
+      if (($field == "{" || $field == "}") && $dq) continue;
+      if ($field == "\\") continue;
+      if ($field == '"' && $dq) continue;
+      if ($field == "'" && $dq) continue;
+      $value = str_replace($field, $char, $value);
     }
-    if ($value == "{}") return null;
-    return $value;
+
+    $strValue = "{" . $value . "}";
+    if ($strValue == "{}") return null;
+    return $strValue;
   }
 }

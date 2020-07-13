@@ -88,7 +88,6 @@ class PubdbBibTexImporter
       "howpublished" => "online_address",
       "urldate" => "access_date",
       "year" => "year",
-      "month" => "month",
       "editor" => "others_involved",
       "keywords" => "keywords"
     );
@@ -150,7 +149,7 @@ class PubdbBibTexImporter
       $literature = array();
 
       foreach ($formattedValues as $key => $value) {
-        if ($this->fieldMapping[$key]) $literature[$this->fieldMapping[$key]] = $value;
+        if (isset($this->fieldMapping[$key]) && $this->fieldMapping[$key]) $literature[$this->fieldMapping[$key]] = $value;
       }
 
       $insertedLiteratures[] = $this->insertLiterature($literature);
@@ -170,17 +169,20 @@ class PubdbBibTexImporter
 
   private function insertLiterature($literature)
   {
-    $date = DateTime::createFromFormat('m/d/Y', $literature['year']);
-    if (!$date) {
-      $date = DateTime::createFromFormat('d.m.Y', $literature['year']);
+    $date = null;
+    if (isset($literature['year'])) {
+      $date = DateTime::createFromFormat('m/d/Y', $literature['year']);
       if (!$date) {
-        $date = DateTime::createFromFormat('d-m-Y', $literature['year']);
+        $date = DateTime::createFromFormat('d.m.Y', $literature['year']);
         if (!$date) {
-          $date = DateTime::createFromFormat('d/m/Y', $literature['year']);
+          $date = DateTime::createFromFormat('d-m-Y', $literature['year']);
           if (!$date) {
-            $date = DateTime::createFromFormat('Y/m/d', $literature['year']);
+            $date = DateTime::createFromFormat('d/m/Y', $literature['year']);
             if (!$date) {
-              $date = DateTime::createFromFormat('d.m.Y', '01.01.' . $literature['year']);
+              $date = DateTime::createFromFormat('Y/m/d', $literature['year']);
+              if (!$date) {
+                $date = DateTime::createFromFormat('d.m.Y', '01.01.' . $literature['year']);
+              }
             }
           }
         }
@@ -297,7 +299,7 @@ class PubdbBibTexImporter
       $arrPersonName = explode(',', $persons);
       if (count($arrPersonName) == 1) {
         $arrName = explode(' ', $persons);
-        return $this->getPersonIDFromDB($arrPersonName[0], $arrPersonName[count($arrName) - 1]);
+        return $this->getPersonIDFromDB($arrName[0], $arrName[count($arrName) - 1]);
       } else {
         return $this->getPersonIDFromDB($arrPersonName[1], $arrPersonName[0]);
       }
